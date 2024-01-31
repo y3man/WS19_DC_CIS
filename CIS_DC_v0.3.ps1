@@ -438,6 +438,95 @@ Get-RightAssignment "SeTakeOwnershipPrivilege" ($SID_ADMINISTRATORS) "2.2.48" "L
  # 2.3.1.1 (L1) Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'
  Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "NoConnectedUser" ("3") "2.3.1.1" "L1" "Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'"
 
+ # 2.3.1.3 (L1) Ensure 'Accounts: Limit local account use of blank passwords to console logon only' is set to 'Enabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "LimitBlankPasswordUse" ("1") "2.3.1.3" "L1" "Ensure 'Accounts: Limit local account use of blank passwords to console logon only' is set to 'Enabled'"
+
+# 2.3.1.4 (L1) Configure 'Accounts: Rename administrator account'
+ $admin_name_line = $secpol | Select-String -Pattern "NewAdministratorName" -AllMatches
+if ($admin_name_line -match "= `"Administrator`"$") {
+    Output "2.3.1.4|L1|Configure 'Accounts: Rename administrator account'|~Administrator|Administrator|NOK" Red
+} else {
+    Output "2.3.1.4|L1|Configure 'Accounts: Rename administrator account'|~Administrator|$admin_name_line|OK" Green
+}
+
+ # 2.3.1.5 (L1) Configure 'Accounts: Rename guest account
+ $guest_name_line = $secpol | Select-String -Pattern "NewGuestName" -AllMatches
+if ($guest_name_line -match "= `"Guest`"$") {
+    Output "2.3.1.5|L1|Configure 'Accounts: Rename guest account'|~Guest|Guest|NOK" Red
+} else {
+    Output "2.3.1.5|L1|Configure 'Accounts: Rename guest account'|~Guest|$guest_name_line|OK" Green
+}
+
+ # --------------- Audit settings ---------------
+
+ # 2.3.2.1 (L1) Ensure 'Audit: Force audit policy subcategory settings
+ #(Windows Vista or later) to override audit policy category settings' is set to 'Enabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "SCENoApplyLegacyAuditPolicy" ("1") "2.3.2.1" "L1" "Ensure 'Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings' is set to 'Enabled'" -empty_ok
+
+# 2.3.2.2 (L1) Ensure 'Audit: Shut down system immediately if
+ #unable to log security audits' is set to 'Disabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "CrashOnAuditFail" ("0") "2.3.2.2" "L1" "Ensure 'Audit: Shut down system immediately if unable to log security audits' is set to 'Disabled'" -empty_ok
+
+ # --------------- Devices ---------------
+
+ # 2.3.4.1 (L1) Ensure 'Devices: Allowed to format and eject
+ #removable media' is set to 'Administrators'
+ Get-RegistryValue "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" "AllocateDASD" ("0") "2.3.4.1" "L1" "Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators'" -empty_ok
+
+# 2.3.4.2 (L1) Ensure 'Devices: Prevent users from installing printer drivers' is set to 'Enabled'
+ Get-RegistryValue "HKLM:\System\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers" "AddPrinterDrivers" ("1") "2.3.4.2" "L1" "Ensure 'Devices: Prevent users from installing printer drivers' is set to 'Enabled'" -empty_ok
+
+ # --------------- Domain controller ---------------
+
+ # 2.3.5.1 (L1) Ensure 'Domain controller: Allow server operators to
+ #schedule tasks' is set to 'Disabled' (DC only)
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "SubmitControl" ("0") "2.3.5.1" "L1" "Ensure 'Domain controller: Allow server operators to schedule tasks' is set to 'Disabled'" -empty_ok
+
+ # 2.3.5.2 (L1) Ensure 'Domain controller: Allow vulnerable Netlogon
+ #secure channel connections' is set to 'Not Configured' (DC Only)
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "VulnerableChannelAllowList" @() "2.3.5.2" "L1" "Ensure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured'" -empty_ok
+
+ # 2.3.5.3 (L1) Ensure 'Domain controller: LDAP server channel
+ #binding token requirements' is set to 'Always' (DC Only)
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" "LdapEnforceChannelBinding" ("2") "2.3.5.3" "L1" "Ensure 'Domain controller: LDAP server channel binding token requirements' is set to 'Always'"
+
+ # 2.3.5.4 (L1) Ensure 'Domain controller: LDAP server signing
+ #requirements' is set to 'Require signing' (DC only)
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" "LDAPServerIntegrity" ("2") "2.3.5.4" "L1" "Ensure 'Domain controller: LDAP server signing requirements' is set to 'Require signing'"
+
+ # 2.3.5.5 (L1) Ensure 'Domain controller: Refuse machine account
+ #password changes' is set to 'Disabled' (DC only)
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RefusePasswordChange" ("0") "2.3.5.5" "L1" "Ensure 'Domain controller: Refuse machine account password changes' is set to 'Disabled'" -empty_ok
+
+ # --------------- Domain member ---------------
+
+ # 2.3.6.1 (L1) Ensure 'Domain member: Digitally encrypt or sign
+ #secure channel data (always)' is set to 'Enabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireSignOrSeal" ("1") "2.3.6.1" "L1" "Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'" -empty_ok
+
+ # 2.3.6.2 (L1) Ensure 'Domain member: Digitally encrypt secure
+ #channel data (when possible)' is set to 'Enabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SealSecureChannel" ("1") "2.3.6.2" "L1" "Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled'" -empty_ok
+
+ # 2.3.6.3 (L1) Ensure 'Domain member: Digitally sign secure
+ #channel data (when possible)' is set to 'Enabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SignSecureChannel" ("1") "2.3.6.3" "L1" "Ensure 'Domain member: Digitally sign secure channel data (when possible)' is set to 'Enabled'" -empty_ok
+
+ # 2.3.6.4 (L1) Ensure 'Domain member: Disable machine account
+ #password changes' is set to 'Disabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "DisablePasswordChange" ("0") "2.3.6.4" "L1" "Ensure 'Domain member: Disable machine account password changes' is set to 'Disabled'" -empty_ok
+
+ # 2.3.6.5 (L1) Ensure 'Domain member: Maximum machine account
+ #password age' is set to '30 or fewer days, but not 0'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "MaximumPasswordAge" (1..30) "2.3.6.5" "L1" "Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0'" -empty_ok
+
+ # 2.3.6.6 (L1) Ensure 'Domain member: Require strong (Windows
+ #2000 or later) session key' is set to 'Enabled'
+ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireStrongKey" ("1") "2.3.6.6" "L1" "Ensure 'Domain member: Require strong (Windows 2000 or later) session key' is set to 'Enabled'" -empty_ok
+
+ # --------------- Interactive logon ---------------
+
+
 
 Write-Host "`nDone`nRemoving export files..."
 
