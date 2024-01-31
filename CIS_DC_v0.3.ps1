@@ -35,9 +35,13 @@ New-Item -Name $output_file_name -ItemType File -Force
 
 function Output([string] $text, $color="White") {
 
-    Write-Host $text -ForegroundColor $color
-
     $text | Out-File -FilePath ".\$($output_file_name)" -Append
+
+    if ($text.length -gt 255) {
+        $text = $text.Substring(0, 200)
+        $text += "..."
+    }
+    Write-Host $text -ForegroundColor $color
 
 }
 
@@ -526,7 +530,55 @@ if ($guest_name_line -match "= `"Guest`"$") {
 
  # --------------- Interactive logon ---------------
 
+# 2.3.7.1 (L1) Ensure 'Interactive logon: Do not require
+ #CTRL+ALT+DEL' is set to 'Disabled'
+ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DisableCAD" ("0") "2.3.7.1" "L1" "Ensure 'Interactive logon: Do not require CTRL+ALT+DEL' is set to 'Disabled'" -empty_ok
 
+ # 2.3.7.2 (L1) Ensure 'Interactive logon: Don't display last signed-in'
+ #is set to 'Enabled'
+ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DontDisplayLastUserName" ("1") "2.3.7.2" "L1" "Ensure 'Interactive logon: Don't display last signed-in' is set to 'Enabled'"
+
+ # 2.3.7.3 (L1) Ensure 'Interactive logon: Machine inactivity limit' is
+ #set to '900 or fewer second(s), but not 0'
+ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "InactivityTimeoutSecs" (1..900) "2.3.7.3" "L1" "Ensure 'Interactive logon: Machine inactivity limit' is set to '900 or fewer second(s), but not 0'"
+
+ # 2.3.7.4 (L1) Configure 'Interactive logon: Message text for users
+ #attempting to log on'
+try {
+    $msg_text = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "LegalNoticeText" -ErrorAction Stop
+} catch {
+    $msg_text = $false
+} finally {
+    if ($msg_text -eq $false -or $msg_text.Trim().length -eq 0) {
+        Output "2.3.7.4|L1|Configure 'Interactive logon: Message text for users attempting to log on'|~|Not Found|NDF-NOK" Red
+    } else {
+        Output "2.3.7.4|L1|Configure 'Interactive logon: Message text for users attempting to log on'|~|$msg_text|OK" Green
+    }
+}
+
+ # 2.3.7.5 (L1) Configure 'Interactive logon: Message title for users
+ #attempting to log on'
+try {
+    $msg_title = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "LegalNoticeCaption" -ErrorAction Stop
+} catch {
+    $msg_title = $false
+} finally {
+    if ($msg_title -eq $false -or $msg_title.Trim().length -eq 0) {
+        Output "2.3.7.5|L1|Configure 'Interactive logon: Message title for users attempting to log on'|~|Not Found|NDF-NOK" Red
+    } else {
+        Output "2.3.7.5|L1|Configure 'Interactive logon: Message title for users attempting to log on'|~|$msg_title|OK" Green
+    }
+}
+
+ # 2.3.7.7 (L1) Ensure 'Interactive logon: Prompt user to change
+ #password before expiration' is set to 'between 5 and 14 days'
+ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "PasswordExpiryWarning" (5..14) "2.3.7.7" "L1" "Ensure 'Interactive logon: Prompt user to change password before expiration' is set to 'between 5 and 14 days'"
+
+ # 2.3.7.9 (L1) Ensure 'Interactive logon: Smart card removal
+ #behavior' is set to 'Lock Workstation' or higher
+ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "ScRemoveOption" (1..3) "2.3.7.9" "L1" "Ensure 'Interactive logon: Smart card removal behavior' is set to 'Lock Workstation' or higher"
+
+ # --------------- Microsoft network client ---------------
 
 Write-Host "`nDone`nRemoving export files..."
 
