@@ -44,7 +44,7 @@ function Output([string] $text, $color="White") {
 Output "ID|L|Text|Expected setting|Current setting|Result"
 
 try {
-#    secedit /export /cfg secpol.cfg
+    secedit /export /cfg secpol.cfg
     $secpol = Get-Content secpol.cfg
 } catch {
     Write-Host "Security policy export failed" -ForegroundColor Red
@@ -126,6 +126,40 @@ function Get-RightAssignment([string] $role,
             Output "$id|$l|$text|$expected_values|$matches|OK" Green
         } else {
             Output "$id|$l|$text|$expected_values|$matches|NOK" Red
+        }
+    }
+}
+
+function Get-RegistryValue([string] $key,
+                           [string] $value_name,
+                           [string[]] $allowed_values,
+                           [string] $id, [string] $l,
+                           [string] $text,
+                           [switch] $empty_ok=$false,
+                           [switch] $reverse_values=$false) {
+    try {
+        $entry = Get-ItemPropertyValue -Path $key -Name $value_name -ErrorAction Stop
+    } catch {
+        if ($empty_ok -eq $true) {
+            Output "$id|$l|$text|$allowed_values|Not Found|NDF-OK" Green
+            return
+        } else {
+            Output "$id|$l|$text|$allowed_values|Not Found|NDF-NOK" Red
+            return
+        }
+    }
+    $found = $allowed_values -contains $entry
+    if ($reverse_values -eq $false) {
+        if ($found -eq $true) {
+            Output "$id|$l|$text|$allowed_values|$entry|OK" Green
+        } else {
+            Output "$id|$l|$text|$allowed_values|$entry|NOK" Red
+        }
+    } else {
+        if ($found -eq $true) {
+            Output "$id|$l|$text|~$allowed_values|$entry|NOK" Red
+        } else {
+            Output "$id|$l|$text|~$allowed_values|$entry|OK" Green
         }
     }
 }
@@ -400,6 +434,10 @@ Get-RightAssignment "SeSyncAgentPrivilege" ($SID_NOONE) "2.2.47" "L1" "Ensure 'S
 Get-RightAssignment "SeTakeOwnershipPrivilege" ($SID_ADMINISTRATORS) "2.2.48" "L1" "Ensure 'Take ownership of files or other objects' is set to 'Administrators'"
 
 # --------------- Security options ---------------
+
+ # 2.3.1.1 (L1) Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'
+ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "NoConnectedUser" ("3") "2.3.1.1" "L1" "Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'"
+
 
 Write-Host "`nDone`nRemoving export files..."
 
