@@ -1,33 +1,33 @@
 ﻿
- $SID_NOONE = "`"`""
+$SID_NOONE = "`"`""
 
- $SID_ADMINISTRATORS = "*S-1-5-32-544"
+$SID_ADMINISTRATORS = "*S-1-5-32-544"
 
- $SID_GUESTS = "*S-1-5-32-546"
+$SID_GUESTS = "*S-1-5-32-546"
 
- $SID_SERVICE = "*S-1-5-6"
+$SID_SERVICE = "*S-1-5-6"
 
- $SID_NETWORK_SERVICE = "*S-1-5-20"
+$SID_NETWORK_SERVICE = "*S-1-5-20"
 
- $SID_LOCAL_SERVICE = "*S-1-5-19"
+$SID_LOCAL_SERVICE = "*S-1-5-19"
 
- $SID_LOCAL_ACCOUNT = "*S-1-5-113"
+$SID_LOCAL_ACCOUNT = "*S-1-5-113"
 
- $SID_WINDOW_MANAGER_GROUP = "*S-1-5-90-0"
+$SID_WINDOW_MANAGER_GROUP = "*S-1-5-90-0"
 
- $SID_REMOTE_DESKTOP_USERS = "*S-1-5-32-555"
+$SID_REMOTE_DESKTOP_USERS = "*S-1-5-32-555"
 
- $SID_VIRTUAL_MACHINE = "*S-1-5-83-0"
+$SID_VIRTUAL_MACHINE = "*S-1-5-83-0"
 
- $SID_AUTHENTICATED_USERS = "*S-1-5-11"
+$SID_AUTHENTICATED_USERS = "*S-1-5-11"
 
- $SID_WDI_SYSTEM_SERVICE = "*S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420"
+$SID_WDI_SYSTEM_SERVICE = "*S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420"
 
- $SID_BACKUP_OPERATORS = "*S-1-5-32-551"
+$SID_BACKUP_OPERATORS = "*S-1-5-32-551"
 
- $SID_ENTERPRISE_DOMAIN_CONTROLLERS= "*S-1-5-9"
+$SID_ENTERPRISE_DOMAIN_CONTROLLERS= "*S-1-5-9"
 
- 
+
 
 $output_file_name = "script_output.csv"
 
@@ -48,13 +48,22 @@ function Output([string] $text, $color="White") {
 Output "ID|L|Text|Expected setting|Current setting|Result"
 
 try {
-    secedit /export /cfg secpol.cfg
+    #    secedit /export /cfg secpol.cfg
     $secpol = Get-Content secpol.cfg
 } catch {
     Write-Host "Security policy export failed" -ForegroundColor Red
     Exit
 }
 Write-Host "Security policy exported"
+
+try {
+    #     auditpol /get /category:* > auditpol.txt
+    $auditpol = Get-Content auditpol.txt
+} catch {
+    Write-Host "Audit policy export failed" -ForegroundColor Red
+    Exit
+}
+Write-Host "Audit policy exported"
 
 function Get-PasswordPolicy([string] $settingName) {
 
@@ -76,22 +85,22 @@ function Get-PasswordPolicy([string] $settingName) {
     }
 }
 
- # Difference between 2 lists
- function Compare-Lists([string[]] $list1, [string[]] $list2) {
+# Difference between 2 lists
+function Compare-Lists([string[]] $list1, [string[]] $list2) {
 
-     $list1 = $list1 | Where-Object { $list2 -notcontains $_ }
-     $list2 = $list2 | Where-Object { $list1 -notcontains $_ }
+    $list1 = $list1 | Where-Object { $list2 -notcontains $_ }
+    $list2 = $list2 | Where-Object { $list1 -notcontains $_ }
 
-     return $list1, $list2
- }
+    return $list1, $list2
+}
 
 function Get-RightAssignment([string] $role,
-        [string[]] $expected_values,
-        [string] $id,
-        [string] $l,
-        [string] $text,
-        [switch] $empty_ok=$false,
-        [switch] $iclude=$false) {
+                             [string[]] $expected_values,
+                             [string] $id,
+                             [string] $l,
+                             [string] $text,
+                             [switch] $empty_ok=$false,
+                             [switch] $iclude=$false) {
     $pattern = "(?<=\b$role\s*=\s*)\S+"
 
     $expected_values = $expected_values | ForEach-Object { $_.Trim() } | Sort-Object
@@ -115,10 +124,10 @@ function Get-RightAssignment([string] $role,
     $found_expected = $diff[1] | Sort-Object
     $found_unexpected = $diff[0] | Sort-Object
 
-#    write-host "wanted: $expected_values"
-#    write-host "found: $matches"
-#    write-host "found_expected: $found_expected"
-#    write-host "found_unexpected: $found_unexpected"
+    #    write-host "wanted: $expected_values"
+    #    write-host "found: $matches"
+    #    write-host "found_expected: $found_expected"
+    #    write-host "found_unexpected: $found_unexpected"
     if ($include -eq $true) {
         if ($found_expected.Count -eq $expected_values.Count) {
             Output "$id|$l|$text|$expected_values|$matches|OK" Green
@@ -168,7 +177,7 @@ function Get-RegistryValue([string] $key,
     }
 }
 
- # --------------- Password policies ---------------
+# --------------- Password policies ---------------
 
 # 1.1.1 (L1) Ensure 'Enforce password history' is set to '24 or more password(s)'
 
@@ -291,141 +300,141 @@ Get-RightAssignment "SeTrustedCredManAccessPrivilege" ($SID_NOONE) "2.2.1" "L1" 
 # to 'Administrators, Authenticated Users, ENTERPRISE DOMAIN CONTROLLERS' (DC only)
 Get-RightAssignment "SeNetworkLogonRight" ($SID_ADMINISTRATORS, $SID_AUTHENTICATED_USERS, $SID_ENTERPRISE_DOMAIN_CONTROLLERS) "2.2.2" "L1" "Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users, ENTERPRISE DOMAIN CONTROLLERS'"
 
- # 2.2.3 (L1) Ensure 'Access this computer from the network' is set
- # to 'Administrators, Authenticated Users' (MS only)
+# 2.2.3 (L1) Ensure 'Access this computer from the network' is set
+# to 'Administrators, Authenticated Users' (MS only)
 # Get-RightAssignment "SeNetworkLogonRight" ($SID_ADMINISTRATORS, $SID_AUTHENTICATED_USERS) "2.2.3" "L1" "Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users'"
 
- # 2.2.4 (L1) Ensure 'Act as part of the operating system' is set to 'No One'
+# 2.2.4 (L1) Ensure 'Act as part of the operating system' is set to 'No One'
 Get-RightAssignment "SeTcbPrivilege" ($SID_NOONE) "2.2.4" "L1" "Ensure 'Act as part of the operating system' is set to 'No One'" -empty_ok
 
- # 2.2.5 (L1) Ensure 'Add workstations to domain' is set to 'Administrators' (DC only)
+# 2.2.5 (L1) Ensure 'Add workstations to domain' is set to 'Administrators' (DC only)
 Get-RightAssignment "SeMachineAccountPrivilege" ($SID_ADMINISTRATORS) "2.2.5" "L1" "Ensure 'Add workstations to domain' is set to 'Administrators'"
 
- # 2.2.6 (L1) Ensure 'Adjust memory quotas for a process' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE'
+# 2.2.6 (L1) Ensure 'Adjust memory quotas for a process' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE'
 Get-RightAssignment "SeIncreaseQuotaPrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE) "2.2.6" "L1" "Ensure 'Adjust memory quotas for a process' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE'"
 
- # 2.2.7 (L1) Ensure 'Allow log on locally' is set to 'Administrators'
+# 2.2.7 (L1) Ensure 'Allow log on locally' is set to 'Administrators'
 Get-RightAssignment "SeInteractiveLogonRight" ($SID_ADMINISTRATORS) "2.2.7" "L1" "Ensure 'Allow log on locally' is set to 'Administrators, Backup Operators'"
 
- # 2.2.8 (L1) Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators' (DC only)
+# 2.2.8 (L1) Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators' (DC only)
 Get-RightAssignment "SeRemoteInteractiveLogonRight" ($SID_ADMINISTRATORS) "2.2.8" "L1" "Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators'"
 
- # 2.2.9 (L1) Ensure 'Allow log on through Remote Desktop
- #Services' is set to 'Administrators, Remote Desktop Users' (MSonly)
+# 2.2.9 (L1) Ensure 'Allow log on through Remote Desktop
+#Services' is set to 'Administrators, Remote Desktop Users' (MSonly)
 # Get-RightAssignment "SeRemoteInteractiveLogonRight" ($SID_ADMINISTRATORS, $SID_REMOTE_DESKTOP_USERS) "2.2.9" "L1" "Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators, Remote Desktop Users'" -empty_ok
 
- # 2.2.10 (L1) Ensure 'Back up files and directories' is set to 'Administrators'
+# 2.2.10 (L1) Ensure 'Back up files and directories' is set to 'Administrators'
 Get-RightAssignment "SeBackupPrivilege" ($SID_ADMINISTRATORS) "2.2.10" "L1" "Ensure 'Back up files and directories' is set to 'Administrators'"
 
- # 2.2.11 (L1) Ensure 'Change the system time' is set to 'Administrators, LOCAL SERVICE'
+# 2.2.11 (L1) Ensure 'Change the system time' is set to 'Administrators, LOCAL SERVICE'
 Get-RightAssignment "SeSystemtimePrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE) "2.2.11" "L1" "Ensure 'Change the system time' is set to 'Administrators, LOCAL SERVICE'"
 
- # 2.2.12 (L1) Ensure 'Change the time zone' is set to 'Administrators, LOCAL SERVICE'
+# 2.2.12 (L1) Ensure 'Change the time zone' is set to 'Administrators, LOCAL SERVICE'
 Get-RightAssignment "SeTimeZonePrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE) "2.2.12" "L1" "Ensure 'Change the time zone' is set to 'Administrators, LOCAL SERVICE'"
 
- # 2.2.13 (L1) Ensure 'Create a pagefile' is set to 'Administrators'
+# 2.2.13 (L1) Ensure 'Create a pagefile' is set to 'Administrators'
 Get-RightAssignment "SeCreatePagefilePrivilege" ($SID_ADMINISTRATORS) "2.2.13" "L1" "Ensure 'Create a pagefile' is set to 'Administrators'"
 
- # 2.2.14 (L1) Ensure 'Create a token object' is set to 'No One'
+# 2.2.14 (L1) Ensure 'Create a token object' is set to 'No One'
 Get-RightAssignment "SeCreateTokenPrivilege" ($SID_NOONE) "2.2.14" "L1" "Ensure 'Create a token object' is set to 'No One'" -empty_ok
 
- # 2.2.15 (L1) Ensure 'Create global objects' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE'
+# 2.2.15 (L1) Ensure 'Create global objects' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE'
 Get-RightAssignment "SeCreateGlobalPrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE, $SID_SERVICE) "2.2.15" "L1" "Ensure 'Create global objects' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE'"
 
- # 2.2.16 (L1) Ensure 'Create permanent shared objects' is set to 'No One'
+# 2.2.16 (L1) Ensure 'Create permanent shared objects' is set to 'No One'
 Get-RightAssignment "SeCreatePermanentPrivilege" ($SID_NOONE) "2.2.16" "L1" "Ensure 'Create permanent shared objects' is set to 'No One'" -empty_ok
 
- # 2.2.17 (L1) Ensure 'Create symbolic links' is set to 'Administrators' (DC only)
+# 2.2.17 (L1) Ensure 'Create symbolic links' is set to 'Administrators' (DC only)
 Get-RightAssignment "SeCreateSymbolicLinkPrivilege" ($SID_ADMINISTRATORS) "2.2.17" "L1" "Ensure 'Create symbolic links' is set to 'Administrators'"
 
- # 2.2.18 (L1) Ensure 'Create symbolic links' is set to
- #'Administrators, NT VIRTUAL MACHINE\Virtual Machines' (MSonly)
+# 2.2.18 (L1) Ensure 'Create symbolic links' is set to
+#'Administrators, NT VIRTUAL MACHINE\Virtual Machines' (MSonly)
 # Get-RightAssignment "SeCreateSymbolicLinkPrivilege" ($SID_ADMINISTRATORS, $SID_VIRTUAL_MACHINE) "2.2.18" "L1" "Ensure 'Create symbolic links' is set to 'Administrators, NT VIRTUAL MACHINE\Virtual Machines'"
 
- # 2.2.19 (L1) Ensure 'Debug programs' is set to 'Administrators'
+# 2.2.19 (L1) Ensure 'Debug programs' is set to 'Administrators'
 Get-RightAssignment "SeDebugPrivilege" ($SID_ADMINISTRATORS) "2.2.19" "L1" "Ensure 'Debug programs' is set to 'Administrators'"
 
- # 2.2.20 (L1) Ensure 'Deny access to this computer from the network' to include 'Guests' (DC only)
- Get-RightAssignment "SeDenyNetworkLogonRight" ($SID_GUESTS) "2.2.20" "L1" "Ensure 'Deny access to this computer from the network' to include 'Guests'" -include
+# 2.2.20 (L1) Ensure 'Deny access to this computer from the network' to include 'Guests' (DC only)
+Get-RightAssignment "SeDenyNetworkLogonRight" ($SID_GUESTS) "2.2.20" "L1" "Ensure 'Deny access to this computer from the network' to include 'Guests'" -include
 
- # 2.2.21 (L1) Ensure 'Deny access to this computer from the
- # network' to include 'Guests, Local account and member of Administrators group' (MS only)
+# 2.2.21 (L1) Ensure 'Deny access to this computer from the
+# network' to include 'Guests, Local account and member of Administrators group' (MS only)
 # Get-RightAssignment "SeDenyNetworkLogonRight" ($SID_GUESTS, $SID_LOCAL_ACCOUNT) "2.2.21" "L1" "Ensure 'Deny access to this computer from the network' to include 'Guests, Local account and member of Administrators group'" -include
 
- # 2.2.22 (L1) Ensure 'Deny log on as a batch job' to include 'Guests'
+# 2.2.22 (L1) Ensure 'Deny log on as a batch job' to include 'Guests'
 Get-RightAssignment "SeDenyBatchLogonRight" ($SID_GUESTS) "2.2.22" "L1" "Ensure 'Deny log on as a batch job' to include 'Guests'" -include
 
- # 2.2.23 (L1) Ensure 'Deny log on as a service' to include 'Guests'
+# 2.2.23 (L1) Ensure 'Deny log on as a service' to include 'Guests'
 Get-RightAssignment "SeDenyServiceLogonRight" ($SID_GUESTS) "2.2.23" "L1" "Ensure 'Deny log on as a service' to include 'Guests'" -include
 
- # 2.2.24 (L1) Ensure 'Deny log on locally' to include 'Guests'
+# 2.2.24 (L1) Ensure 'Deny log on locally' to include 'Guests'
 Get-RightAssignment "SeDenyInteractiveLogonRight" ($SID_GUESTS) "2.2.24" "L1" "Ensure 'Deny log on locally' to include 'Guests'" -include
 
- # 2.2.25 (L1) Ensure 'Deny log on through Remote Desktop Services' to include 'Guests' (DC only)
+# 2.2.25 (L1) Ensure 'Deny log on through Remote Desktop Services' to include 'Guests' (DC only)
 Get-RightAssignment "SeDenyRemoteInteractiveLogonRight" ($SID_GUESTS) "2.2.25" "L1" "Ensure 'Deny log on through Remote Desktop Services' to include 'Guests'" -include
 
- # 2.2.26 (L1) Ensure 'Deny log on through Remote Desktop Services' is set to 'Guests, Local account' (MS only)
+# 2.2.26 (L1) Ensure 'Deny log on through Remote Desktop Services' is set to 'Guests, Local account' (MS only)
 #Get-RightAssignment "SeDenyRemoteInteractiveLogonRight" ($SID_GUESTS, $SID_LOCAL_ACCOUNT) "2.2.26" "L1" "Ensure 'Deny log on through Remote Desktop Services' is set to 'Guests, Local account'"
 
- # 2.2.27 (L1) Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'Administrators' (DC only)
+# 2.2.27 (L1) Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'Administrators' (DC only)
 Get-RightAssignment "SeEnableDelegationPrivilege" ($SID_ADMINISTRATORS) "2.2.27" "L1" "Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'Administrators'"
 
- # 2.2.28 (L1) Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'No One' (MS only)
+# 2.2.28 (L1) Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'No One' (MS only)
 #Get-RightAssignment "SeEnableDelegationPrivilege" ($SID_NOONE) "2.2.28" "L1" "Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'No One'" -empty_ok
 
- # 2.2.29 (L1) Ensure 'Force shutdown from a remote system' is set to 'Administrators'
+# 2.2.29 (L1) Ensure 'Force shutdown from a remote system' is set to 'Administrators'
 Get-RightAssignment "SeRemoteShutdownPrivilege" ($SID_ADMINISTRATORS) "2.2.29" "L1" "Ensure 'Force shutdown from a remote system' is set to 'Administrators'"
 
- # 2.2.30 (L1) Ensure 'Generate security audits' is set to 'LOCAL SERVICE, NETWORK SERVICE'
+# 2.2.30 (L1) Ensure 'Generate security audits' is set to 'LOCAL SERVICE, NETWORK SERVICE'
 Get-RightAssignment "SeAuditPrivilege" ($SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE) "2.2.30" "L1" "Ensure 'Generate security audits' is set to 'LOCAL SERVICE, NETWORK SERVICE'"
 
- # 2.2.31 (L1) Ensure 'Impersonate a client after authentication' is
- #set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE' (DC only)
+# 2.2.31 (L1) Ensure 'Impersonate a client after authentication' is
+#set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE' (DC only)
 Get-RightAssignment "SeImpersonatePrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE, $SID_SERVICE) "2.2.31" "L1" "Ensure 'Impersonate a client after authentication' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE'"
 
- # 2.2.32 (L1) Ensure 'Impersonate a client after authentication' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE,
- #SERVICE' and (when the Web Server (IIS) Role with Web Services Role Service is installed) 'IIS_IUSRS' (MS only)
+# 2.2.32 (L1) Ensure 'Impersonate a client after authentication' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE,
+#SERVICE' and (when the Web Server (IIS) Role with Web Services Role Service is installed) 'IIS_IUSRS' (MS only)
 #Get-RightAssignment "SeImpersonatePrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE, $SID_SERVICE) "2.2.31" "L1" "Ensure 'Impersonate a client after authentication' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE'"
 
 # 2.2.33 (L1) Ensure 'Increase scheduling priority' is set to
- #'Administrators, Window Manager\Window Manager Group'
+#'Administrators, Window Manager\Window Manager Group'
 Get-RightAssignment "SeIncreaseBasePriorityPrivilege" ($SID_ADMINISTRATORS, $SID_WINDOW_MANAGER_GROUP) "2.2.33" "L1" "Ensure 'Increase scheduling priority' is set to 'Administrators, Window Manager\Window Manager Group'"
 
- # 2.2.34 (L1) Ensure 'Load and unload device drivers' is set to 'Administrators'
+# 2.2.34 (L1) Ensure 'Load and unload device drivers' is set to 'Administrators'
 Get-RightAssignment "SeLoadDriverPrivilege" ($SID_ADMINISTRATORS) "2.2.34" "L1" "Ensure 'Load and unload device drivers' is set to 'Administrators'"
 
- # 2.2.35 (L1) Ensure 'Lock pages in memory' is set to 'No One'
+# 2.2.35 (L1) Ensure 'Lock pages in memory' is set to 'No One'
 Get-RightAssignment "SeLockMemoryPrivilege" ($SID_NOONE) "2.2.35" "L1" "Ensure 'Lock pages in memory' is set to 'No One'" -empty_ok
 
- # 2.2.36 (L2) Ensure 'Log on as a batch job' is set to 'Administrators' (DC Only)
+# 2.2.36 (L2) Ensure 'Log on as a batch job' is set to 'Administrators' (DC Only)
 Get-RightAssignment "SeBatchLogonRight" ($SID_ADMINISTRATORS) "2.2.36" "L2" "Ensure 'Log on as a batch job' is set to 'Administrators'"
 
- # 2.2.37 (L1) Ensure 'Manage auditing and security log' is set to
- #'Administrators' and (when Exchange is running in the environment) 'Exchange Servers' (DC only)
- Get-RightAssignment "SeSecurityPrivilege" ($SID_ADMINISTRATORS) "2.2.37" "L1" "Ensure 'Manage auditing and security log' is set to 'Administrators' (and possibly Exchange Servers)"
+# 2.2.37 (L1) Ensure 'Manage auditing and security log' is set to
+#'Administrators' and (when Exchange is running in the environment) 'Exchange Servers' (DC only)
+Get-RightAssignment "SeSecurityPrivilege" ($SID_ADMINISTRATORS) "2.2.37" "L1" "Ensure 'Manage auditing and security log' is set to 'Administrators' (and possibly Exchange Servers)"
 
- # 2.2.38 (L1) Ensure 'Manage auditing and security log' is set to 'Administrators' (MS only)
+# 2.2.38 (L1) Ensure 'Manage auditing and security log' is set to 'Administrators' (MS only)
 #Get-RightAssignment "SeSecurityPrivilege" ($SID_ADMINISTRATORS) "2.2.38" "L1" "Ensure 'Manage auditing and security log' is set to 'Administrators'"
 
- # 2.2.39 (L1) Ensure 'Modify an object label' is set to 'No One'
+# 2.2.39 (L1) Ensure 'Modify an object label' is set to 'No One'
 Get-RightAssignment "SeRelabelPrivilege" ($SID_NOONE) "2.2.39" "L1" "Ensure 'Modify an object label' is set to 'No One'" -empty_ok
 
- # 2.2.40 (L1) Ensure 'Modify firmware environment values' is set to 'Administrators'
+# 2.2.40 (L1) Ensure 'Modify firmware environment values' is set to 'Administrators'
 Get-RightAssignment "SeSystemEnvironmentPrivilege" ($SID_ADMINISTRATORS) "2.2.40" "L1" "Ensure 'Modify firmware environment values' is set to 'Administrators'"
 
 # 2.2.41 (L1) Ensure 'Perform volume maintenance tasks' is set to 'Administrators'
 Get-RightAssignment "SeManageVolumePrivilege" ($SID_ADMINISTRATORS) "2.2.41" "L1" "Ensure 'Perform volume maintenance tasks' is set to 'Administrators'"
 
- # 2.2.42 (L1) Ensure 'Profile single process' is set to 'Administrators'
+# 2.2.42 (L1) Ensure 'Profile single process' is set to 'Administrators'
 Get-RightAssignment "SeProfileSingleProcessPrivilege" ($SID_ADMINISTRATORS) "2.2.42" "L1" "Ensure 'Profile single process' is set to 'Administrators'"
 
- # 2.2.43 (L1) Ensure 'Profile system performance' is set to 'Administrators, NT SERVICE\WdiServiceHost'
+# 2.2.43 (L1) Ensure 'Profile system performance' is set to 'Administrators, NT SERVICE\WdiServiceHost'
 Get-RightAssignment "SeSystemProfilePrivilege" ($SID_ADMINISTRATORS, $SID_WDI_SYSTEM_SERVICE) "2.2.43" "L1" "Ensure 'Profile system performance' is set to 'Administrators, NT SERVICE\WdiServiceHost'"
 
- # 2.2.44 (L1) Ensure 'Replace a process level token' is set to 'LOCAL SERVICE, NETWORK SERVICE'
+# 2.2.44 (L1) Ensure 'Replace a process level token' is set to 'LOCAL SERVICE, NETWORK SERVICE'
 Get-RightAssignment "SeAssignPrimaryTokenPrivilege" ($SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE) "2.2.44" "L1" "Ensure 'Replace a process level token' is set to 'LOCAL SERVICE, NETWORK SERVICE'"
 
- # 2.2.45 (L1) Ensure 'Restore files and directories' is set to 'Administrators'
+# 2.2.45 (L1) Ensure 'Restore files and directories' is set to 'Administrators'
 Get-RightAssignment "SeRestorePrivilege" ($SID_ADMINISTRATORS) "2.2.45" "L1" "Ensure 'Restore files and directories' is set to 'Administrators'"
 
 # 2.2.46 (L1) Ensure 'Shut down the system' is set to 'Administrators, LOCAL SERVICE'
@@ -439,95 +448,95 @@ Get-RightAssignment "SeTakeOwnershipPrivilege" ($SID_ADMINISTRATORS) "2.2.48" "L
 
 # --------------- Security options ---------------
 
- # 2.3.1.1 (L1) Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'
- Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "NoConnectedUser" ("3") "2.3.1.1" "L1" "Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'"
+# 2.3.1.1 (L1) Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "NoConnectedUser" ("3") "2.3.1.1" "L1" "Ensure 'Accounts: Block Microsoft accounts' is set to 'Users can't add or log on with Microsoft accounts'"
 
- # 2.3.1.3 (L1) Ensure 'Accounts: Limit local account use of blank passwords to console logon only' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "LimitBlankPasswordUse" ("1") "2.3.1.3" "L1" "Ensure 'Accounts: Limit local account use of blank passwords to console logon only' is set to 'Enabled'"
+# 2.3.1.3 (L1) Ensure 'Accounts: Limit local account use of blank passwords to console logon only' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "LimitBlankPasswordUse" ("1") "2.3.1.3" "L1" "Ensure 'Accounts: Limit local account use of blank passwords to console logon only' is set to 'Enabled'"
 
 # 2.3.1.4 (L1) Configure 'Accounts: Rename administrator account'
- $admin_name_line = $secpol | Select-String -Pattern "NewAdministratorName" -AllMatches
+$admin_name_line = $secpol | Select-String -Pattern "NewAdministratorName" -AllMatches
 if ($admin_name_line -match "= `"Administrator`"$") {
     Output "2.3.1.4|L1|Configure 'Accounts: Rename administrator account'|~Administrator|Administrator|NOK" Red
 } else {
     Output "2.3.1.4|L1|Configure 'Accounts: Rename administrator account'|~Administrator|$admin_name_line|OK" Green
 }
 
- # 2.3.1.5 (L1) Configure 'Accounts: Rename guest account
- $guest_name_line = $secpol | Select-String -Pattern "NewGuestName" -AllMatches
+# 2.3.1.5 (L1) Configure 'Accounts: Rename guest account
+$guest_name_line = $secpol | Select-String -Pattern "NewGuestName" -AllMatches
 if ($guest_name_line -match "= `"Guest`"$") {
     Output "2.3.1.5|L1|Configure 'Accounts: Rename guest account'|~Guest|Guest|NOK" Red
 } else {
     Output "2.3.1.5|L1|Configure 'Accounts: Rename guest account'|~Guest|$guest_name_line|OK" Green
 }
 
- # --------------- Audit settings ---------------
+# --------------- Audit settings ---------------
 
- # 2.3.2.1 (L1) Ensure 'Audit: Force audit policy subcategory settings
- #(Windows Vista or later) to override audit policy category settings' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "SCENoApplyLegacyAuditPolicy" ("1") "2.3.2.1" "L1" "Ensure 'Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings' is set to 'Enabled'" -empty_ok
+# 2.3.2.1 (L1) Ensure 'Audit: Force audit policy subcategory settings
+#(Windows Vista or later) to override audit policy category settings' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "SCENoApplyLegacyAuditPolicy" ("1") "2.3.2.1" "L1" "Ensure 'Audit: Force audit policy subcategory settings (Windows Vista or later) to override audit policy category settings' is set to 'Enabled'" -empty_ok
 
 # 2.3.2.2 (L1) Ensure 'Audit: Shut down system immediately if unable to log security audits' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "CrashOnAuditFail" ("0") "2.3.2.2" "L1" "Ensure 'Audit: Shut down system immediately if unable to log security audits' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "CrashOnAuditFail" ("0") "2.3.2.2" "L1" "Ensure 'Audit: Shut down system immediately if unable to log security audits' is set to 'Disabled'" -empty_ok
 
- # --------------- Devices ---------------
+# --------------- Devices ---------------
 
- # 2.3.4.1 (L1) Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators'
- Get-RegistryValue "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" "AllocateDASD" ("0") "2.3.4.1" "L1" "Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators'" -empty_ok
+# 2.3.4.1 (L1) Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators'
+Get-RegistryValue "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" "AllocateDASD" ("0") "2.3.4.1" "L1" "Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators'" -empty_ok
 
 # 2.3.4.2 (L1) Ensure 'Devices: Prevent users from installing printer drivers' is set to 'Enabled'
- Get-RegistryValue "HKLM:\System\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers" "AddPrinterDrivers" ("1") "2.3.4.2" "L1" "Ensure 'Devices: Prevent users from installing printer drivers' is set to 'Enabled'" -empty_ok
+Get-RegistryValue "HKLM:\System\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers" "AddPrinterDrivers" ("1") "2.3.4.2" "L1" "Ensure 'Devices: Prevent users from installing printer drivers' is set to 'Enabled'" -empty_ok
 
- # --------------- Domain controller ---------------
+# --------------- Domain controller ---------------
 
- # 2.3.5.1 (L1) Ensure 'Domain controller: Allow server operators to schedule tasks' is set to 'Disabled' (DC only)
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "SubmitControl" ("0") "2.3.5.1" "L1" "Ensure 'Domain controller: Allow server operators to schedule tasks' is set to 'Disabled'" -empty_ok
+# 2.3.5.1 (L1) Ensure 'Domain controller: Allow server operators to schedule tasks' is set to 'Disabled' (DC only)
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "SubmitControl" ("0") "2.3.5.1" "L1" "Ensure 'Domain controller: Allow server operators to schedule tasks' is set to 'Disabled'" -empty_ok
 
- # 2.3.5.2 (L1) Ensure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured' (DC Only)
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "VulnerableChannelAllowList" @() "2.3.5.2" "L1" "Ensure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured'" -empty_ok
+# 2.3.5.2 (L1) Ensure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured' (DC Only)
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "VulnerableChannelAllowList" @() "2.3.5.2" "L1" "Ensure 'Domain controller: Allow vulnerable Netlogon secure channel connections' is set to 'Not Configured'" -empty_ok
 
- # 2.3.5.3 (L1) Ensure 'Domain controller: LDAP server channel binding token requirements' is set to 'Always' (DC Only)
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" "LdapEnforceChannelBinding" ("2") "2.3.5.3" "L1" "Ensure 'Domain controller: LDAP server channel binding token requirements' is set to 'Always'"
+# 2.3.5.3 (L1) Ensure 'Domain controller: LDAP server channel binding token requirements' is set to 'Always' (DC Only)
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" "LdapEnforceChannelBinding" ("2") "2.3.5.3" "L1" "Ensure 'Domain controller: LDAP server channel binding token requirements' is set to 'Always'"
 
- # 2.3.5.4 (L1) Ensure 'Domain controller: LDAP server signing requirements' is set to 'Require signing' (DC only)
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" "LDAPServerIntegrity" ("2") "2.3.5.4" "L1" "Ensure 'Domain controller: LDAP server signing requirements' is set to 'Require signing'"
+# 2.3.5.4 (L1) Ensure 'Domain controller: LDAP server signing requirements' is set to 'Require signing' (DC only)
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" "LDAPServerIntegrity" ("2") "2.3.5.4" "L1" "Ensure 'Domain controller: LDAP server signing requirements' is set to 'Require signing'"
 
- # 2.3.5.5 (L1) Ensure 'Domain controller: Refuse machine account password changes' is set to 'Disabled' (DC only)
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RefusePasswordChange" ("0") "2.3.5.5" "L1" "Ensure 'Domain controller: Refuse machine account password changes' is set to 'Disabled'" -empty_ok
+# 2.3.5.5 (L1) Ensure 'Domain controller: Refuse machine account password changes' is set to 'Disabled' (DC only)
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RefusePasswordChange" ("0") "2.3.5.5" "L1" "Ensure 'Domain controller: Refuse machine account password changes' is set to 'Disabled'" -empty_ok
 
- # --------------- Domain member ---------------
+# --------------- Domain member ---------------
 
- # 2.3.6.1 (L1) Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireSignOrSeal" ("1") "2.3.6.1" "L1" "Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'" -empty_ok
+# 2.3.6.1 (L1) Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireSignOrSeal" ("1") "2.3.6.1" "L1" "Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'" -empty_ok
 
- # 2.3.6.2 (L1) Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SealSecureChannel" ("1") "2.3.6.2" "L1" "Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled'" -empty_ok
+# 2.3.6.2 (L1) Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SealSecureChannel" ("1") "2.3.6.2" "L1" "Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled'" -empty_ok
 
- # 2.3.6.3 (L1) Ensure 'Domain member: Digitally sign secure channel data (when possible)' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SignSecureChannel" ("1") "2.3.6.3" "L1" "Ensure 'Domain member: Digitally sign secure channel data (when possible)' is set to 'Enabled'" -empty_ok
+# 2.3.6.3 (L1) Ensure 'Domain member: Digitally sign secure channel data (when possible)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SignSecureChannel" ("1") "2.3.6.3" "L1" "Ensure 'Domain member: Digitally sign secure channel data (when possible)' is set to 'Enabled'" -empty_ok
 
- # 2.3.6.4 (L1) Ensure 'Domain member: Disable machine account password changes' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "DisablePasswordChange" ("0") "2.3.6.4" "L1" "Ensure 'Domain member: Disable machine account password changes' is set to 'Disabled'" -empty_ok
+# 2.3.6.4 (L1) Ensure 'Domain member: Disable machine account password changes' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "DisablePasswordChange" ("0") "2.3.6.4" "L1" "Ensure 'Domain member: Disable machine account password changes' is set to 'Disabled'" -empty_ok
 
- # 2.3.6.5 (L1) Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "MaximumPasswordAge" (1..30) "2.3.6.5" "L1" "Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0'" -empty_ok
+# 2.3.6.5 (L1) Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "MaximumPasswordAge" (1..30) "2.3.6.5" "L1" "Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0'" -empty_ok
 
- # 2.3.6.6 (L1) Ensure 'Domain member: Require strong (Windows 2000 or later) session key' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireStrongKey" ("1") "2.3.6.6" "L1" "Ensure 'Domain member: Require strong (Windows 2000 or later) session key' is set to 'Enabled'" -empty_ok
+# 2.3.6.6 (L1) Ensure 'Domain member: Require strong (Windows 2000 or later) session key' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireStrongKey" ("1") "2.3.6.6" "L1" "Ensure 'Domain member: Require strong (Windows 2000 or later) session key' is set to 'Enabled'" -empty_ok
 
- # --------------- Interactive logon ---------------
+# --------------- Interactive logon ---------------
 
 # 2.3.7.1 (L1) Ensure 'Interactive logon: Do not require CTRL+ALT+DEL' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DisableCAD" ("0") "2.3.7.1" "L1" "Ensure 'Interactive logon: Do not require CTRL+ALT+DEL' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DisableCAD" ("0") "2.3.7.1" "L1" "Ensure 'Interactive logon: Do not require CTRL+ALT+DEL' is set to 'Disabled'" -empty_ok
 
- # 2.3.7.2 (L1) Ensure 'Interactive logon: Don't display last signed-in' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DontDisplayLastUserName" ("1") "2.3.7.2" "L1" "Ensure 'Interactive logon: Don't display last signed-in' is set to 'Enabled'"
+# 2.3.7.2 (L1) Ensure 'Interactive logon: Don't display last signed-in' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DontDisplayLastUserName" ("1") "2.3.7.2" "L1" "Ensure 'Interactive logon: Don't display last signed-in' is set to 'Enabled'"
 
- # 2.3.7.3 (L1) Ensure 'Interactive logon: Machine inactivity limit' is
- #set to '900 or fewer second(s), but not 0'
- Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "InactivityTimeoutSecs" (1..900) "2.3.7.3" "L1" "Ensure 'Interactive logon: Machine inactivity limit' is set to '900 or fewer second(s), but not 0'"
+# 2.3.7.3 (L1) Ensure 'Interactive logon: Machine inactivity limit' is
+#set to '900 or fewer second(s), but not 0'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "InactivityTimeoutSecs" (1..900) "2.3.7.3" "L1" "Ensure 'Interactive logon: Machine inactivity limit' is set to '900 or fewer second(s), but not 0'"
 
- # 2.3.7.4 (L1) Configure 'Interactive logon: Message text for users attempting to log on'
+# 2.3.7.4 (L1) Configure 'Interactive logon: Message text for users attempting to log on'
 try {
     $msg_text = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "LegalNoticeText" -ErrorAction Stop
 } catch {
@@ -540,7 +549,7 @@ try {
     }
 }
 
- # 2.3.7.5 (L1) Configure 'Interactive logon: Message title for users attempting to log on'
+# 2.3.7.5 (L1) Configure 'Interactive logon: Message title for users attempting to log on'
 try {
     $msg_title = Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "LegalNoticeCaption" -ErrorAction Stop
 } catch {
@@ -553,58 +562,58 @@ try {
     }
 }
 
- # 2.3.7.7 (L1) Ensure 'Interactive logon: Prompt user to change password before expiration' is set to 'between 5 and 14 days'
- Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "PasswordExpiryWarning" (5..14) "2.3.7.7" "L1" "Ensure 'Interactive logon: Prompt user to change password before expiration' is set to 'between 5 and 14 days'"
+# 2.3.7.7 (L1) Ensure 'Interactive logon: Prompt user to change password before expiration' is set to 'between 5 and 14 days'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "PasswordExpiryWarning" (5..14) "2.3.7.7" "L1" "Ensure 'Interactive logon: Prompt user to change password before expiration' is set to 'between 5 and 14 days'"
 
- # 2.3.7.9 (L1) Ensure 'Interactive logon: Smart card removal behavior' is set to 'Lock Workstation' or higher
- Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "ScRemoveOption" (1..3) "2.3.7.9" "L1" "Ensure 'Interactive logon: Smart card removal behavior' is set to 'Lock Workstation' or higher"
+# 2.3.7.9 (L1) Ensure 'Interactive logon: Smart card removal behavior' is set to 'Lock Workstation' or higher
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "ScRemoveOption" (1..3) "2.3.7.9" "L1" "Ensure 'Interactive logon: Smart card removal behavior' is set to 'Lock Workstation' or higher"
 
- # --------------- Microsoft network client ---------------
+# --------------- Microsoft network client ---------------
 
- # 2.3.8.1 (L1) Ensure 'Microsoft network client: Digitally sign communications (always)' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" "RequireSecuritySignature" ("1") "2.3.8.1" "L1" "Ensure 'Microsoft network client: Digitally sign communications (always)' is set to 'Enabled'"
+# 2.3.8.1 (L1) Ensure 'Microsoft network client: Digitally sign communications (always)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" "RequireSecuritySignature" ("1") "2.3.8.1" "L1" "Ensure 'Microsoft network client: Digitally sign communications (always)' is set to 'Enabled'"
 
- # 2.3.8.2 (L1) Ensure 'Microsoft network client: Digitally sign communications (if server agrees)' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" "EnableSecuritySignature" ("1") "2.3.8.2" "L1" "Ensure 'Microsoft network client: Digitally sign communications (if server agrees)' is set to 'Enabled'"
+# 2.3.8.2 (L1) Ensure 'Microsoft network client: Digitally sign communications (if server agrees)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" "EnableSecuritySignature" ("1") "2.3.8.2" "L1" "Ensure 'Microsoft network client: Digitally sign communications (if server agrees)' is set to 'Enabled'"
 
- # 2.3.8.3 (L1) Ensure 'Microsoft network client: Send unencrypted password to third-party SMB servers' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" "EnablePlainTextPassword" ("0") "2.3.8.3" "L1" "Ensure 'Microsoft network client: Send unencrypted password to third-party SMB servers' is set to 'Disabled'"
+# 2.3.8.3 (L1) Ensure 'Microsoft network client: Send unencrypted password to third-party SMB servers' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Parameters" "EnablePlainTextPassword" ("0") "2.3.8.3" "L1" "Ensure 'Microsoft network client: Send unencrypted password to third-party SMB servers' is set to 'Disabled'"
 
- # --------------- Microsoft network server ---------------
+# --------------- Microsoft network server ---------------
 
- # 2.3.9.1 (L1) Ensure 'Microsoft network server: Amount of idle time
- #required before suspending session' is set to '15 or fewer minute(s)'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "AutoDisconnect" (1..15) "2.3.9.1" "L1" "Ensure 'Microsoft network server: Amount of idle time required before suspending session' is set to '15 or fewer minute(s)'"
+# 2.3.9.1 (L1) Ensure 'Microsoft network server: Amount of idle time
+#required before suspending session' is set to '15 or fewer minute(s)'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "AutoDisconnect" (1..15) "2.3.9.1" "L1" "Ensure 'Microsoft network server: Amount of idle time required before suspending session' is set to '15 or fewer minute(s)'"
 
- # 2.3.9.2 (L1) Ensure 'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "RequireSecuritySignature" ("1") "2.3.9.2" "L1" "Ensure 'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'"
+# 2.3.9.2 (L1) Ensure 'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "RequireSecuritySignature" ("1") "2.3.9.2" "L1" "Ensure 'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'"
 
- # 2.3.9.3 (L1) Ensure 'Microsoft network server: Digitally sign communications (if client agrees)' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "EnableSecuritySignature" ("1") "2.3.9.3" "L1" "Ensure 'Microsoft network server: Digitally sign communications (if client agrees)' is set to 'Enabled'"
+# 2.3.9.3 (L1) Ensure 'Microsoft network server: Digitally sign communications (if client agrees)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "EnableSecuritySignature" ("1") "2.3.9.3" "L1" "Ensure 'Microsoft network server: Digitally sign communications (if client agrees)' is set to 'Enabled'"
 
- # 2.3.9.4 (L1) Ensure 'Microsoft network server: Disconnect clients when logon hours expire' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "EnableForcedLogOff" ("1") "2.3.9.4" "L1" "Ensure 'Microsoft network server: Disconnect clients when logon hours expire' is set to 'Enabled'" -empty_ok
+# 2.3.9.4 (L1) Ensure 'Microsoft network server: Disconnect clients when logon hours expire' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "EnableForcedLogOff" ("1") "2.3.9.4" "L1" "Ensure 'Microsoft network server: Disconnect clients when logon hours expire' is set to 'Enabled'" -empty_ok
 
- # --------------- Network access ---------------
+# --------------- Network access ---------------
 
- # 2.3.10.1 (L1) Ensure 'Network access: Allow anonymous SID/Name translation' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "TurnOffAnonymousBlock" ("1") "2.3.10.1" "L1" "Ensure 'Network access: Allow anonymous SID/Name translation' is set to 'Disabled'" -empty_ok
+# 2.3.10.1 (L1) Ensure 'Network access: Allow anonymous SID/Name translation' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "TurnOffAnonymousBlock" ("1") "2.3.10.1" "L1" "Ensure 'Network access: Allow anonymous SID/Name translation' is set to 'Disabled'" -empty_ok
 
- # 2.3.10.4 (L2) Ensure 'Network access: Do not allow storage of
- #passwords and credentials for network authentication' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "DisableDomainCreds" ("1") "2.3.10.4" "L2" "Ensure 'Network access: Do not allow storage of passwords and credentials for network authentication' is set to 'Enabled'"
+# 2.3.10.4 (L2) Ensure 'Network access: Do not allow storage of
+#passwords and credentials for network authentication' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "DisableDomainCreds" ("1") "2.3.10.4" "L2" "Ensure 'Network access: Do not allow storage of passwords and credentials for network authentication' is set to 'Enabled'"
 
 # 2.3.10.5 (L1) Ensure 'Network access: Let Everyone permissions apply to anonymous users' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "EveryoneIncludesAnonymous" ("0") "2.3.10.5" "L1" "Ensure 'Network access: Let Everyone permissions apply to anonymous users' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "EveryoneIncludesAnonymous" ("0") "2.3.10.5" "L1" "Ensure 'Network access: Let Everyone permissions apply to anonymous users' is set to 'Disabled'" -empty_ok
 
- # 2.3.10.6 (L1) Configure 'Network access: Named Pipes that can be accessed anonymously' (DC only)
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "NullSessionPipes" @() "2.3.10.6" "L1" "Configure 'Network access: Named Pipes that can be accessed anonymously'" -empty_ok
+# 2.3.10.6 (L1) Configure 'Network access: Named Pipes that can be accessed anonymously' (DC only)
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "NullSessionPipes" @() "2.3.10.6" "L1" "Configure 'Network access: Named Pipes that can be accessed anonymously'" -empty_ok
 
- # 2.3.10.8 (L1) Configure 'Network access: Remotely accessible registry paths' is configured
- $expected_paths = ("System\CurrentControlSet\Control\ProductOptions", "System\CurrentControlSet\Control\Server Applications", "Software\Microsoft\Windows NT\CurrentVersion")
- try {
+# 2.3.10.8 (L1) Configure 'Network access: Remotely accessible registry paths' is configured
+$expected_paths = ("System\CurrentControlSet\Control\ProductOptions", "System\CurrentControlSet\Control\Server Applications", "Software\Microsoft\Windows NT\CurrentVersion")
+try {
     $reg_paths = Get-ItemPropertyValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedExactPaths" -Name "Machine" -ErrorAction Stop
- } catch {
+} catch {
     $reg_paths = $false
 } finally {
     if ($reg_paths -eq $false -or $reg_paths.Count -eq 0) {
@@ -614,8 +623,8 @@ try {
     }
 }
 
- # 2.3.10.9 (L1) Configure 'Network access: Remotely accessible registry paths and sub-paths' is configured
- $expected_paths = ("System\CurrentControlSet\Control\Print\Printers", "System\CurrentControlSet\Services\Eventlog", "Software\Microsoft\OLAP Server", "Software\Microsoft\Windows NT\CurrentVersion\Print", "Software\Microsoft\Windows NT\CurrentVersion\Windows", "System\CurrentControlSet\Control\ContentIndex", "System\CurrentControlSet\Control\Terminal Server", "System\CurrentControlSet\Control\Terminal Server\UserConfig", "System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration", "Software\Microsoft\Windows NT\CurrentVersion\Perflib", "System\CurrentControlSet\Services\SysmonLog")
+# 2.3.10.9 (L1) Configure 'Network access: Remotely accessible registry paths and sub-paths' is configured
+$expected_paths = ("System\CurrentControlSet\Control\Print\Printers", "System\CurrentControlSet\Services\Eventlog", "Software\Microsoft\OLAP Server", "Software\Microsoft\Windows NT\CurrentVersion\Print", "Software\Microsoft\Windows NT\CurrentVersion\Windows", "System\CurrentControlSet\Control\ContentIndex", "System\CurrentControlSet\Control\Terminal Server", "System\CurrentControlSet\Control\Terminal Server\UserConfig", "System\CurrentControlSet\Control\Terminal Server\DefaultUserConfiguration", "Software\Microsoft\Windows NT\CurrentVersion\Perflib", "System\CurrentControlSet\Services\SysmonLog")
 try {
     $reg_paths = Get-ItemPropertyValue -Path "HKLM:\SYSTEM\CurrentControlSet\Control\SecurePipeServers\Winreg\AllowedPaths" -Name "Machine" -ErrorAction Stop
 } catch {
@@ -628,60 +637,63 @@ try {
     }
 }
 
- # 2.3.10.10 (L1) Ensure 'Network access: Restrict anonymous access to Named Pipes and Shares' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "RestrictNullSessAccess" ("1") "2.3.10.10" "L1" "Ensure 'Network access: Restrict anonymous access to Named Pipes and Shares' is set to 'Enabled'" -empty_ok
+# 2.3.10.10 (L1) Ensure 'Network access: Restrict anonymous access to Named Pipes and Shares' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "RestrictNullSessAccess" ("1") "2.3.10.10" "L1" "Ensure 'Network access: Restrict anonymous access to Named Pipes and Shares' is set to 'Enabled'" -empty_ok
 
- # 2.3.10.12 (L1) Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "NullSessionShares" @() "2.3.10.12" "L1" "Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None'" -empty_ok
+# 2.3.10.12 (L1) Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "NullSessionShares" @() "2.3.10.12" "L1" "Ensure 'Network access: Shares that can be accessed anonymously' is set to 'None'" -empty_ok
 
- # 2.3.10.13 (L1) Ensure 'Network access: Sharing and security
- #model for local accounts' is set to 'Classic - local users authenticate as themselves'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "ForceGuest" ("0") "2.3.10.13" "L1" "Ensure 'Network access: Sharing and security model for local accounts' is set to 'Classic - local users authenticate as themselves'" -empty_ok
+# 2.3.10.13 (L1) Ensure 'Network access: Sharing and security
+#model for local accounts' is set to 'Classic - local users authenticate as themselves'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "ForceGuest" ("0") "2.3.10.13" "L1" "Ensure 'Network access: Sharing and security model for local accounts' is set to 'Classic - local users authenticate as themselves'" -empty_ok
 
- # --------------- Network security ---------------
+# --------------- Network security ---------------
 
- # 2.3.11.1 (L1) Ensure 'Network security: Allow Local System to use computer identity for NTLM' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "UseMachineId" ("1") "2.3.11.1" "L1" "Ensure 'Network security: Allow Local System to use computer identity for NTLM' is set to 'Enabled'" -empty_ok
+# 2.3.11.1 (L1) Ensure 'Network security: Allow Local System to use computer identity for NTLM' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "UseMachineId" ("1") "2.3.11.1" "L1" "Ensure 'Network security: Allow Local System to use computer identity for NTLM' is set to 'Enabled'" -empty_ok
 
 # 2.3.11.2 (L1) Ensure 'Network security: Allow LocalSystem NULL session fallback' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "AllowNullSessionFallback" ("0") "2.3.11.2" "L1" "Ensure 'Network security: Allow LocalSystem NULL session fallback' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "AllowNullSessionFallback" ("0") "2.3.11.2" "L1" "Ensure 'Network security: Allow LocalSystem NULL session fallback' is set to 'Disabled'" -empty_ok
 
 # 2.3.11.3 (L1) Ensure 'Network Security: Allow PKU2U
- #authentication requests to this computer to use online identities' is set to 'Disabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\pku2u" "AllowOnlineID" ("0") "2.3.11.3" "L1" "Ensure 'Network Security: Allow PKU2U authentication requests to this computer to use online identities' is set to 'Disabled'" -empty_ok
+#authentication requests to this computer to use online identities' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\pku2u" "AllowOnlineID" ("0") "2.3.11.3" "L1" "Ensure 'Network Security: Allow PKU2U authentication requests to this computer to use online identities' is set to 'Disabled'" -empty_ok
 
- # 2.3.11.4 (L1) Ensure 'Network security: Configure encryption
- #types allowed for Kerberos' is set to 'AES128_HMAC_SHA1, AES256_HMAC_SHA1, Future encryption types'
- Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters" "SupportedEncryptionTypes" ("2147483640") "2.3.11.4" "L1" "Ensure 'Network security: Configure encryption types allowed for Kerberos' is set to 'AES128_HMAC_SHA1, AES256_HMAC_SHA1, Future encryption types'"
+# 2.3.11.4 (L1) Ensure 'Network security: Configure encryption
+#types allowed for Kerberos' is set to 'AES128_HMAC_SHA1, AES256_HMAC_SHA1, Future encryption types'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Kerberos\Parameters" "SupportedEncryptionTypes" ("2147483640") "2.3.11.4" "L1" "Ensure 'Network security: Configure encryption types allowed for Kerberos' is set to 'AES128_HMAC_SHA1, AES256_HMAC_SHA1, Future encryption types'"
 
- # 2.3.11.5 (L1) Ensure 'Network security: Do not store LAN
- #Manager hash value on next password change' is set to 'Enabled'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "NoLMHash" ("1") "2.3.11.5" "L1" "Ensure 'Network security: Do not store LAN Manager hash value on next password change' is set to 'Enabled'" -empty_ok
+# 2.3.11.5 (L1) Ensure 'Network security: Do not store LAN
+#Manager hash value on next password change' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "NoLMHash" ("1") "2.3.11.5" "L1" "Ensure 'Network security: Do not store LAN Manager hash value on next password change' is set to 'Enabled'" -empty_ok
 
- # 2.3.11.6 (L1) Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled'
+# 2.3.11.6 (L1) Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled'
 $force_logoff = $secpol | Select-String -Pattern "ForceLogoffWhenHourExpire"
- if ($force_logoff -match " = 1") {
-     Output "2.3.11.6|L1|Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled'|$force_logoff|1|OK" Green
- } else {
-     Output "2.3.11.6|L1|Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled'|$force_logoff|1|NOK" Red
- }
+if ($force_logoff -match " = 1") {
+    Output "2.3.11.6|L1|Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled'|$force_logoff|1|OK" Green
+} else {
+    Output "2.3.11.6|L1|Ensure 'Network security: Force logoff when logon hours expire' is set to 'Enabled'|$force_logoff|1|NOK" Red
+}
 
- # 2.3.11.7 (L1) Ensure 'Network security: LAN Manager
- #authentication level' is set to 'Send NTLMv2 response only. Refuse LM & NTLM'
+# 2.3.11.7 (L1) Ensure 'Network security: LAN Manager
+#authentication level' is set to 'Send NTLMv2 response only. Refuse LM & NTLM'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "LmCompatibilityLevel" ("5") "2.3.11.7" "L1" "Ensure 'Network security: LAN Manager authentication level' is set to 'Send NTLMv2 response only. Refuse LM & NTLM'"
 
- #2.3.11.8 (L1) Ensure 'Network security: LDAP client signing requirements' is set to 'Negotiate signing' or higher
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LDAP" "LDAPClientIntegrity" ("1", "2") "2.3.11.8" "L1" "Ensure 'Network security: LDAP client signing requirements' is set to 'Negotiate signing' or higher"
+#2.3.11.8 (L1) Ensure 'Network security: LDAP client signing requirements' is set to 'Negotiate signing' or higher
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LDAP" "LDAPClientIntegrity" ("1", "2") "2.3.11.8" "L1" "Ensure 'Network security: LDAP client signing requirements' is set to 'Negotiate signing' or higher"
 
 # 2.3.11.9 (L1) Ensure 'Network security: Minimum session security
- #for NTLM SSP based (including secure RPC) clients' is set to 'Require NTLMv2 session security, Require 128-bit encryption'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "NTLMMinClientSec" ("537395200") "2.3.11.9" "L1" "Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) clients' is set to 'Require NTLMv2 session security, Require 128-bit encryption'"
+#for NTLM SSP based (including secure RPC) clients' is set to 'Require NTLMv2 session security, Require 128-bit encryption'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "NTLMMinClientSec" ("537395200") "2.3.11.9" "L1" "Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) clients' is set to 'Require NTLMv2 session security, Require 128-bit encryption'"
 
- # 2.3.11.10 (L1) Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is
- #set to 'Require NTLMv2 session security, Require 128-bit encryption'
- Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "NTLMMinServerSec" ("537395200") "2.3.11.10" "L1" "Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require NTLMv2 session security, Require 128-bit encryption'"
+# 2.3.11.10 (L1) Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is
+#set to 'Require NTLMv2 session security, Require 128-bit encryption'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "NTLMMinServerSec" ("537395200") "2.3.11.10" "L1" "Ensure 'Network security: Minimum session security for NTLM SSP based (including secure RPC) servers' is set to 'Require NTLMv2 session security, Require 128-bit encryption'"
 
- # --------------- Shutdown ---------------
+# --------------- Shutdown ---------------
+
+# 2.3.13.1 (L1) Ensure 'Shutdown: Allow system to be shut down
+#without having to log on' is set to 'Disabled'
 
 
 Write-Host "`nDone`nRemoving export files..."
