@@ -708,6 +708,41 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager" "Prot
 
 # --------------- User Account Control ---------------
 
+# 2.3.17.1 (L1) Ensure 'User Account Control: Admin Approval
+#Mode for the Built-in Administrator account' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "FilterAdministratorToken" ("1") "2.3.17.1" "L1" "Ensure 'User Account Control: Admin Approval Mode for the Built-in Administrator account' is set to 'Enabled'"
+
+# 2.3.17.2 (L1) Ensure 'User Account Control: Behavior of the
+#elevation prompt for administrators in Admin Approval Mode' is
+#set to 'Prompt for consent on the secure desktop' or higher
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "ConsentPromptBehaviorAdmin" ("2", "5") "2.3.17.2" "L1" "Ensure 'User Account Control: Behavior of the elevation prompt for administrators in Admin Approval Mode' is set to 'Prompt for consent on the secure desktop' or higher"
+
+# 2.3.17.3 (L1) Ensure 'User Account Control: Behavior of the
+#elevation prompt for standard users' is set to 'Automatically deny elevation requests'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "ConsentPromptBehaviorUser" ("0") "2.3.17.3" "L1" "Ensure 'User Account Control: Behavior of the elevation prompt for standard users' is set to 'Automatically deny elevation requests'"
+
+# 2.3.17.4 (L1) Ensure 'User Account Control: Detect application
+#installations and prompt for elevation' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "EnableInstallerDetection" ("1") "2.3.17.4" "L1" "Ensure 'User Account Control: Detect application installations and prompt for elevation' is set to 'Enabled'"
+
+# 2.3.17.5 (L1) Ensure 'User Account Control: Only elevate
+#UIAccess applications that are installed in secure locations' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "EnableSecureUIAPaths" ("1") "2.3.17.5" "L1" "Ensure 'User Account Control: Only elevate UIAccess applications that are installed in secure locations' is set to 'Enabled'" -empty_ok
+
+# 2.3.17.6 (L1) Ensure 'User Account Control: Run all
+#administrators in Admin Approval Mode' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "EnableLUA" ("1") "2.3.17.6" "L1" "Ensure 'User Account Control: Run all administrators in Admin Approval Mode' is set to 'Enabled'" -empty_ok
+
+# 2.3.17.7 (L1) Ensure 'User Account Control: Switch to the secure
+#desktop when prompting for elevation' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "PromptOnSecureDesktop" ("1") "2.3.17.7" "L1" "Ensure 'User Account Control: Switch to the secure desktop when prompting for elevation' is set to 'Enabled'" -empty_ok
+
+# 2.3.17.8 (L1) Ensure 'User Account Control: Virtualize file and
+#registry write failures to per-user locations' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "EnableVirtualization" ("1") "2.3.17.8" "L1" "Ensure 'User Account Control: Virtualize file and registry write failures to per-user locations' is set to 'Enabled'" -empty_ok
+
+# --------------- System services ---------------
+
 
 
 Write-Host "`nDone`nRemoving export files..."
@@ -719,6 +754,16 @@ Write-Host "`nDone`nRemoving export files..."
 #} catch {
 #
 #    Write-Host "Failed to remove secpol.cfg" -ForegroundColor Red
+#
+#}
+
+#try {
+#
+#    Remove-Item .\auditpol.txt
+#
+#} catch {
+#
+#    Write-Host "Failed to remove auditpol.txt" -ForegroundColor Red
 #
 #}
 
