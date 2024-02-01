@@ -177,6 +177,16 @@ function Get-RegistryValue([string] $key,
     }
 }
 
+function Get-AuditPolicy([string] $key,
+                         [string] $desired,
+                         [string] $id, [string] $l, [string] $text,
+                         [switch] $include=$false) {
+    $key_pattern = ".*,$key,.*"
+    $line = $auditpol | Select-String -Pattern $key_pattern -AllMatches | ForEach-Object { $_.Matches.Value }
+    $line = $line.Split(",")
+    $setting = $line[4]
+}
+
 # --------------- Password policies ---------------
 
 # 1.1.1 (L1) Ensure 'Enforce password history' is set to '24 or more password(s)'
@@ -858,6 +868,8 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfi
 
 # --------------- Audit policy ---------------
 
+# 17.1.1 (L1) Ensure 'Audit Credential Validation' is set to 'Success and Failure'
+Get-AuditPolicy "Credential Validation" "Success,Failure" "17.1.1" "L1" "Ensure 'Audit Credential Validation' is set to 'Success and Failure'"
 
 Write-Host "`nDone`nRemoving export files..."
 
