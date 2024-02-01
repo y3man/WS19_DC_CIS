@@ -743,6 +743,120 @@ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Syst
 
 # --------------- System services ---------------
 
+# 5.1 (L1) Ensure 'Print Spooler (Spooler)' is set to 'Disabled' (DC only)
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Spooler" "Start" ("4") "5.1" "L1" "Ensure 'Print Spooler (Spooler)' is set to 'Disabled'"
+
+# --------------- Firewall (domain) ---------------
+
+# 9.1.1 (L1) Ensure 'Windows Firewall: Domain: Firewall state' is set
+#to 'On (recommended)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "EnableFirewall" ("1") "9.1.1" "L1" "Ensure 'Windows Firewall: Domain: Firewall state' is set to 'On (recommended)'" -empty_ok
+
+# 9.1.2 (L1) Ensure 'Windows Firewall: Domain: Inbound
+#connections' is set to 'Block (default)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "DefaultInboundAction" ("1") "9.1.2" "L1" "Ensure 'Windows Firewall: Domain: Inbound connections' is set to 'Block (default)'" -empty_ok
+
+# 9.1.3 (L1) Ensure 'Windows Firewall: Domain: Outbound
+#connections' is set to 'Allow (default)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "DefaultOutboundAction" ("0") "9.1.3" "L1" "Ensure 'Windows Firewall: Domain: Outbound connections' is set to 'Allow (default)'" -empty_ok
+
+# 9.1.4 (L1) Ensure 'Windows Firewall: Domain: Settings: Display a
+#notification' is set to 'No'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "DisableNotifications" ("1") "9.1.4" "L1" "Ensure 'Windows Firewall: Domain: Settings: Display a notification' is set to 'No'"
+
+# 9.1.5 (L1) Ensure 'Windows Firewall: Domain: Logging: Name' is
+#set to '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogFilePath" ("%SystemRoot%\System32\logfiles\firewall\domainfw.log") "9.1.5" "L1" "Ensure 'Windows Firewall: Domain: Logging: Name' is set to '%SystemRoot%\System32\logfiles\firewall\domainfw.log'"
+
+# 9.1.6 (L1) Ensure 'Windows Firewall: Domain: Logging: Size limit
+#(KB)' is set to '16,384 KB or greater'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogFileSize" (16384..99999) "9.1.6" "L1" "Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
+
+# 9.1.7 (L1) Ensure 'Windows Firewall: Domain: Logging: Log
+#dropped packets' is set to 'Yes'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogDroppedPackets" ("1") "9.1.7" "L1" "Ensure 'Windows Firewall: Domain: Logging: Log dropped packets' is set to 'Yes'"
+
+# 9.1.8 (L1) Ensure 'Windows Firewall: Domain: Logging: Log
+#successful connections' is set to 'Yes'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogSuccessfulConnections" ("1") "9.1.8" "L1" "Ensure 'Windows Firewall: Domain: Logging: Log successful connections' is set to 'Yes'"
+
+# --------------- Firewall (private) ---------------
+
+# 9.2.1 (L1) Ensure 'Windows Firewall: Private: Firewall state' is set
+#to 'On (recommended)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "EnableFirewall" ("1") "9.2.1" "L1" "Ensure 'Windows Firewall: Private: Firewall state' is set to 'On (recommended)'" -empty_ok
+
+# 9.2.2 (L1) Ensure 'Windows Firewall: Private: Inbound
+#connections' is set to 'Block (default)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "DefaultInboundAction" ("1") "9.2.2" "L1" "Ensure 'Windows Firewall: Private: Inbound connections' is set to 'Block (default)'" -empty_ok
+
+# 9.2.3 (L1) Ensure 'Windows Firewall: Private: Outbound
+#connections' is set to 'Allow (default)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "DefaultOutboundAction" ("0") "9.2.3" "L1" "Ensure 'Windows Firewall: Private: Outbound connections' is set to 'Allow (default)'" -empty_ok
+
+# 9.2.4 (L1) Ensure 'Windows Firewall: Private: Settings: Display a
+#notification' is set to 'No'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "DisableNotifications" ("1") "9.2.4" "L1" "Ensure 'Windows Firewall: Private: Settings: Display a notification' is set to 'No'"
+
+# 9.2.5 (L1) Ensure 'Windows Firewall: Private: Logging: Name' is
+#set to '%SystemRoot%\System32\logfiles\firewall\privatefw.log'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogFilePath" ("%SystemRoot%\System32\logfiles\firewall\privatefw.log") "9.2.5" "L1" "Ensure 'Windows Firewall: Private: Logging: Name' is set to '%SystemRoot%\System32\logfiles\firewall\privatefw.log'"
+
+# 9.2.6 (L1) Ensure 'Windows Firewall: Private: Logging: Size limit
+#(KB)' is set to '16,384 KB or greater'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogFileSize" (16384..99999) "9.2.6" "L1" "Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
+
+# 9.2.7 (L1) Ensure 'Windows Firewall: Private: Logging: Log
+#dropped packets' is set to 'Yes'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogDroppedPackets" ("1") "9.2.7" "L1" "Ensure 'Windows Firewall: Private: Logging: Log dropped packets' is set to 'Yes'"
+
+# 9.2.8 (L1) Ensure 'Windows Firewall: Private: Logging: Log
+#successful connections' is set to 'Yes'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogSuccessfulConnections" ("1") "9.2.8" "L1" "Ensure 'Windows Firewall: Private: Logging: Log successful connections' is set to 'Yes'"
+
+# --------------- Firewall (public) ---------------
+
+# 9.3.1 (L1) Ensure 'Windows Firewall: Public: Firewall state' is set
+#to 'On (recommended)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "EnableFirewall" ("1") "9.3.1" "L1" "Ensure 'Windows Firewall: Public: Firewall state' is set to 'On (recommended)'" -empty_ok
+
+# 9.3.2 (L1) Ensure 'Windows Firewall: Public: Inbound connections'
+#is set to 'Block (default)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "DefaultInboundAction" ("1") "9.3.2" "L1" "Ensure 'Windows Firewall: Public: Inbound connections' is set to 'Block (default)'" -empty_ok
+
+# 9.3.3 (L1) Ensure 'Windows Firewall: Public: Outbound
+#connections' is set to 'Allow (default)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "DefaultOutboundAction" ("0") "9.3.3" "L1" "Ensure 'Windows Firewall: Public: Outbound connections' is set to 'Allow (default)'" -empty_ok
+
+# 9.3.4 (L1) Ensure 'Windows Firewall: Public: Settings: Display a
+#notification' is set to 'No'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "DisableNotifications" ("1") "9.3.4" "L1" "Ensure 'Windows Firewall: Public: Settings: Display a notification' is set to 'No'"
+
+# 9.3.5 (L1) Ensure 'Windows Firewall: Public: Settings: Apply local
+#firewall rules' is set to 'No'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "AllowLocalPolicyMerge" ("0") "9.3.5" "L1" "Ensure 'Windows Firewall: Public: Settings: Apply local firewall rules' is set to 'No'"
+
+# 9.3.6 (L1) Ensure 'Windows Firewall: Public: Settings: Apply local
+#connection security rules' is set to 'No'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "AllowLocalIPsecPolicyMerge" ("0") "9.3.6" "L1" "Ensure 'Windows Firewall: Public: Settings: Apply local connection security rules' is set to 'No'"
+
+# 9.3.7 (L1) Ensure 'Windows Firewall: Public: Logging: Name' is
+#set to '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogFilePath" ("%SystemRoot%\System32\logfiles\firewall\publicfw.log") "9.3.7" "L1" "Ensure 'Windows Firewall: Public: Logging: Name' is set to '%SystemRoot%\System32\logfiles\firewall\publicfw.log'"
+
+# 9.3.8 (L1) Ensure 'Windows Firewall: Public: Logging: Size limit
+#(KB)' is set to '16,384 KB or greater'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogFileSize" (16384..99999) "9.3.8" "L1" "Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
+
+# 9.3.9 (L1) Ensure 'Windows Firewall: Public: Logging: Log
+#dropped packets' is set to 'Yes'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogDroppedPackets" ("1") "9.3.9" "L1" "Ensure 'Windows Firewall: Public: Logging: Log dropped packets' is set to 'Yes'"
+
+# 9.3.10 (L1) Ensure 'Windows Firewall: Public: Logging: Log
+#successful connections' is set to 'Yes'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogSuccessfulConnections" ("1") "9.3.10" "L1" "Ensure 'Windows Firewall: Public: Logging: Log successful connections' is set to 'Yes'"
+
+# --------------- Audit policy ---------------
 
 
 Write-Host "`nDone`nRemoving export files..."

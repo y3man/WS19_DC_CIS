@@ -632,9 +632,9 @@ GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "D
 
 GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "DisableNotifications" "1"
 
-GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "PublicAllowLocalPolicyMerge" "0" # cannot check this rule
+GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "AllowLocalPolicyMerge" "0" # cannot check this rule
 
-GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "PublicAllowLocalIPsecPolicyMerge" "0" # cannot check this rule
+GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "AllowLocalIPsecPolicyMerge" "0" # cannot check this rule
 
 GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogFilePath" "%SystemRoot%\System32\logfiles\firewall\publicfw.log"
 
