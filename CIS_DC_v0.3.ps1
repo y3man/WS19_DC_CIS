@@ -694,6 +694,20 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "NTLMMinSe
 
 # 2.3.13.1 (L1) Ensure 'Shutdown: Allow system to be shut down
 #without having to log on' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "ShutdownWithoutLogon" ("0") "2.3.13.1" "L1" "Ensure 'Shutdown: Allow system to be shut down without having to log on' is set to 'Disabled'" -empty_ok
+
+# --------------- System objects ---------------
+
+# 2.3.15.1 (L1) Ensure 'System objects: Require case insensitivity
+#for non-Windows subsystems' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel" "ObCaseInsensitive" ("1") "2.3.15.1" "L1" "Ensure 'System objects: Require case insensitivity for non-Windows subsystems' is set to 'Enabled'" -empty_ok
+
+# 2.3.15.2 (L1) Ensure 'System objects: Strengthen default
+#permissions of internal system objects (e.g. Symbolic Links)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager" "ProtectionMode" ("1") "2.3.15.2" "L1" "Ensure 'System objects: Strengthen default permissions of internal system objects (e.g. Symbolic Links)' is set to 'Enabled'" -empty_ok
+
+# --------------- User Account Control ---------------
+
 
 
 Write-Host "`nDone`nRemoving export files..."
