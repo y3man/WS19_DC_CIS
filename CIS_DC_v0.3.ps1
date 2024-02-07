@@ -48,7 +48,7 @@ function Output([string] $text, $color="White") {
 Output "ID|L|Text|Expected setting|Current setting|Result"
 
 try {
-    #    secedit /export /cfg secpol.cfg
+    secedit /export /cfg secpol.cfg
     $secpol = Get-Content secpol.cfg
 } catch {
     Write-Host "Security policy export failed" -ForegroundColor Red
@@ -57,7 +57,7 @@ try {
 Write-Host "Security policy exported"
 
 try {
-    #     auditpol /get /category:* > auditpol.txt
+    auditpol /get /category:* > auditpol.txt
     $auditpol = Get-Content auditpol.txt
 } catch {
     Write-Host "Audit policy export failed" -ForegroundColor Red
@@ -178,13 +178,51 @@ function Get-RegistryValue([string] $key,
 }
 
 function Get-AuditPolicy([string] $key,
-                         [string] $desired,
+                         [int[]] $desired,
                          [string] $id, [string] $l, [string] $text,
                          [switch] $include=$false) {
-    $key_pattern = ".*,$key,.*"
-    $line = $auditpol | Select-String -Pattern $key_pattern -AllMatches | ForEach-Object { $_.Matches.Value }
-    $line = $line.Split(",")
-    $setting = $line[4]
+    $key_pattern = "  $key {2,}"
+    $line = $auditpol | Select-String -Pattern $key_pattern
+    $line = $line -replace "  $key {2,}", "$key,"
+    $line = $line -split ","
+    $setting = $line[1].Trim()
+
+    $success = 0
+    $failure = 0
+    Write-Host "Setting: $setting"
+
+    if ($setting -eq "Success and Failure") {
+        $success = 1
+        $failure = 1
+    } elseif ($setting -eq "Success") {
+        $success = 1
+    } elseif ($setting -eq "Failure") {
+        $failure = 1
+    }
+    $setting = ($success, $failure)
+
+    if ($include -eq $true) {
+        if ($desired[0] -eq 1 -and $success -eq 1) {
+            Output "$id|$l|$text|$desired|$setting|OK" Green
+            return
+        } else {
+            Output "$id|$l|$text|$desired|$setting|NOK" Red
+            return
+        }
+        if ($desired[1] -eq 1 -and $failure -eq 1) {
+            Output "$id|$l|$text|$desired|$setting|OK" Green
+            return
+        } else {
+            Output "$id|$l|$text|$desired|$setting|NOK" Red
+            return
+        }
+    } else {
+        if ($success -eq $desired[0] -and $failure -eq $desired[1]) {
+            Output "$id|$l|$text|$desired|$setting|OK" Green
+        } else {
+            Output "$id|$l|$text|$desired|$setting|NOK" Red
+        }
+    }
 }
 
 # --------------- Password policies ---------------
@@ -869,7 +907,21 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfi
 # --------------- Audit policy ---------------
 
 # 17.1.1 (L1) Ensure 'Audit Credential Validation' is set to 'Success and Failure'
-Get-AuditPolicy "Credential Validation" "Success,Failure" "17.1.1" "L1" "Ensure 'Audit Credential Validation' is set to 'Success and Failure'"
+Get-AuditPolicy "Credential Validation" (1,1) "17.1.1" "L1" "Ensure 'Audit Credential Validation' is set to 'Success and Failure'"
+
+# 17.1.2 (L1) Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure' (DC Only)
+Get-AuditPolicy "Kerberos Authentication Service" (1,1) "17.1.2" "L1" "Ensure 'Audit Kerberos Authentication Service' is set to 'Success and Failure'"
+
+# 17.1.3 (L1) Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure' (DC Only)
+Get-AuditPolicy "Kerberos Service Ticket Operations" (1,1) "17.1.3" "L1" "Ensure 'Audit Kerberos Service Ticket Operations' is set to 'Success and Failure'"
+
+# 17.2.1 (L1) Ensure 'Audit Application Group Management' is set to 'Success and Failure'
+Get-AuditPolicy "Application Group Management" (1,1) "17.2.1" "L1" "Ensure 'Audit Application Group Management' is set to 'Success and Failure'"
+
+# 17.2.2 (L1) Ensure 'Audit Computer Account Management' is set to include 'Success' (DC only)
+Get-AuditPolicy "Computer Account Management" (1,0) "17.2.2" "L1" "Ensure 'Audit Computer Account Management' is set to include 'Success'" -include
+
+
 
 Write-Host "`nDone`nRemoving export files..."
 
