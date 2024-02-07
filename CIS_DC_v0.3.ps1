@@ -921,6 +921,22 @@ Get-AuditPolicy "Application Group Management" (1,1) "17.2.1" "L1" "Ensure 'Audi
 # 17.2.2 (L1) Ensure 'Audit Computer Account Management' is set to include 'Success' (DC only)
 Get-AuditPolicy "Computer Account Management" (1,0) "17.2.2" "L1" "Ensure 'Audit Computer Account Management' is set to include 'Success'" -include
 
+# 17.2.3 (L1) Ensure 'Audit Distribution Group Management' is set to include 'Success' (DC only)
+Get-AuditPolicy "Distribution Group Management" (1,0) "17.2.3" "L1" "Ensure 'Audit Distribution Group Management' is set to include 'Success'" -include
+
+# 17.2.4 (L1) Ensure 'Audit Other Account Management Events' is set to include 'Success' (DC only)
+Get-AuditPolicy "Other Account Management Events" (1,0) "17.2.4" "L1" "Ensure 'Audit Other Account Management Events' is set to include 'Success'" -include
+
+# 17.2.5 (L1) Ensure 'Audit Security Group Management' is set to include 'Success'
+Get-AuditPolicy "Security Group Management" (1,0) "17.2.5" "L1" "Ensure 'Audit Security Group Management' is set to include 'Success'" -include
+
+# 17.2.6 (L1) Ensure 'Audit User Account Management' is set to 'Success and Failure'
+Get-AuditPolicy "User Account Management" (1,1) "17.2.6" "L1" "Ensure 'Audit User Account Management' is set to 'Success and Failure'"
+
+# 17.3.1 (L1) Ensure 'Audit PNP Activity' is set to include 'Success'
+Get-AuditPolicy "PNP Activity" (1,0) "17.3.1" "L1" "Ensure 'Audit PNP Activity' is set to include 'Success'" -include
+
+
 
 
 Write-Host "`nDone`nRemoving export files..."
