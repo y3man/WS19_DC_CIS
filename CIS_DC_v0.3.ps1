@@ -936,6 +936,82 @@ Get-AuditPolicy "User Account Management" (1,1) "17.2.6" "L1" "Ensure 'Audit Use
 # 17.3.1 (L1) Ensure 'Audit PNP Activity' is set to include 'Success'
 Get-AuditPolicy "PNP Activity" (1,0) "17.3.1" "L1" "Ensure 'Audit PNP Activity' is set to include 'Success'" -include
 
+# 17.3.2 (L1) Ensure 'Audit Process Creation' is set to include 'Success'
+Get-AuditPolicy "Process Creation" (1,0) "17.3.2" "L1" "Ensure 'Audit Process Creation' is set to include 'Success'" -include
+
+# 17.4.1 (L1) Ensure 'Audit Directory Service Access' is set to include 'Failure' (DC only)
+Get-AuditPolicy "Directory Service Access" (0,1) "17.4.1" "L1" "Ensure 'Audit Directory Service Access' is set to include 'Failure'" -include
+
+# 17.4.2 (L1) Ensure 'Audit Directory Service Changes' is set to include 'Success' (DC only)
+Get-AuditPolicy "Directory Service Changes" (1,0) "17.4.2" "L1" "Ensure 'Audit Directory Service Changes' is set to include 'Success'" -include
+
+# 17.5.1 (L1) Ensure 'Audit Account Lockout' is set to include 'Failure'
+Get-AuditPolicy "Account Lockout" (0,1) "17.5.1" "L1" "Ensure 'Audit Account Lockout' is set to include 'Failure'" -include
+
+# 17.5.2 (L1) Ensure 'Audit Group Membership' is set to include 'Success'
+Get-AuditPolicy "Group Membership" (1,0) "17.5.2" "L1" "Ensure 'Audit Group Membership' is set to include 'Success'" -include
+
+# 17.5.3 (L1) Ensure 'Audit Logoff' is set to include 'Success'
+Get-AuditPolicy "Logoff" (1,0) "17.5.3" "L1" "Ensure 'Audit Logoff' is set to include 'Success'" -include
+
+# 17.5.4 (L1) Ensure 'Audit Logon' is set to 'Success and Failure'
+Get-AuditPolicy "Logon" (1,1) "17.5.4" "L1" "Ensure 'Audit Logon' is set to 'Success and Failure'"
+
+# 17.5.5 (L1) Ensure 'Audit Other Logon/Logoff Events' is set to 'Success and Failure'
+Get-AuditPolicy "Other Logon/Logoff Events" (1,1) "17.5.5" "L1" "Ensure 'Audit Other Logon/Logoff Events' is set to 'Success and Failure'"
+
+# 17.5.6 (L1) Ensure 'Audit Special Logon' is set to include 'Success'
+Get-AuditPolicy "Special Logon" (1,0) "17.5.6" "L1" "Ensure 'Audit Special Logon' is set to include 'Success'" -include
+
+# 17.6.1 (L1) Ensure 'Audit Detailed File Share' is set to include 'Failure'
+Get-AuditPolicy "Detailed File Share" (0,1) "17.6.1" "L1" "Ensure 'Audit Detailed File Share' is set to include 'Failure'" -include
+
+# 17.6.2 (L1) Ensure 'Audit File Share' is set to 'Success and Failure'
+Get-AuditPolicy "File Share" (1,1) "17.6.2" "L1" "Ensure 'Audit File Share' is set to 'Success and Failure'"
+
+# 17.6.3 (L1) Ensure 'Audit Other Object Access Events' is set to 'Success and Failure'
+Get-AuditPolicy "Other Object Access Events" (1,1) "17.6.3" "L1" "Ensure 'Audit Other Object Access Events' is set to 'Success and Failure'"
+
+# 17.6.4 (L1) Ensure 'Audit Removable Storage' is set to 'Success and Failure'
+Get-AuditPolicy "Removable Storage" (1,1) "17.6.4" "L1" "Ensure 'Audit Removable Storage' is set to 'Success and Failure'"
+
+# 17.7.1 (L1) Ensure 'Audit Audit Policy Change' is set to include 'Success'
+Get-AuditPolicy "Audit Policy Change" (1,0) "17.7.1" "L1" "Ensure 'Audit Audit Policy Change' is set to include 'Success'" -include
+
+# 17.7.2 (L1) Ensure 'Audit Authentication Policy Change' is set to include 'Success'
+Get-AuditPolicy "Authentication Policy Change" (1,0) "17.7.2" "L1" "Ensure 'Audit Authentication Policy Change' is set to include 'Success'" -include
+
+# 17.7.3 (L1) Ensure 'Audit Authorization Policy Change' is set to include 'Success'
+Get-AuditPolicy "Authorization Policy Change" (1,0) "17.7.3" "L1" "Ensure 'Audit Authorization Policy Change' is set to include 'Success'" -include
+
+# 17.7.4 (L1) Ensure 'Audit MPSSVC Rule-Level Policy Change' is set to 'Success and Failure'
+Get-AuditPolicy "MPSSVC Rule-Level Policy Change" (1,1) "17.7.4" "L1" "Ensure 'Audit MPSSVC Rule-Level Policy Change' is set to 'Success and Failure'"
+
+# 17.7.5 (L1) Ensure 'Audit Other Policy Change Events' is set to include 'Failure'
+Get-AuditPolicy "Other Policy Change Events" (0,1) "17.7.5" "L1" "Ensure 'Audit Other Policy Change Events' is set to include 'Failure'" -include
+
+# 17.8.1 (L1) Ensure 'Audit Sensitive Privilege Use' is set to 'Success and Failure'
+Get-AuditPolicy "Sensitive Privilege Use" (1,1) "17.8.1" "L1" "Ensure 'Audit Sensitive Privilege Use' is set to 'Success and Failure'"
+
+# 17.9.1 (L1) Ensure 'Audit IPsec Driver' is set to 'Success and Failure'
+Get-AuditPolicy "IPsec Driver" (1,1) "17.9.1" "L1" "Ensure 'Audit IPsec Driver' is set to 'Success and Failure'"
+
+# 17.9.2 (L1) Ensure 'Audit Other System Events' is set to 'Success and Failure'
+Get-AuditPolicy "Other System Events" (1,1) "17.9.2" "L1" "Ensure 'Audit Other System Events' is set to 'Success and Failure'"
+
+# 17.9.3 (L1) Ensure 'Audit Security State Change' is set to include 'Success'
+Get-AuditPolicy "Security State Change" (1,0) "17.9.3" "L1" "Ensure 'Audit Security State Change' is set to include 'Success'" -include
+
+# 17.9.4 (L1) Ensure 'Audit Security System Extension' is set to include 'Success'
+Get-AuditPolicy "Security System Extension" (1,0) "17.9.4" "L1" "Ensure 'Audit Security System Extension' is set to include 'Success'" -include
+
+# 17.9.5 (L1) Ensure 'Audit System Integrity' is set to 'Success and Failure'
+Get-AuditPolicy "System Integrity" (1,1) "17.9.5" "L1" "Ensure 'Audit System Integrity' is set to 'Success and Failure'"
+
+# --------------- Administrative templates ---------------
+
+# ------------------- Personalization -------------------
+
 
 
 
