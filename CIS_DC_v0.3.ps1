@@ -1114,6 +1114,28 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "EnableFont
 
 # --------------- LanMan workstation ---------------
 
+# 18.6.8.1 (L1) Ensure 'Enable insecure guest logons' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LanmanWorkstation" "AllowInsecureGuestAuth" ("0") "18.6.8.1" "L1" "Ensure 'Enable insecure guest logons' is set to 'Disabled'"
+
+# --------------- Link-Layer Topology Discovery ---------------
+
+# 18.6.9.1 (L2) Ensure 'Turn on Mapper I/O (LLTDIO) driver' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "AllowLLTDIOOnDomain" ("0") "18.6.9.1" "L2" "Ensure 'Turn on Mapper I/O (LLTDIO) driver' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "AllowLLTDIOOnPublicNet" ("0") "18.6.9.1" "L2" "Ensure 'Turn on Mapper I/O (LLTDIO) driver' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "EnableLLTDIO" ("0") "18.6.9.1" "L2" "Ensure 'Turn on Mapper I/O (LLTDIO) driver' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "ProhibitLLTDIOOnPrivateNet" ("0") "18.6.9.1" "L2" "Ensure 'Turn on Mapper I/O (LLTDIO) driver' is set to 'Disabled'" -empty_ok
+
+# 18.6.9.2 (L2) Ensure 'Turn on Responder (RSPNDR) driver' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "AllowRspndrOnDomain" ("0") "18.6.9.2" "L2" "Ensure 'Turn on Responder (RSPNDR) driver' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "AllowRspndrOnPublicNet" ("0") "18.6.9.2" "L2" "Ensure 'Turn on Responder (RSPNDR) driver' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "EnableRspndr" ("0") "18.6.9.2" "L2" "Ensure 'Turn on Responder (RSPNDR) driver' is set to 'Disabled'" -empty_ok
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "ProhibitRspndrOnPrivateNet" ("0") "18.6.9.2" "L2" "Ensure 'Turn on Responder (RSPNDR) driver' is set to 'Disabled'" -empty_ok
+
+# --------------- Peer Name Resolution Protocol ---------------
+
+
+
+
 Write-Host "`nDone`nRemoving export files..."
 
 #try {
