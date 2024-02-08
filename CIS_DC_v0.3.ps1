@@ -1133,7 +1133,32 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "ProhibitRspn
 
 # --------------- Peer Name Resolution Protocol ---------------
 
+# 18.6.10.2 (L2) Ensure 'Turn off Microsoft Peer-to-Peer Networking
+#Services' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Peernet" "Disabled" ("1") "18.6.10.2" "L2" "Ensure 'Turn off Microsoft Peer-to-Peer Networking Services' is set to 'Enabled'"
 
+# --------------- Windows Defender Firewall ---------------
+
+# 18.6.11.2 (L1) Ensure 'Prohibit installation and configuration of
+#Network Bridge on your DNS domain network' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" "NC_AllowNetBridge_NLA" ("0") "18.6.11.2" "L1" "Ensure 'Prohibit installation and configuration of Network Bridge on your DNS domain network' is set to 'Enabled'"
+
+# 18.6.11.3 (L1) Ensure 'Prohibit use of Internet Connection
+#Sharing on your DNS domain network' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" "NC_ShowSharedAccessUI" ("0") "18.6.11.3" "L1" "Ensure 'Prohibit use of Internet Connection Sharing on your DNS domain network' is set to 'Enabled'"
+
+# 18.6.11.4 (L1) Ensure 'Require domain users to elevate when
+#setting a network's location' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" "NC_StdDomainUserSetLocation" ("1") "18.6.11.4" "L1" "Ensure 'Require domain users to elevate when setting a network's location' is set to 'Enabled'"
+
+# --------------- Network Provider ---------------
+
+# 18.6.14.1 (L1) Ensure 'Hardened UNC Paths' is set to 'Enabled,
+#with "Require Mutual Authentication" and "Require Integrity" set
+#for all NETLOGON and SYSVOL shares'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths" "\\*\NETLOGON" ("RequireMutualAuthentication=1, RequireIntegrity=1") "18.6.14.1" "L1" "Ensure 'Hardened UNC Paths' is set to 'Enabled, with 'Require Mutual Authentication' and 'Require Integrity' set for all NETLOGON and SYSVOL shares'"
+
+#
 
 
 Write-Host "`nDone`nRemoving export files..."
