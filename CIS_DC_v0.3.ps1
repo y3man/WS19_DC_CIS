@@ -1012,8 +1012,107 @@ Get-AuditPolicy "System Integrity" (1,1) "17.9.5" "L1" "Ensure 'Audit System Int
 
 # ------------------- Personalization -------------------
 
+# 18.1.1.1 (L1) Ensure 'Prevent enabling lock screen camera' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" "NoLockScreenCamera" ("1") "18.1.1.1" "L1" "Ensure 'Prevent enabling lock screen camera' is set to 'Enabled'"
 
+# 18.1.1.2 (L1) Ensure 'Prevent enabling lock screen slide show' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" "NoLockScreenSlideshow" ("1") "18.1.1.2" "L1" "Ensure 'Prevent enabling lock screen slide show' is set to 'Enabled'"
 
+# 18.1.2.2 (L1) Ensure 'Allow users to enable online speech recognition services' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" "AllowInputPersonalization" ("1") "18.1.2.2" "L1" "Ensure 'Allow users to enable online speech recognition services' is set to 'Disabled'"
+
+# 18.1.3 (L2) Ensure 'Allow Online Tips' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" "AllowOnlineTips" ("1") "18.1.3" "L2" "Ensure 'Allow Online Tips' is set to 'Disabled'"
+
+# ------------------- MS Security Guide -------------------
+
+# 18.4.2 (L1) Ensure 'Configure RPC packet level privacy setting for
+#incoming connections' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Print" "RpcAuthnLevelPrivacyEnabled" ("1") "18.4.2" "L1" "Ensure 'Configure RPC packet level privacy setting for incoming connections' is set to 'Enabled'" -empty_ok
+
+# 18.4.3 (L1) Ensure 'Configure SMB v1 client driver' is set to 'Enabled: Disable driver
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\mrxsmb10" "Start" ("0") "18.4.3" "L1" "Ensure 'Configure SMB v1 client driver' is set to 'Enabled: Disable driver'" -empty_ok
+
+# 18.4.4 (L1) Ensure 'Configure SMB v1 server' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanServer\Parameters" "SMB1" ("0") "18.4.4" "L1" "Ensure 'Configure SMB v1 server' is set to 'Disabled'" -empty_ok
+
+# 18.4.5 (L1) Ensure 'Enable Structured Exception Handling Overwrite Protection (SEHOP)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\kernel" "DisableExceptionChainValidation" ("0") "18.4.5" "L1" "Ensure 'Enable Structured Exception Handling Overwrite Protection (SEHOP)' is set to 'Enabled'"
+
+# 18.4.6 (L1) Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters" "NodeType" ("1") "18.4.6" "L1" "Ensure 'NetBT NodeType configuration' is set to 'Enabled: P-node'"
+
+# 18.4.7 (L1) Ensure 'WDigest Authentication' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest" "UseLogonCredential" ("0") "18.4.7" "L1" "Ensure 'WDigest Authentication' is set to 'Disabled'" -empty_ok
+
+# 18.5.1 (L1) Ensure 'MSS: (AutoAdminLogon) Enable Automatic
+#Logon (not recommended)' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "AutoAdminLogon" ("0") "18.5.1" "L1" "Ensure 'MSS: (AutoAdminLogon) Enable Automatic Logon (not recommended)' is set to 'Disabled'" -empty_ok
+
+# 18.5.2 (L1) Ensure 'MSS: (DisableIPSourceRouting IPv6) IP
+#source routing protection level (protects against packet spoofing)'
+#is set to 'Enabled: Highest protection, source routing is completely disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" "DisableIPSourceRouting" ("2") "18.5.2" "L1" "Ensure 'MSS: (DisableIPSourceRouting IPv6) IP source routing protection level (protects against packet spoofing)' is set to 'Enabled: Highest protection, source routing is completely disabled'"
+
+# 18.5.3 (L1) Ensure 'MSS: (DisableIPSourceRouting) IP source
+#routing protection level (protects against packet spoofing)' is set
+#to 'Enabled: Highest protection, source routing is completely disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "DisableIPSourceRouting" ("2") "18.5.3" "L1" "Ensure 'MSS: (DisableIPSourceRouting) IP source routing protection level (protects against packet spoofing)' is set to 'Enabled: Highest protection, source routing is completely disabled'"
+
+# 18.5.4 (L1) Ensure 'MSS: (EnableICMPRedirect) Allow ICMP
+#redirects to override OSPF generated routes' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "EnableICMPRedirect" ("0") "18.5.4" "L1" "Ensure 'MSS: (EnableICMPRedirect) Allow ICMP redirects to override OSPF generated routes' is set to 'Disabled'"
+
+# 18.5.5 (L2) Ensure 'MSS: (KeepAliveTime) How often keep-alive
+#packets are sent in milliseconds' is set to 'Enabled: 300,000 or 5 minutes (recommended)'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "KeepAliveTime" ("300000") "18.5.5" "L2" "Ensure 'MSS: (KeepAliveTime) How often keep-alive packets are sent in milliseconds' is set to 'Enabled: 300,000 or 5 minutes (recommended)'"
+
+# 18.5.6 (L1) Ensure 'MSS: (NoNameReleaseOnDemand) Allow the
+#computer to ignore NetBIOS name release requests except from
+#WINS servers' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters" "NoNameReleaseOnDemand" ("1") "18.5.6" "L1" "Ensure 'MSS: (NoNameReleaseOnDemand) Allow the computer to ignore NetBIOS name release requests except from WINS servers' is set to 'Enabled'" -empty_ok
+
+# 18.5.7 (L2) Ensure 'MSS: (PerformRouterDiscovery) Allow IRDP
+#to detect and configure Default Gateway addresses (could lead to DoS)' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "PerformRouterDiscovery" ("0") "18.5.7" "L2" "Ensure 'MSS: (PerformRouterDiscovery) Allow IRDP to detect and configure Default Gateway addresses (could lead to DoS)' is set to 'Disabled'"
+
+# 18.5.8 (L1) Ensure 'MSS: (SafeDllSearchMode) Enable Safe DLL
+#search mode (recommended)' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager" "SafeDllSearchMode" ("1") "18.5.8" "L1" "Ensure 'MSS: (SafeDllSearchMode) Enable Safe DLL search mode (recommended)' is set to 'Enabled'" -empty_ok
+
+# 18.5.9 (L1) Ensure 'MSS: (ScreenSaverGracePeriod) The time in
+#seconds before the screen saver grace period expires (0
+#recommended)' is set to 'Enabled: 5 or fewer seconds'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "ScreenSaverGracePeriod" (0..5) "18.5.9" "L1" "Ensure 'MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires (0 recommended)' is set to 'Enabled: 5 or fewer seconds'"
+
+# 18.5.10 (L2) Ensure 'MSS: (TcpMaxDataRetransmissions IPv6)
+#How many times unacknowledged data is retransmitted' is set to 'Enabled: 3'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" "TcpMaxDataRetransmissions" ("3") "18.5.10" "L2" "Ensure 'MSS: (TcpMaxDataRetransmissions IPv6) How many times unacknowledged data is retransmitted' is set to 'Enabled: 3'"
+
+# 18.5.11 (L2) Ensure 'MSS: (TcpMaxDataRetransmissions) How
+#many times unacknowledged data is retransmitted' is set to 'Enabled: 3'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "TcpMaxDataRetransmissions" ("3") "18.5.11" "L2" "Ensure 'MSS: (TcpMaxDataRetransmissions) How many times unacknowledged data is retransmitted' is set to 'Enabled: 3'"
+
+# 18.5.12 (L1) Ensure 'MSS: (WarningLevel) Percentage threshold
+#for the security event log at which the system will generate a
+#warning' is set to 'Enabled: 90% or less'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Eventlog\Security" "WarningLevel" (0..90) "18.5.12" "L1" "Ensure 'MSS: (WarningLevel) Percentage threshold for the security event log at which the system will generate a warning' is set to 'Enabled: 90% or less'"
+
+# --------------- DNS client ---------------
+
+# 18.6.4.1 (L1) Ensure 'Configure NetBIOS settings' is set to
+#'Enabled: Disable NetBIOS name resolution on public networks'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" "EnableNetbios" ("1") "18.6.4.1" "L1" "Ensure 'Configure NetBIOS settings' is set to 'Enabled: Disable NetBIOS name resolution on public networks'" -empty_ok
+
+# 18.6.4.2 (L1) Ensure 'Turn off multicast name resolution' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" "EnableMulticast" ("0") "18.6.4.2" "L1" "Ensure 'Turn off multicast name resolution' is set to 'Enabled'"
+
+# --------------- Fonts ---------------
+
+# 18.6.5.1 (L2) Ensure 'Enable Font Providers' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "EnableFontProviders" ("0") "18.6.5.1" "L2" "Ensure 'Enable Font Providers' is set to 'Disabled'"
+
+# --------------- LanMan workstation ---------------
 
 Write-Host "`nDone`nRemoving export files..."
 
