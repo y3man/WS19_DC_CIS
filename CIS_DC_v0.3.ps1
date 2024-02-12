@@ -1276,6 +1276,34 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "Confi
 
 # --------------- Device installation ---------------
 
+# 18.9.7.2 (L1) Ensure 'Prevent device metadata retrieval from the
+#Internet' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" "PreventDeviceMetadataFromNetwork" ("1") "18.9.7.2" "L1" "Ensure 'Prevent device metadata retrieval from the Internet' is set to 'Enabled'"
+
+# --------------- Early Launch Antimalware ---------------
+
+# 18.9.13.1 (L1) Ensure 'Boot-Start Driver Initialization Policy' is set
+#to 'Enabled: Good, unknown and bad but critical'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Policies\EarlyLaunch" "DriverLoadPolicy" ("3") "18.9.13.1" "L1" "Ensure 'Boot-Start Driver Initialization Policy' is set to 'Enabled: Good, unknown and bad but critical'"
+
+# --------------- Group policy ---------------
+
+# 18.9.19.2 (L1) Ensure 'Configure registry policy processing: Do
+#not apply during periodic background processing' is set to 'Enabled: FALSE'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}" "NoBackgroundPolicy" ("0") "18.9.19.2" "L1" "Ensure 'Configure registry policy processing: Do not apply during periodic background processing' is set to 'Enabled: FALSE'"
+
+# 18.9.19.3 (L1) Ensure 'Configure registry policy processing:
+#Process even if the Group Policy objects have not changed' is set to 'Enabled: TRUE'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Group Policy\{35378EAC-683F-11D2-A89A-00C04FBBCFA2}" "NoGPOListChanges" ("0") "18.9.19.3" "L1" "Ensure 'Configure registry policy processing: Process even if the Group Policy objects have not changed' is set to 'Enabled: TRUE'"
+
+# 18.9.19.4 (L1) Ensure 'Continue experiences on this device' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "EnableCdp" ("0") "18.9.19.4" "L1" "Ensure 'Continue experiences on this device' is set to 'Disabled'"
+
+# 18.9.19.5 (L1) Ensure 'Turn off background refresh of Group Policy' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DisableBkGndGroupPolicy" ("0") "18.9.19.5" "L1" "Ensure 'Turn off background refresh of Group Policy' is set to 'Disabled'"
+
+# --------------- Internet communication settings ---------------
+
 Write-Host "`nDone`nRemoving export files..."
 
 #try {
