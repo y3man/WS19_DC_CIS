@@ -1238,7 +1238,43 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\Push
 
 # --------------- System ---------------
 
+# 18.9.3.1 (L1) Ensure 'Include command line in process creation
+#events' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit" "ProcessCreationIncludeCmdLine_Enabled" ("1") "18.9.3.1" "L1" "Ensure 'Include command line in process creation events' is set to 'Enabled'"
 
+# 18.9.4.1 (L1) Ensure 'Encryption Oracle Remediation' is set to
+#'Enabled: Force Updated Clients'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters" "AllowEncryptionOracle" ("0") "18.9.4.1" "L1" "Ensure 'Encryption Oracle Remediation' is set to 'Enabled: Force Updated Clients'"
+
+# 18.9.4.2 (L1) Ensure 'Remote host allows delegation of non-
+#exportable credentials' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation" "AllowProtectedCreds" ("1") "18.9.4.2" "L1" "Ensure 'Remote host allows delegation of non-exportable credentials' is set to 'Enabled'"
+
+# 18.9.5.1 (NG) Ensure 'Turn On Virtualization Based Security' is
+#set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "EnableVirtualizationBasedSecurity" ("1") "18.9.5.1" "NG" "Ensure 'Turn On Virtualization Based Security' is set to 'Enabled'"
+
+# 18.9.5.2 (NG) Ensure 'Turn On Virtualization Based Security:
+#Select Platform Security Level' is set to 'Secure Boot' or higher
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "RequirePlatformSecurityFeatures" ("3") "18.9.5.2" "NG" "Ensure 'Turn On Virtualization Based Security: Select Platform Security Level' is set to 'Secure Boot' or higher"
+
+# 18.9.5.3 (NG) Ensure 'Turn On Virtualization Based Security:
+#Virtualization Based Protection of Code Integrity' is set to 'Enabled with UEFI lock'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "HypervisorEnforcedCodeIntegrity" ("1") "18.9.5.3" "NG" "Ensure 'Turn On Virtualization Based Security: Virtualization Based Protection of Code Integrity' is set to 'Enabled with UEFI lock'"
+
+# 18.9.5.4 (NG) Ensure 'Turn On Virtualization Based Security:
+#Require UEFI Memory Attributes Table' is set to 'True (checked)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "HVCIMATRequired" ("1") "18.9.5.4" "NG" "Ensure 'Turn On Virtualization Based Security: Require UEFI Memory Attributes Table' is set to 'True (checked)'"
+
+# 18.9.5.6 (NG) Ensure 'Turn On Virtualization Based Security:
+#Credential Guard Configuration' is set to 'Disabled' (DC Only)
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "LsaCfgFlags" ("0") "18.9.5.6" "NG" "Ensure 'Turn On Virtualization Based Security: Credential Guard Configuration' is set to 'Disabled' (DC Only)" -empty_ok
+
+# 18.9.5.7 (NG) Ensure 'Turn On Virtualization Based Security:
+#Secure Launch Configuration' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "ConfigureSystemGuardLaunch" ("1") "18.9.5.7" "NG" "Ensure 'Turn On Virtualization Based Security: Secure Launch Configuration' is set to 'Enabled'"
+
+# --------------- Device installation ---------------
 
 Write-Host "`nDone`nRemoving export files..."
 
