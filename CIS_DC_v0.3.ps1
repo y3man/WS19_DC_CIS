@@ -348,10 +348,6 @@ Get-RightAssignment "SeTrustedCredManAccessPrivilege" ($SID_NOONE) "2.2.1" "L1" 
 # to 'Administrators, Authenticated Users, ENTERPRISE DOMAIN CONTROLLERS' (DC only)
 Get-RightAssignment "SeNetworkLogonRight" ($SID_ADMINISTRATORS, $SID_AUTHENTICATED_USERS, $SID_ENTERPRISE_DOMAIN_CONTROLLERS) "2.2.2" "L1" "Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users, ENTERPRISE DOMAIN CONTROLLERS'"
 
-# 2.2.3 (L1) Ensure 'Access this computer from the network' is set
-# to 'Administrators, Authenticated Users' (MS only)
-# Get-RightAssignment "SeNetworkLogonRight" ($SID_ADMINISTRATORS, $SID_AUTHENTICATED_USERS) "2.2.3" "L1" "Ensure 'Access this computer from the network' is set to 'Administrators, Authenticated Users'"
-
 # 2.2.4 (L1) Ensure 'Act as part of the operating system' is set to 'No One'
 Get-RightAssignment "SeTcbPrivilege" ($SID_NOONE) "2.2.4" "L1" "Ensure 'Act as part of the operating system' is set to 'No One'" -empty_ok
 
@@ -405,10 +401,6 @@ Get-RightAssignment "SeDebugPrivilege" ($SID_ADMINISTRATORS) "2.2.19" "L1" "Ensu
 # 2.2.20 (L1) Ensure 'Deny access to this computer from the network' to include 'Guests' (DC only)
 Get-RightAssignment "SeDenyNetworkLogonRight" ($SID_GUESTS) "2.2.20" "L1" "Ensure 'Deny access to this computer from the network' to include 'Guests'" -include
 
-# 2.2.21 (L1) Ensure 'Deny access to this computer from the
-# network' to include 'Guests, Local account and member of Administrators group' (MS only)
-# Get-RightAssignment "SeDenyNetworkLogonRight" ($SID_GUESTS, $SID_LOCAL_ACCOUNT) "2.2.21" "L1" "Ensure 'Deny access to this computer from the network' to include 'Guests, Local account and member of Administrators group'" -include
-
 # 2.2.22 (L1) Ensure 'Deny log on as a batch job' to include 'Guests'
 Get-RightAssignment "SeDenyBatchLogonRight" ($SID_GUESTS) "2.2.22" "L1" "Ensure 'Deny log on as a batch job' to include 'Guests'" -include
 
@@ -421,14 +413,8 @@ Get-RightAssignment "SeDenyInteractiveLogonRight" ($SID_GUESTS) "2.2.24" "L1" "E
 # 2.2.25 (L1) Ensure 'Deny log on through Remote Desktop Services' to include 'Guests' (DC only)
 Get-RightAssignment "SeDenyRemoteInteractiveLogonRight" ($SID_GUESTS) "2.2.25" "L1" "Ensure 'Deny log on through Remote Desktop Services' to include 'Guests'" -include
 
-# 2.2.26 (L1) Ensure 'Deny log on through Remote Desktop Services' is set to 'Guests, Local account' (MS only)
-#Get-RightAssignment "SeDenyRemoteInteractiveLogonRight" ($SID_GUESTS, $SID_LOCAL_ACCOUNT) "2.2.26" "L1" "Ensure 'Deny log on through Remote Desktop Services' is set to 'Guests, Local account'"
-
 # 2.2.27 (L1) Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'Administrators' (DC only)
 Get-RightAssignment "SeEnableDelegationPrivilege" ($SID_ADMINISTRATORS) "2.2.27" "L1" "Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'Administrators'"
-
-# 2.2.28 (L1) Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'No One' (MS only)
-#Get-RightAssignment "SeEnableDelegationPrivilege" ($SID_NOONE) "2.2.28" "L1" "Ensure 'Enable computer and user accounts to be trusted for delegation' is set to 'No One'" -empty_ok
 
 # 2.2.29 (L1) Ensure 'Force shutdown from a remote system' is set to 'Administrators'
 Get-RightAssignment "SeRemoteShutdownPrivilege" ($SID_ADMINISTRATORS) "2.2.29" "L1" "Ensure 'Force shutdown from a remote system' is set to 'Administrators'"
@@ -439,10 +425,6 @@ Get-RightAssignment "SeAuditPrivilege" ($SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE
 # 2.2.31 (L1) Ensure 'Impersonate a client after authentication' is
 #set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE' (DC only)
 Get-RightAssignment "SeImpersonatePrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE, $SID_SERVICE) "2.2.31" "L1" "Ensure 'Impersonate a client after authentication' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE'"
-
-# 2.2.32 (L1) Ensure 'Impersonate a client after authentication' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE,
-#SERVICE' and (when the Web Server (IIS) Role with Web Services Role Service is installed) 'IIS_IUSRS' (MS only)
-#Get-RightAssignment "SeImpersonatePrivilege" ($SID_ADMINISTRATORS, $SID_LOCAL_SERVICE, $SID_NETWORK_SERVICE, $SID_SERVICE) "2.2.31" "L1" "Ensure 'Impersonate a client after authentication' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE'"
 
 # 2.2.33 (L1) Ensure 'Increase scheduling priority' is set to
 #'Administrators, Window Manager\Window Manager Group'
@@ -460,9 +442,6 @@ Get-RightAssignment "SeBatchLogonRight" ($SID_ADMINISTRATORS) "2.2.36" "L2" "Ens
 # 2.2.37 (L1) Ensure 'Manage auditing and security log' is set to
 #'Administrators' and (when Exchange is running in the environment) 'Exchange Servers' (DC only)
 Get-RightAssignment "SeSecurityPrivilege" ($SID_ADMINISTRATORS) "2.2.37" "L1" "Ensure 'Manage auditing and security log' is set to 'Administrators' (and possibly Exchange Servers)"
-
-# 2.2.38 (L1) Ensure 'Manage auditing and security log' is set to 'Administrators' (MS only)
-#Get-RightAssignment "SeSecurityPrivilege" ($SID_ADMINISTRATORS) "2.2.38" "L1" "Ensure 'Manage auditing and security log' is set to 'Administrators'"
 
 # 2.2.39 (L1) Ensure 'Modify an object label' is set to 'No One'
 Get-RightAssignment "SeRelabelPrivilege" ($SID_NOONE) "2.2.39" "L1" "Ensure 'Modify an object label' is set to 'No One'" -empty_ok
