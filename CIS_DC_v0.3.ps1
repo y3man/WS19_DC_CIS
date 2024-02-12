@@ -1232,6 +1232,12 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAn
 
 # --------------- Start menu and taskbar ---------------
 
+# 18.8.1.1 (L2) Ensure 'Turn off notifications network usage' is set
+#to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" "NoCloudApplicationNotification" ("1") "18.8.1.1" "L2" "Ensure 'Turn off notifications network usage' is set to 'Enabled'"
+
+# --------------- System ---------------
+
 
 
 Write-Host "`nDone`nRemoving export files..."
