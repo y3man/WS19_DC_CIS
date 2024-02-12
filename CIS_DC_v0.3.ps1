@@ -1158,8 +1158,30 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections
 #for all NETLOGON and SYSVOL shares'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths" "\\*\NETLOGON" ("RequireMutualAuthentication=1, RequireIntegrity=1") "18.6.14.1" "L1" "Ensure 'Hardened UNC Paths' is set to 'Enabled, with 'Require Mutual Authentication' and 'Require Integrity' set for all NETLOGON and SYSVOL shares'"
 
-#
+# --------------- TCP/IP settings ---------------
 
+# 18.6.19.2.1 (L2) Disable IPv6 (Ensure TCPIP6 Parameter
+#'DisabledComponents' is set to '0xff (255)')
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\TCPIP6\Parameters" "DisabledComponents" ("255") "18.6.19.2.1" "L2" "Disable IPv6 (Ensure TCPIP6 Parameter 'DisabledComponents' is set to '0xff (255)'"
+
+# 18.6.20.1 (L2) Ensure 'Configuration of wireless settings using
+#Windows Connect Now' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "EnableRegistrars" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableUPnPRegistrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableInBand802DOT11Registrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableFlashConfigRegistrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableWPDRegistrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
+
+# 18.6.20.2 (L2) Ensure 'Prohibit access of the Windows Connect
+#Now wizards' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\UI" "DisableWcnUi" ("1") "18.6.20.2" "L2" "Ensure 'Prohibit access of the Windows Connect Now wizards' is set to 'Enabled'"
+
+# 18.6.21.1 (L1) Ensure 'Minimize the number of simultaneous
+#connections to the Internet or a Windows Domain' is set to
+#'Enabled: 3 = Prevent Wi-Fi when on Ethernet'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy" "fMinimizeConnections" ("3") "18.6.21.1" "L1" "Ensure 'Minimize the number of simultaneous connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'"
+
+# --------------- Printers ---------------
 
 Write-Host "`nDone`nRemoving export files..."
 
