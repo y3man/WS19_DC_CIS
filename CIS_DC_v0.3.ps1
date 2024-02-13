@@ -1335,26 +1335,67 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting" "D
 
 # --------------- Kerberos ---------------
 
+# 18.9.23.1 (L2) Ensure 'Support device authentication using
+#certificate' is set to 'Enabled: Automatic'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters" "DevicePKInitBehavior" ("1") "18.9.23.1" "L2" "Ensure 'Support device authentication using certificate' is set to 'Enabled: Automatic'"
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters" "DevicePKInitEnabled" ("1") "18.9.23.1" "L2" "Ensure 'Support device authentication using certificate' is set to 'Enabled: Automatic'"
+
+# --------------- Kernel DMA protection ---------------
+
+# 18.9.24.1 (L1) Ensure 'Enumeration policy for external devices
+#incompatible with Kernel DMA Protection' is set to 'Enabled: Block All'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protection" "DeviceEnumerationPolicy" ("1") "18.9.24.1" "L1" "Ensure 'Enumeration policy for external devices incompatible with Kernel DMA Protection' is set to 'Enabled: Block All'"
+
+# --------------- Local Security Authority ---------------
+
+# 18.9.25.1 (NG) Ensure 'Configures LSASS to run as a protected
+#process' is set to 'Enabled: Enabled with UEFI Lock'
+Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "RunAsPPL" ("1") "18.9.25.1" "NG" "Ensure 'Configures LSASS to run as a protected process' is set to 'Enabled: Enabled with UEFI Lock'"
+
+# --------------- Locale Services ---------------
+
+# 18.9.26.1 (L2) Ensure 'Disallow copying of user input methods to
+#the system account for sign-in' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Control Panel\International" "BlockUserInputMethodsForSignIn" ("1") "18.9.26.1" "L2" "Ensure 'Disallow copying of user input methods to the system account for sign-in' is set to 'Enabled'"
+
+# --------------- Logon ---------------
+
+# 18.9.27.1 (L1) Ensure 'Block user from showing account details
+#on sign-in' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "BlockUserFromShowingAccountDetailsOnSignin" ("1") "18.9.27.1" "L1" "Ensure 'Block user from showing account details on sign-in' is set to 'Enabled'"
+
+# 18.9.27.2 (L1) Ensure 'Do not display network selection UI' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DontDisplayNetworkSelectionUI" ("1") "18.9.27.2" "L1" "Ensure 'Do not display network selection UI' is set to 'Enabled'"
+
+# 18.9.27.3 (L1) Ensure 'Do not enumerate connected users on
+#domain-joined computers' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DontEnumerateConnectedUsers" ("1") "18.9.27.3" "L1" "Ensure 'Do not enumerate connected users on domain-joined computers' is set to 'Enabled'"
+
+# 18.9.27.5 (L1) Ensure 'Turn off app notifications on the lock
+#screen' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DisableLockScreenAppNotifications" ("1") "18.9.27.5" "L1" "Ensure 'Turn off app notifications on the lock screen' is set to 'Enabled'"
+
+# 18.9.27.6 (L1) Ensure 'Turn off picture password sign-in' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "BlockDomainPicturePassword" ("1") "18.9.27.6" "L1" "Ensure 'Turn off picture password sign-in' is set to 'Enabled'"
+
+# 18.9.27.7 (L1) Ensure 'Turn on convenience PIN sign-in' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "AllowDomainPINLogon" ("0") "18.9.27.7" "L1" "Ensure 'Turn on convenience PIN sign-in' is set to 'Disabled'" -empty_ok
+
+# --------------- OS Policies ---------------
+
+
 Write-Host "`nDone`nRemoving export files..."
 
 #try {
-#
 #    Remove-Item .\secpol.cfg
-#
 #} catch {
-#
 #    Write-Host "Failed to remove secpol.cfg" -ForegroundColor Red
-#
 #}
 
 #try {
-#
 #    Remove-Item .\auditpol.txt
-#
 #} catch {
-#
 #    Write-Host "Failed to remove auditpol.txt" -ForegroundColor Red
-#
 #}
 
 Read-Host "Press enter to exit..."
