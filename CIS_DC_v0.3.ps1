@@ -1283,6 +1283,58 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DisableBkG
 
 # --------------- Internet communication settings ---------------
 
+# 18.9.20.1.1 (L1) Ensure 'Turn off downloading of print drivers over
+#HTTP' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "DisableWebPnPDownload" ("1") "18.9.20.1.1" "L1" "Ensure 'Turn off downloading of print drivers over HTTP' is set to 'Enabled'"
+
+# 18.9.20.1.2 (L2) Ensure 'Turn off handwriting personalization data
+#sharing' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC" "PreventHandwritingDataSharing" ("1") "18.9.20.1.2" "L2" "Ensure 'Turn off handwriting personalization data sharing' is set to 'Enabled'"
+
+# 18.9.20.1.3 (L2) Ensure 'Turn off handwriting recognition error
+#reporting' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC" "PreventHandwritingErrorReports" ("1") "18.9.20.1.3" "L2" "Ensure 'Turn off handwriting recognition error reporting' is set to 'Enabled'"
+
+# 18.9.20.1.4 (L2) Ensure 'Turn off Internet Connection Wizard if
+#URL connection is referring to Microsoft.com' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Internet Connection Wizard" "ExitOnMSICW" ("1") "18.9.20.1.4" "L2" "Ensure 'Turn off Internet Connection Wizard if URL connection is referring to Microsoft.com' is set to 'Enabled'"
+
+# 18.9.20.1.5 (L1) Ensure 'Turn off Internet download for Web
+#publishing and online ordering wizards' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Internet Connection Wizard" "NoWebServices" ("1") "18.9.20.1.5" "L1" "Ensure 'Turn off Internet download for Web publishing and online ordering wizards' is set to 'Enabled'"
+
+# 18.9.20.1.6 (L2) Ensure 'Turn off printing over HTTP' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "DisableHTTPPrinting" ("1") "18.9.20.1.6" "L2" "Ensure 'Turn off printing over HTTP' is set to 'Enabled'"
+
+# 18.9.20.1.7 (L2) Ensure 'Turn off Registration if URL connection is
+#referring to Microsoft.com' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Internet Connection Wizard" "NoRegistration" ("1") "18.9.20.1.7" "L2" "Ensure 'Turn off Registration if URL connection is referring to Microsoft.com' is set to 'Enabled'"
+
+# 18.9.20.1.8 (L2) Ensure 'Turn off Search Companion content file
+#updates' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\SearchCompanion" "DisableContentFileUpdates" ("1") "18.9.20.8" "L2" "Ensure 'Turn off Search Companion content file updates' is set to 'Enabled'"
+
+# 18.9.20.1.9 (L2) Ensure 'Turn off the "Order Prints" picture task' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" "NoOnlinePrintsWizard" ("1") "18.9.20.9" "L2" "Ensure 'Turn off the 'Order Prints' picture task' is set to 'Enabled'"
+
+# 18.9.20.1.10 (L2) Ensure 'Turn off the "Publish to Web" task for
+#files and folders' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" "NoPublishingWizard" ("1") "18.9.20.10" "L2" "Ensure 'Turn off the 'Publish to Web' task for files and folders' is set to 'Enabled'"
+
+# 18.9.20.1.11 (L2) Ensure 'Turn off the Windows Messenger
+#Customer Experience Improvement Program' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Messenger\Client" "CEIP" ("2") "18.9.20.1.11" "L2" "Ensure 'Turn off the Windows Messenger Customer Experience Improvement Program' is set to 'Enabled'"
+
+# 18.9.20.1.12 (L2) Ensure 'Turn off Windows Customer Experience
+#Improvement Program' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\SQMClient\Windows" "CEIPEnable" ("0") "18.9.20.1.12" "L2" "Ensure 'Turn off Windows Customer Experience Improvement Program' is set to 'Enabled'"
+
+# 18.9.20.1.13 (L2) Ensure 'Turn off Windows Error Reporting' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Error Reporting" "Disabled" ("1") "18.9.20.1.13" "L2" "Ensure 'Turn off Windows Error Reporting' is set to 'Enabled'"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting" "DoReport" ("1") "18.9.20.1.13" "L2" "Ensure 'Turn off Windows Error Reporting' is set to 'Enabled'"
+
+# --------------- Kerberos ---------------
+
 Write-Host "`nDone`nRemoving export files..."
 
 #try {
