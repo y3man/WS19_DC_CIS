@@ -70,4 +70,12 @@ is set to 'Enabled: Disable Authenticated Proxy usage'
 
 # 18.10.17.4 (L1) Ensure 'Enable App Installer ms-appinstaller protocol' is set to 'Disabled'
 
+# 18.10.41.1 (L2) Ensure 'Allow Message Service Cloud Sync' is set to 'Disabled'
+
+# 18.10.42.1 (L1) Ensure 'Block all consumer Microsoft account user authentication' is set to 'Enabled'
+
+# 18.10.43.5.1 (L1) Ensure 'Configure local setting override for reporting to Microsoft MAPS' is set to 'Disabled'
+
+# 18.10.43.5.2 (L2) Ensure 'Join Microsoft MAPS' is set to 'Disabled'
+
 #

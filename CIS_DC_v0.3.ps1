@@ -1382,6 +1382,29 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\System" "R
 # 18.10.26.4.2 (L1) Ensure 'System: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\System" "MaxSize" (32768..99999) "18.10.26.4.2" "L1" "Ensure 'System: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'"
 
+# ---------------  File explorer ---------------
+
+# 18.10.29.2 (L1) Ensure 'Turn off Data Execution Prevention for Explorer' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" "NoDataExecutionPrevention" ("0") "18.10.29.2" "L1" "Ensure 'Turn off Data Execution Prevention for Explorer' is set to 'Disabled'" -empty_ok
+
+# 18.10.29.3 (L1) Ensure 'Turn off heap termination on corruption' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Explorer" "NoHeapTerminationOnCorruption" ("0") "18.10.29.3" "L1" "Ensure 'Turn off heap termination on corruption' is set to 'Disabled'" -empty_ok
+
+# 18.10.29.4 (L1) Ensure 'Turn off shell protocol protected mode' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" "PreXPSP2ShellProtocolBehavior" ("0") "18.10.29.4" "L1" "Ensure 'Turn off shell protocol protected mode' is set to 'Disabled'" -empty_ok
+
+# ---------------  Location ---------------
+
+# 18.10.37.1 (L2) Ensure 'Turn off location' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors" "DisableLocation" ("1") "18.10.37.1" "L2" "Ensure 'Turn off location' is set to 'Enabled'"
+
+# ---------------  Attack surface reduction ---------------
+
+# 18.10.43.6.1.1 (L1) Ensure 'Configure Attack Surface Reduction rules' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR" "ExploitGuard_ASR_Rules" ("1") "18.10.43.6.1.1" "L1" "Ensure 'Configure Attack Surface Reduction rules' is set to 'Enabled'"
+
+# 18.10.43.6.1.2 (L1) Ensure 'Configure Attack Surface Reduction
+#rules: Set the state for each ASR rule' is configured
 
 
 Write-Host "`nDone`nRemoving export files..."
