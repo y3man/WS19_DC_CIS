@@ -185,11 +185,10 @@ function Get-AuditPolicy([string] $key,
     $line = $auditpol | Select-String -Pattern $key_pattern
     $line = $line -replace "  $key {2,}", "$key,"
     $line = $line -split ","
-    $setting = $line[1].Trim()
+    $setting = $line[1]
 
     $success = 0
     $failure = 0
-    Write-Host "Setting: $setting"
 
     if ($setting -eq "Success and Failure") {
         $success = 1
