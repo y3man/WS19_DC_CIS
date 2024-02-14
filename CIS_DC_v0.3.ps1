@@ -1317,9 +1317,46 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Service
 # 18.9.34.2 (L1) Ensure 'Configure Solicited Remote Assistance' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fAllowToGetHelp" ("0") "18.9.34.2" "L1" "Ensure 'Configure Solicited Remote Assistance' is set to 'Disabled'"
 
-# ---------------  Remote Procedure Call ---------------
+# ---------------  Security Account Manager ---------------
 
-#
+# 18.9.38.1 (L1) Ensure 'Configure validation of ROCA-vulnerable
+#WHfB keys during authentication' is set to 'Enabled: Audit' or higher (DC only)
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\SAM" "SamNGCKeyROCAValidation" (1,2) "18.9.38.1" "L1" "Ensure 'Configure validation of ROCA-vulnerable WHfB keys during authentication' is set to 'Enabled: Audit' or higher (DC only)" -empty_ok
+
+# ---------------  Microsoft Support Diagnostic Tool ---------------
+
+# 18.9.46.5.1 (L2) Ensure 'Microsoft Support Diagnostic Tool: Turn
+#on MSDT interactive communication with support provider' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\ScriptedDiagnosticsProvider\Policy" "DisableQueryRemoteServer" ("0") "18.9.46.5.1" "L2" "Ensure 'Microsoft Support Diagnostic Tool: Turn on MSDT interactive communication with support provider' is set to 'Disabled'"
+
+# ---------------  Time providers ---------------
+
+# 18.9.50.1.1 (L2) Ensure 'Enable Windows NTP Client' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpClient" "Enabled" ("1") "18.9.50.1.1" "L2" "Ensure 'Enable Windows NTP Client' is set to 'Enabled'"
+
+# ---------------  Credential UI ---------------
+
+# 18.10.14.1 (L1) Ensure 'Do not display the password reveal
+#button' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CredUI" "DisablePasswordReveal" ("1") "18.10.14.1" "L1" "Ensure 'Do not display the password reveal button' is set to 'Enabled'"
+
+# 18.10.14.2 (L1) Ensure 'Enumerate administrator accounts on
+#elevation' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\CredUI" "EnumerateAdministrators" ("0") "18.10.14.2" "L1" "Ensure 'Enumerate administrator accounts on elevation' is set to 'Disabled'" -empty_ok
+
+# ---------------  Data Collection and Preview Builds ---------------
+
+# 18.10.15.1 (L1) Ensure 'Allow Diagnostic Data' is set to 'Enabled:
+#Diagnostic data off (not recommended)' or 'Enabled: Send required diagnostic data'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" "AllowTelemetry" (0,1) "18.10.15.1" "L1" "Ensure 'Allow Diagnostic Data' is set to 'Enabled: Diagnostic data off (not recommended)' or 'Enabled: Send required diagnostic data'"
+
+# 18.10.15.3 (L1) Ensure 'Disable OneSettings Downloads' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" "DisableOneSettingsDownloads" ("1") "18.10.15.3" "L1" "Ensure 'Disable OneSettings Downloads' is set to 'Enabled'"
+
+# 18.10.15.7 (L1) Ensure 'Limit Dump Collection' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" "LimitDumpCollection" ("1") "18.10.15.7" "L1" "Ensure 'Limit Dump Collection' is set to 'Enabled'"
+
+
 
 Write-Host "`nDone`nRemoving export files..."
 
