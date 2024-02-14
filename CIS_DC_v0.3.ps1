@@ -1170,23 +1170,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "Regis
 #'Enabled: Redirection Guard Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RedirectionguardPolicy" ("1") "18.7.2" "L1" "Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'"
 
-# 18.7.3 (L1) Ensure 'Configure RPC connection settings: Protocol
-#to use for outgoing RPC connections' is set to 'Enabled: RPC over TCP'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcUseNamedPipeProtocol" ("0") "18.7.3" "L1" "Ensure 'Configure RPC connection settings: Protocol to use for outgoing RPC connections' is set to 'Enabled: RPC over TCP'"
-
-# 18.7.4 (L1) Ensure 'Configure RPC connection settings: Use
-#authentication for outgoing RPC connections' is set to 'Enabled: Default'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcAuthentication" ("1") "18.7.4" "L1" "Ensure 'Configure RPC connection settings: Use authentication for outgoing RPC connections' is set to 'Enabled: Default'"
-
-# 18.7.5 (L1) Ensure 'Configure RPC listener settings: Protocols to
-#allow for incoming RPC connections' is set to 'Enabled: RPC over TCP'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcProtocols" ("0") "18.7.5" "L1" "Ensure 'Configure RPC listener settings: Protocols to allow for incoming RPC connections' is set to 'Enabled: RPC over TCP'"
-
-# 18.7.6 (L1) Ensure 'Configure RPC listener settings:
-#Authentication protocol to use for incoming RPC connections:' is
-#set to 'Enabled: Negotiate' or higher
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "ForceKerberosForRpc" ("2") "18.7.6" "L1" "Ensure 'Configure RPC listener settings: Authentication protocol to use for incoming RPC connections:' is set to 'Enabled: Negotiate' or higher" -empty_ok
-
 # 18.7.7 (L1) Ensure 'Configure RPC over TCP port' is set to
 #'Enabled: 0'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcTcpPort" ("0") "18.7.7" "L1" "Ensure 'Configure RPC over TCP port' is set to 'Enabled: 0'"
@@ -1194,10 +1177,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "R
 # 18.7.8 (L1) Ensure 'Limits print driver installation to
 #Administrators' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RestrictDriverInstallationToAdministrators" ("1") "18.7.8" "L1" "Ensure 'Limits print driver installation to Administrators' is set to 'Enabled'" -empty_ok
-
-# 18.7.9 (L1) Ensure 'Manage processing of Queue-specific files' is
-#set to 'Enabled: Limit Queue-specific files to Color profiles'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "CopyFilesPolicy" ("1") "18.7.9" "L1" "Ensure 'Manage processing of Queue-specific files' is set to 'Enabled: Limit Queue-specific files to Color profiles'" -empty_ok
 
 # 18.7.10 (L1) Ensure 'Point and Print Restrictions: When installing
 #drivers for a new connection' is set to 'Enabled: Show warning

@@ -1,0 +1,20 @@
+# 18.7.3 (L1) Ensure 'Configure RPC connection settings: Protocol
+#to use for outgoing RPC connections' is set to 'Enabled: RPC over TCP'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcUseNamedPipeProtocol" ("0") "18.7.3" "L1" "Ensure 'Configure RPC connection settings: Protocol to use for outgoing RPC connections' is set to 'Enabled: RPC over TCP'"
+
+# 18.7.4 (L1) Ensure 'Configure RPC connection settings: Use
+#authentication for outgoing RPC connections' is set to 'Enabled: Default'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcAuthentication" ("1") "18.7.4" "L1" "Ensure 'Configure RPC connection settings: Use authentication for outgoing RPC connections' is set to 'Enabled: Default'"
+
+# 18.7.5 (L1) Ensure 'Configure RPC listener settings: Protocols to
+#allow for incoming RPC connections' is set to 'Enabled: RPC over TCP'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcProtocols" ("0") "18.7.5" "L1" "Ensure 'Configure RPC listener settings: Protocols to allow for incoming RPC connections' is set to 'Enabled: RPC over TCP'"
+
+# 18.7.6 (L1) Ensure 'Configure RPC listener settings:
+#Authentication protocol to use for incoming RPC connections:' is
+#set to 'Enabled: Negotiate' or higher
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "ForceKerberosForRpc" ("2") "18.7.6" "L1" "Ensure 'Configure RPC listener settings: Authentication protocol to use for incoming RPC connections:' is set to 'Enabled: Negotiate' or higher" -empty_ok
+
+# 18.7.9 (L1) Ensure 'Manage processing of Queue-specific files' is
+#set to 'Enabled: Limit Queue-specific files to Color profiles'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "CopyFilesPolicy" ("1") "18.7.9" "L1" "Ensure 'Manage processing of Queue-specific files' is set to 'Enabled: Limit Queue-specific files to Color profiles'" -empty_ok
