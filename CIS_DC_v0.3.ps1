@@ -718,14 +718,12 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa\MSV1_0" "NTLMMinSe
 
 # --------------- Shutdown ---------------
 
-# 2.3.13.1 (L1) Ensure 'Shutdown: Allow system to be shut down
-#without having to log on' is set to 'Disabled'
+# 2.3.13.1 (L1) Ensure 'Shutdown: Allow system to be shut down without having to log on' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "ShutdownWithoutLogon" ("0") "2.3.13.1" "L1" "Ensure 'Shutdown: Allow system to be shut down without having to log on' is set to 'Disabled'" -empty_ok
 
 # --------------- System objects ---------------
 
-# 2.3.15.1 (L1) Ensure 'System objects: Require case insensitivity
-#for non-Windows subsystems' is set to 'Enabled'
+# 2.3.15.1 (L1) Ensure 'System objects: Require case insensitivity for non-Windows subsystems' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Kernel" "ObCaseInsensitive" ("1") "2.3.15.1" "L1" "Ensure 'System objects: Require case insensitivity for non-Windows subsystems' is set to 'Enabled'" -empty_ok
 
 # 2.3.15.2 (L1) Ensure 'System objects: Strengthen default
@@ -774,112 +772,89 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Spooler" "Start" ("4"
 
 # --------------- Firewall (domain) ---------------
 
-# 9.1.1 (L1) Ensure 'Windows Firewall: Domain: Firewall state' is set
-#to 'On (recommended)'
+# 9.1.1 (L1) Ensure 'Windows Firewall: Domain: Firewall state' is set to 'On (recommended)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "EnableFirewall" ("1") "9.1.1" "L1" "Ensure 'Windows Firewall: Domain: Firewall state' is set to 'On (recommended)'" -empty_ok
 
-# 9.1.2 (L1) Ensure 'Windows Firewall: Domain: Inbound
-#connections' is set to 'Block (default)'
+# 9.1.2 (L1) Ensure 'Windows Firewall: Domain: Inbound connections' is set to 'Block (default)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "DefaultInboundAction" ("1") "9.1.2" "L1" "Ensure 'Windows Firewall: Domain: Inbound connections' is set to 'Block (default)'" -empty_ok
 
-# 9.1.3 (L1) Ensure 'Windows Firewall: Domain: Outbound
-#connections' is set to 'Allow (default)'
+# 9.1.3 (L1) Ensure 'Windows Firewall: Domain: Outbound connections' is set to 'Allow (default)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "DefaultOutboundAction" ("0") "9.1.3" "L1" "Ensure 'Windows Firewall: Domain: Outbound connections' is set to 'Allow (default)'" -empty_ok
 
-# 9.1.4 (L1) Ensure 'Windows Firewall: Domain: Settings: Display a
-#notification' is set to 'No'
+# 9.1.4 (L1) Ensure 'Windows Firewall: Domain: Settings: Display a notification' is set to 'No'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" "DisableNotifications" ("1") "9.1.4" "L1" "Ensure 'Windows Firewall: Domain: Settings: Display a notification' is set to 'No'"
 
 # 9.1.5 (L1) Ensure 'Windows Firewall: Domain: Logging: Name' is
 #set to '%SystemRoot%\System32\logfiles\firewall\domainfw.log'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogFilePath" ("%SystemRoot%\System32\logfiles\firewall\domainfw.log") "9.1.5" "L1" "Ensure 'Windows Firewall: Domain: Logging: Name' is set to '%SystemRoot%\System32\logfiles\firewall\domainfw.log'"
 
-# 9.1.6 (L1) Ensure 'Windows Firewall: Domain: Logging: Size limit
-#(KB)' is set to '16,384 KB or greater'
+# 9.1.6 (L1) Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogFileSize" (16384..99999) "9.1.6" "L1" "Ensure 'Windows Firewall: Domain: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
 
-# 9.1.7 (L1) Ensure 'Windows Firewall: Domain: Logging: Log
-#dropped packets' is set to 'Yes'
+# 9.1.7 (L1) Ensure 'Windows Firewall: Domain: Logging: Log dropped packets' is set to 'Yes'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogDroppedPackets" ("1") "9.1.7" "L1" "Ensure 'Windows Firewall: Domain: Logging: Log dropped packets' is set to 'Yes'"
 
-# 9.1.8 (L1) Ensure 'Windows Firewall: Domain: Logging: Log
-#successful connections' is set to 'Yes'
+# 9.1.8 (L1) Ensure 'Windows Firewall: Domain: Logging: Log successful connections' is set to 'Yes'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" "LogSuccessfulConnections" ("1") "9.1.8" "L1" "Ensure 'Windows Firewall: Domain: Logging: Log successful connections' is set to 'Yes'"
 
 # --------------- Firewall (private) ---------------
 
-# 9.2.1 (L1) Ensure 'Windows Firewall: Private: Firewall state' is set
-#to 'On (recommended)'
+# 9.2.1 (L1) Ensure 'Windows Firewall: Private: Firewall state' is set to 'On (recommended)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "EnableFirewall" ("1") "9.2.1" "L1" "Ensure 'Windows Firewall: Private: Firewall state' is set to 'On (recommended)'" -empty_ok
 
-# 9.2.2 (L1) Ensure 'Windows Firewall: Private: Inbound
-#connections' is set to 'Block (default)'
+# 9.2.2 (L1) Ensure 'Windows Firewall: Private: Inbound connections' is set to 'Block (default)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "DefaultInboundAction" ("1") "9.2.2" "L1" "Ensure 'Windows Firewall: Private: Inbound connections' is set to 'Block (default)'" -empty_ok
 
-# 9.2.3 (L1) Ensure 'Windows Firewall: Private: Outbound
-#connections' is set to 'Allow (default)'
+# 9.2.3 (L1) Ensure 'Windows Firewall: Private: Outbound connections' is set to 'Allow (default)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "DefaultOutboundAction" ("0") "9.2.3" "L1" "Ensure 'Windows Firewall: Private: Outbound connections' is set to 'Allow (default)'" -empty_ok
 
-# 9.2.4 (L1) Ensure 'Windows Firewall: Private: Settings: Display a
-#notification' is set to 'No'
+# 9.2.4 (L1) Ensure 'Windows Firewall: Private: Settings: Display a notification' is set to 'No'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" "DisableNotifications" ("1") "9.2.4" "L1" "Ensure 'Windows Firewall: Private: Settings: Display a notification' is set to 'No'"
 
 # 9.2.5 (L1) Ensure 'Windows Firewall: Private: Logging: Name' is
 #set to '%SystemRoot%\System32\logfiles\firewall\privatefw.log'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogFilePath" ("%SystemRoot%\System32\logfiles\firewall\privatefw.log") "9.2.5" "L1" "Ensure 'Windows Firewall: Private: Logging: Name' is set to '%SystemRoot%\System32\logfiles\firewall\privatefw.log'"
 
-# 9.2.6 (L1) Ensure 'Windows Firewall: Private: Logging: Size limit
-#(KB)' is set to '16,384 KB or greater'
+# 9.2.6 (L1) Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogFileSize" (16384..99999) "9.2.6" "L1" "Ensure 'Windows Firewall: Private: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
 
-# 9.2.7 (L1) Ensure 'Windows Firewall: Private: Logging: Log
-#dropped packets' is set to 'Yes'
+# 9.2.7 (L1) Ensure 'Windows Firewall: Private: Logging: Log dropped packets' is set to 'Yes'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogDroppedPackets" ("1") "9.2.7" "L1" "Ensure 'Windows Firewall: Private: Logging: Log dropped packets' is set to 'Yes'"
 
-# 9.2.8 (L1) Ensure 'Windows Firewall: Private: Logging: Log
-#successful connections' is set to 'Yes'
+# 9.2.8 (L1) Ensure 'Windows Firewall: Private: Logging: Log successful connections' is set to 'Yes'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" "LogSuccessfulConnections" ("1") "9.2.8" "L1" "Ensure 'Windows Firewall: Private: Logging: Log successful connections' is set to 'Yes'"
 
 # --------------- Firewall (public) ---------------
 
-# 9.3.1 (L1) Ensure 'Windows Firewall: Public: Firewall state' is set
-#to 'On (recommended)'
+# 9.3.1 (L1) Ensure 'Windows Firewall: Public: Firewall state' is set to 'On (recommended)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "EnableFirewall" ("1") "9.3.1" "L1" "Ensure 'Windows Firewall: Public: Firewall state' is set to 'On (recommended)'" -empty_ok
 
-# 9.3.2 (L1) Ensure 'Windows Firewall: Public: Inbound connections'
-#is set to 'Block (default)'
+# 9.3.2 (L1) Ensure 'Windows Firewall: Public: Inbound connections' is set to 'Block (default)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "DefaultInboundAction" ("1") "9.3.2" "L1" "Ensure 'Windows Firewall: Public: Inbound connections' is set to 'Block (default)'" -empty_ok
 
-# 9.3.3 (L1) Ensure 'Windows Firewall: Public: Outbound
-#connections' is set to 'Allow (default)'
+# 9.3.3 (L1) Ensure 'Windows Firewall: Public: Outbound connections' is set to 'Allow (default)'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "DefaultOutboundAction" ("0") "9.3.3" "L1" "Ensure 'Windows Firewall: Public: Outbound connections' is set to 'Allow (default)'" -empty_ok
 
-# 9.3.4 (L1) Ensure 'Windows Firewall: Public: Settings: Display a
-#notification' is set to 'No'
+# 9.3.4 (L1) Ensure 'Windows Firewall: Public: Settings: Display a notification' is set to 'No'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "DisableNotifications" ("1") "9.3.4" "L1" "Ensure 'Windows Firewall: Public: Settings: Display a notification' is set to 'No'"
 
-# 9.3.5 (L1) Ensure 'Windows Firewall: Public: Settings: Apply local
-#firewall rules' is set to 'No'
+# 9.3.5 (L1) Ensure 'Windows Firewall: Public: Settings: Apply local firewall rules' is set to 'No'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "AllowLocalPolicyMerge" ("0") "9.3.5" "L1" "Ensure 'Windows Firewall: Public: Settings: Apply local firewall rules' is set to 'No'"
 
-# 9.3.6 (L1) Ensure 'Windows Firewall: Public: Settings: Apply local
-#connection security rules' is set to 'No'
+# 9.3.6 (L1) Ensure 'Windows Firewall: Public: Settings: Apply local connection security rules' is set to 'No'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" "AllowLocalIPsecPolicyMerge" ("0") "9.3.6" "L1" "Ensure 'Windows Firewall: Public: Settings: Apply local connection security rules' is set to 'No'"
 
 # 9.3.7 (L1) Ensure 'Windows Firewall: Public: Logging: Name' is
 #set to '%SystemRoot%\System32\logfiles\firewall\publicfw.log'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogFilePath" ("%SystemRoot%\System32\logfiles\firewall\publicfw.log") "9.3.7" "L1" "Ensure 'Windows Firewall: Public: Logging: Name' is set to '%SystemRoot%\System32\logfiles\firewall\publicfw.log'"
 
-# 9.3.8 (L1) Ensure 'Windows Firewall: Public: Logging: Size limit
-#(KB)' is set to '16,384 KB or greater'
+# 9.3.8 (L1) Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogFileSize" (16384..99999) "9.3.8" "L1" "Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater'"
 
-# 9.3.9 (L1) Ensure 'Windows Firewall: Public: Logging: Log
-#dropped packets' is set to 'Yes'
+# 9.3.9 (L1) Ensure 'Windows Firewall: Public: Logging: Log dropped packets' is set to 'Yes'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogDroppedPackets" ("1") "9.3.9" "L1" "Ensure 'Windows Firewall: Public: Logging: Log dropped packets' is set to 'Yes'"
 
-# 9.3.10 (L1) Ensure 'Windows Firewall: Public: Logging: Log
-#successful connections' is set to 'Yes'
+# 9.3.10 (L1) Ensure 'Windows Firewall: Public: Logging: Log successful connections' is set to 'Yes'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" "LogSuccessfulConnections" ("1") "9.3.10" "L1" "Ensure 'Windows Firewall: Public: Logging: Log successful connections' is set to 'Yes'"
 
 # --------------- Audit policy ---------------
@@ -1004,8 +979,7 @@ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Expl
 
 # ------------------- MS Security Guide -------------------
 
-# 18.4.2 (L1) Ensure 'Configure RPC packet level privacy setting for
-#incoming connections' is set to 'Enabled'
+# 18.4.2 (L1) Ensure 'Configure RPC packet level privacy setting for incoming connections' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Print" "RpcAuthnLevelPrivacyEnabled" ("1") "18.4.2" "L1" "Ensure 'Configure RPC packet level privacy setting for incoming connections' is set to 'Enabled'" -empty_ok
 
 # 18.4.3 (L1) Ensure 'Configure SMB v1 client driver' is set to 'Enabled: Disable driver
@@ -1023,8 +997,7 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters" "No
 # 18.4.7 (L1) Ensure 'WDigest Authentication' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\WDigest" "UseLogonCredential" ("0") "18.4.7" "L1" "Ensure 'WDigest Authentication' is set to 'Disabled'" -empty_ok
 
-# 18.5.1 (L1) Ensure 'MSS: (AutoAdminLogon) Enable Automatic
-#Logon (not recommended)' is set to 'Disabled'
+# 18.5.1 (L1) Ensure 'MSS: (AutoAdminLogon) Enable Automatic Logon (not recommended)' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "AutoAdminLogon" ("0") "18.5.1" "L1" "Ensure 'MSS: (AutoAdminLogon) Enable Automatic Logon (not recommended)' is set to 'Disabled'" -empty_ok
 
 # 18.5.2 (L1) Ensure 'MSS: (DisableIPSourceRouting IPv6) IP
@@ -1046,21 +1019,18 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "En
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "KeepAliveTime" ("300000") "18.5.5" "L2" "Ensure 'MSS: (KeepAliveTime) How often keep-alive packets are sent in milliseconds' is set to 'Enabled: 300,000 or 5 minutes (recommended)'"
 
 # 18.5.6 (L1) Ensure 'MSS: (NoNameReleaseOnDemand) Allow the
-#computer to ignore NetBIOS name release requests except from
-#WINS servers' is set to 'Enabled'
+#computer to ignore NetBIOS name release requests except from WINS servers' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters" "NoNameReleaseOnDemand" ("1") "18.5.6" "L1" "Ensure 'MSS: (NoNameReleaseOnDemand) Allow the computer to ignore NetBIOS name release requests except from WINS servers' is set to 'Enabled'" -empty_ok
 
 # 18.5.7 (L2) Ensure 'MSS: (PerformRouterDiscovery) Allow IRDP
 #to detect and configure Default Gateway addresses (could lead to DoS)' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "PerformRouterDiscovery" ("0") "18.5.7" "L2" "Ensure 'MSS: (PerformRouterDiscovery) Allow IRDP to detect and configure Default Gateway addresses (could lead to DoS)' is set to 'Disabled'"
 
-# 18.5.8 (L1) Ensure 'MSS: (SafeDllSearchMode) Enable Safe DLL
-#search mode (recommended)' is set to 'Enabled'
+# 18.5.8 (L1) Ensure 'MSS: (SafeDllSearchMode) Enable Safe DLL search mode (recommended)' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager" "SafeDllSearchMode" ("1") "18.5.8" "L1" "Ensure 'MSS: (SafeDllSearchMode) Enable Safe DLL search mode (recommended)' is set to 'Enabled'" -empty_ok
 
 # 18.5.9 (L1) Ensure 'MSS: (ScreenSaverGracePeriod) The time in
-#seconds before the screen saver grace period expires (0
-#recommended)' is set to 'Enabled: 5 or fewer seconds'
+#seconds before the screen saver grace period expires (0 recommended)' is set to 'Enabled: 5 or fewer seconds'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon" "ScreenSaverGracePeriod" (0..5) "18.5.9" "L1" "Ensure 'MSS: (ScreenSaverGracePeriod) The time in seconds before the screen saver grace period expires (0 recommended)' is set to 'Enabled: 5 or fewer seconds'"
 
 # 18.5.10 (L2) Ensure 'MSS: (TcpMaxDataRetransmissions IPv6)
@@ -1072,8 +1042,7 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip6\Parameters" "T
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Tcpip\Parameters" "TcpMaxDataRetransmissions" ("3") "18.5.11" "L2" "Ensure 'MSS: (TcpMaxDataRetransmissions) How many times unacknowledged data is retransmitted' is set to 'Enabled: 3'"
 
 # 18.5.12 (L1) Ensure 'MSS: (WarningLevel) Percentage threshold
-#for the security event log at which the system will generate a
-#warning' is set to 'Enabled: 90% or less'
+#for the security event log at which the system will generate a warning' is set to 'Enabled: 90% or less'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Eventlog\Security" "WarningLevel" (0..90) "18.5.12" "L1" "Ensure 'MSS: (WarningLevel) Percentage threshold for the security event log at which the system will generate a warning' is set to 'Enabled: 90% or less'"
 
 # --------------- DNS client ---------------
@@ -1111,8 +1080,7 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LLTD" "ProhibitRspn
 
 # --------------- Peer Name Resolution Protocol ---------------
 
-# 18.6.10.2 (L2) Ensure 'Turn off Microsoft Peer-to-Peer Networking
-#Services' is set to 'Enabled'
+# 18.6.10.2 (L2) Ensure 'Turn off Microsoft Peer-to-Peer Networking Services' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Peernet" "Disabled" ("1") "18.6.10.2" "L2" "Ensure 'Turn off Microsoft Peer-to-Peer Networking Services' is set to 'Enabled'"
 
 # --------------- Windows Defender Firewall ---------------
@@ -1121,94 +1089,76 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Peernet" "Disabled" ("1") "
 #Network Bridge on your DNS domain network' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" "NC_AllowNetBridge_NLA" ("0") "18.6.11.2" "L1" "Ensure 'Prohibit installation and configuration of Network Bridge on your DNS domain network' is set to 'Enabled'"
 
-# 18.6.11.3 (L1) Ensure 'Prohibit use of Internet Connection
-#Sharing on your DNS domain network' is set to 'Enabled'
+# 18.6.11.3 (L1) Ensure 'Prohibit use of Internet Connection Sharing on your DNS domain network' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" "NC_ShowSharedAccessUI" ("0") "18.6.11.3" "L1" "Ensure 'Prohibit use of Internet Connection Sharing on your DNS domain network' is set to 'Enabled'"
 
-# 18.6.11.4 (L1) Ensure 'Require domain users to elevate when
-#setting a network's location' is set to 'Enabled'
+# 18.6.11.4 (L1) Ensure 'Require domain users to elevate when setting a network's location' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" "NC_StdDomainUserSetLocation" ("1") "18.6.11.4" "L1" "Ensure 'Require domain users to elevate when setting a network's location' is set to 'Enabled'"
 
 # --------------- Network Provider ---------------
 
 # 18.6.14.1 (L1) Ensure 'Hardened UNC Paths' is set to 'Enabled,
-#with "Require Mutual Authentication" and "Require Integrity" set
-#for all NETLOGON and SYSVOL shares'
+#with "Require Mutual Authentication" and "Require Integrity" set for all NETLOGON and SYSVOL shares'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\NetworkProvider\HardenedPaths" "\\*\NETLOGON" ("RequireMutualAuthentication=1, RequireIntegrity=1") "18.6.14.1" "L1" "Ensure 'Hardened UNC Paths' is set to 'Enabled, with 'Require Mutual Authentication' and 'Require Integrity' set for all NETLOGON and SYSVOL shares'"
 
 # --------------- TCP/IP settings ---------------
 
-# 18.6.19.2.1 (L2) Disable IPv6 (Ensure TCPIP6 Parameter
-#'DisabledComponents' is set to '0xff (255)')
+# 18.6.19.2.1 (L2) Disable IPv6 (Ensure TCPIP6 Parameter 'DisabledComponents' is set to '0xff (255)')
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\TCPIP6\Parameters" "DisabledComponents" ("255") "18.6.19.2.1" "L2" "Disable IPv6 (Ensure TCPIP6 Parameter 'DisabledComponents' is set to '0xff (255)'"
 
-# 18.6.20.1 (L2) Ensure 'Configuration of wireless settings using
-#Windows Connect Now' is set to 'Disabled'
+# 18.6.20.1 (L2) Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "EnableRegistrars" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableUPnPRegistrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableInBand802DOT11Registrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableFlashConfigRegistrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\Registrars" "DisableWPDRegistrar" ("0") "18.6.20.1" "L2" "Ensure 'Configuration of wireless settings using Windows Connect Now' is set to 'Disabled'"
 
-# 18.6.20.2 (L2) Ensure 'Prohibit access of the Windows Connect
-#Now wizards' is set to 'Enabled'
+# 18.6.20.2 (L2) Ensure 'Prohibit access of the Windows Connect Now wizards' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\UI" "DisableWcnUi" ("1") "18.6.20.2" "L2" "Ensure 'Prohibit access of the Windows Connect Now wizards' is set to 'Enabled'"
 
 # 18.6.21.1 (L1) Ensure 'Minimize the number of simultaneous
-#connections to the Internet or a Windows Domain' is set to
-#'Enabled: 3 = Prevent Wi-Fi when on Ethernet'
+#connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy" "fMinimizeConnections" ("3") "18.6.21.1" "L1" "Ensure 'Minimize the number of simultaneous connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'"
 
 # --------------- Printers ---------------
 
-# 18.7.1 (L1) Ensure 'Allow Print Spooler to accept client
-#connections' is set to 'Disabled'
+# 18.7.1 (L1) Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RegisterSpoolerRemoteRpcEndPoint" ("2") "18.7.1" "L1" "Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'"
 
-# 18.7.2 (L1) Ensure 'Configure Redirection Guard' is set to
-#'Enabled: Redirection Guard Enabled'
+# 18.7.2 (L1) Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RedirectionguardPolicy" ("1") "18.7.2" "L1" "Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'"
 
-# 18.7.7 (L1) Ensure 'Configure RPC over TCP port' is set to
-#'Enabled: 0'
+# 18.7.7 (L1) Ensure 'Configure RPC over TCP port' is set to 'Enabled: 0'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcTcpPort" ("0") "18.7.7" "L1" "Ensure 'Configure RPC over TCP port' is set to 'Enabled: 0'"
 
-# 18.7.8 (L1) Ensure 'Limits print driver installation to
-#Administrators' is set to 'Enabled'
+# 18.7.8 (L1) Ensure 'Limits print driver installation to Administrators' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RestrictDriverInstallationToAdministrators" ("1") "18.7.8" "L1" "Ensure 'Limits print driver installation to Administrators' is set to 'Enabled'" -empty_ok
 
 # 18.7.10 (L1) Ensure 'Point and Print Restrictions: When installing
-#drivers for a new connection' is set to 'Enabled: Show warning
-#and elevation prompt'
+#drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint" "NoWarningNoElevationOnInstall" ("0") "18.7.10" "L1" "Ensure 'Point and Print Restrictions: When installing drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'" -empty_ok
 
 # 18.7.11 (L1) Ensure 'Point and Print Restrictions: When updating
-#drivers for an existing connection' is set to 'Enabled: Show
-#warning and elevation prompt'
+#drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint" "UpdatePromptSettings" ("0") "18.7.11" "L1" "Ensure 'Point and Print Restrictions: When updating drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'" -empty_ok
 
 # --------------- Start menu and taskbar ---------------
 
-# 18.8.1.1 (L2) Ensure 'Turn off notifications network usage' is set
-#to 'Enabled'
+# 18.8.1.1 (L2) Ensure 'Turn off notifications network usage' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" "NoCloudApplicationNotification" ("1") "18.8.1.1" "L2" "Ensure 'Turn off notifications network usage' is set to 'Enabled'"
 
 # --------------- System ---------------
 
-# 18.9.3.1 (L1) Ensure 'Include command line in process creation
-#events' is set to 'Enabled'
+# 18.9.3.1 (L1) Ensure 'Include command line in process creation events' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\Audit" "ProcessCreationIncludeCmdLine_Enabled" ("1") "18.9.3.1" "L1" "Ensure 'Include command line in process creation events' is set to 'Enabled'"
 
-# 18.9.4.1 (L1) Ensure 'Encryption Oracle Remediation' is set to
-#'Enabled: Force Updated Clients'
+# 18.9.4.1 (L1) Ensure 'Encryption Oracle Remediation' is set to 'Enabled: Force Updated Clients'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\CredSSP\Parameters" "AllowEncryptionOracle" ("0") "18.9.4.1" "L1" "Ensure 'Encryption Oracle Remediation' is set to 'Enabled: Force Updated Clients'"
 
-# 18.9.4.2 (L1) Ensure 'Remote host allows delegation of non-
-#exportable credentials' is set to 'Enabled'
+# 18.9.4.2 (L1) Ensure 'Remote host allows delegation of non-exportable credentials' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CredentialsDelegation" "AllowProtectedCreds" ("1") "18.9.4.2" "L1" "Ensure 'Remote host allows delegation of non-exportable credentials' is set to 'Enabled'"
 
-# 18.9.5.1 (NG) Ensure 'Turn On Virtualization Based Security' is
-#set to 'Enabled'
+# 18.9.5.1 (NG) Ensure 'Turn On Virtualization Based Security' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "EnableVirtualizationBasedSecurity" ("1") "18.9.5.1" "NG" "Ensure 'Turn On Virtualization Based Security' is set to 'Enabled'"
 
 # 18.9.5.2 (NG) Ensure 'Turn On Virtualization Based Security:
@@ -1227,20 +1177,17 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "HVCIM
 #Credential Guard Configuration' is set to 'Disabled' (DC Only)
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "LsaCfgFlags" ("0") "18.9.5.6" "NG" "Ensure 'Turn On Virtualization Based Security: Credential Guard Configuration' is set to 'Disabled' (DC Only)" -empty_ok
 
-# 18.9.5.7 (NG) Ensure 'Turn On Virtualization Based Security:
-#Secure Launch Configuration' is set to 'Enabled'
+# 18.9.5.7 (NG) Ensure 'Turn On Virtualization Based Security: Secure Launch Configuration' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DeviceGuard" "ConfigureSystemGuardLaunch" ("1") "18.9.5.7" "NG" "Ensure 'Turn On Virtualization Based Security: Secure Launch Configuration' is set to 'Enabled'"
 
 # --------------- Device installation ---------------
 
-# 18.9.7.2 (L1) Ensure 'Prevent device metadata retrieval from the
-#Internet' is set to 'Enabled'
+# 18.9.7.2 (L1) Ensure 'Prevent device metadata retrieval from the Internet' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Device Metadata" "PreventDeviceMetadataFromNetwork" ("1") "18.9.7.2" "L1" "Ensure 'Prevent device metadata retrieval from the Internet' is set to 'Enabled'"
 
 # --------------- Early Launch Antimalware ---------------
 
-# 18.9.13.1 (L1) Ensure 'Boot-Start Driver Initialization Policy' is set
-#to 'Enabled: Good, unknown and bad but critical'
+# 18.9.13.1 (L1) Ensure 'Boot-Start Driver Initialization Policy' is set to 'Enabled: Good, unknown and bad but critical'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Policies\EarlyLaunch" "DriverLoadPolicy" ("3") "18.9.13.1" "L1" "Ensure 'Boot-Start Driver Initialization Policy' is set to 'Enabled: Good, unknown and bad but critical'"
 
 # --------------- Group policy ---------------
@@ -1261,31 +1208,26 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DisableBkG
 
 # --------------- Internet communication settings ---------------
 
-# 18.9.20.1.1 (L1) Ensure 'Turn off downloading of print drivers over
-#HTTP' is set to 'Enabled'
+# 18.9.20.1.1 (L1) Ensure 'Turn off downloading of print drivers over HTTP' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "DisableWebPnPDownload" ("1") "18.9.20.1.1" "L1" "Ensure 'Turn off downloading of print drivers over HTTP' is set to 'Enabled'"
 
-# 18.9.20.1.2 (L2) Ensure 'Turn off handwriting personalization data
-#sharing' is set to 'Enabled'
+# 18.9.20.1.2 (L2) Ensure 'Turn off handwriting personalization data sharing' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC" "PreventHandwritingDataSharing" ("1") "18.9.20.1.2" "L2" "Ensure 'Turn off handwriting personalization data sharing' is set to 'Enabled'"
 
-# 18.9.20.1.3 (L2) Ensure 'Turn off handwriting recognition error
-#reporting' is set to 'Enabled'
+# 18.9.20.1.3 (L2) Ensure 'Turn off handwriting recognition error reporting' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\TabletPC" "PreventHandwritingErrorReports" ("1") "18.9.20.1.3" "L2" "Ensure 'Turn off handwriting recognition error reporting' is set to 'Enabled'"
 
 # 18.9.20.1.4 (L2) Ensure 'Turn off Internet Connection Wizard if
 #URL connection is referring to Microsoft.com' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Internet Connection Wizard" "ExitOnMSICW" ("1") "18.9.20.1.4" "L2" "Ensure 'Turn off Internet Connection Wizard if URL connection is referring to Microsoft.com' is set to 'Enabled'"
 
-# 18.9.20.1.5 (L1) Ensure 'Turn off Internet download for Web
-#publishing and online ordering wizards' is set to 'Enabled'
+# 18.9.20.1.5 (L1) Ensure 'Turn off Internet download for Web publishing and online ordering wizards' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Internet Connection Wizard" "NoWebServices" ("1") "18.9.20.1.5" "L1" "Ensure 'Turn off Internet download for Web publishing and online ordering wizards' is set to 'Enabled'"
 
 # 18.9.20.1.6 (L2) Ensure 'Turn off printing over HTTP' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "DisableHTTPPrinting" ("1") "18.9.20.1.6" "L2" "Ensure 'Turn off printing over HTTP' is set to 'Enabled'"
 
-# 18.9.20.1.7 (L2) Ensure 'Turn off Registration if URL connection is
-#referring to Microsoft.com' is set to 'Enabled'
+# 18.9.20.1.7 (L2) Ensure 'Turn off Registration if URL connection is referring to Microsoft.com' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Internet Connection Wizard" "NoRegistration" ("1") "18.9.20.1.7" "L2" "Ensure 'Turn off Registration if URL connection is referring to Microsoft.com' is set to 'Enabled'"
 
 # 18.9.20.1.8 (L2) Ensure 'Turn off Search Companion content file
@@ -1313,8 +1255,7 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\PCHealth\ErrorReporting" "D
 
 # --------------- Kerberos ---------------
 
-# 18.9.23.1 (L2) Ensure 'Support device authentication using
-#certificate' is set to 'Enabled: Automatic'
+# 18.9.23.1 (L2) Ensure 'Support device authentication using certificate' is set to 'Enabled: Automatic'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters" "DevicePKInitBehavior" ("1") "18.9.23.1" "L2" "Ensure 'Support device authentication using certificate' is set to 'Enabled: Automatic'"
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\kerberos\parameters" "DevicePKInitEnabled" ("1") "18.9.23.1" "L2" "Ensure 'Support device authentication using certificate' is set to 'Enabled: Automatic'"
 
@@ -1361,6 +1302,24 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "AllowDomai
 
 # --------------- OS Policies ---------------
 
+# 18.9.30.1 (L2) Ensure 'Allow Clipboard synchronization across
+#devices' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "AllowCrossDeviceClipboard" ("0") "18.9.30.1" "L2" "Ensure 'Allow Clipboard synchronization across devices' is set to 'Disabled'"
+
+# 18.9.30.2 (L2) Ensure 'Allow upload of User Activities' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "UploadUserActivities" ("0") "18.9.30.2" "L2" "Ensure 'Allow upload of User Activities' is set to 'Disabled'"
+
+# ---------------  Remote Assistance ---------------
+
+# 18.9.34.1 (L1) Ensure 'Configure Offer Remote Assistance' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fAllowUnsolicited" ("0") "18.9.34.1" "L1" "Ensure 'Configure Offer Remote Assistance' is set to 'Disabled'"
+
+# 18.9.34.2 (L1) Ensure 'Configure Solicited Remote Assistance' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fAllowToGetHelp" ("0") "18.9.34.2" "L1" "Ensure 'Configure Solicited Remote Assistance' is set to 'Disabled'"
+
+# ---------------  Remote Procedure Call ---------------
+
+#
 
 Write-Host "`nDone`nRemoving export files..."
 
