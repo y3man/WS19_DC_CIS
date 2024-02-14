@@ -62,4 +62,12 @@ is set to 'Enabled: Disable Authenticated Proxy usage'
 
 # 18.10.15.8 (L1) Ensure 'Toggle user control over Insider builds' is set to 'Disabled'
 
+# 18.10.17.1 (L1) Ensure 'Enable App Installer' is set to 'Disabled'
+
+# 18.10.17.2 (L1) Ensure 'Enable App Installer Experimental Features' is set to 'Disabled'
+
+# 18.10.17.3 (L1) Ensure 'Enable App Installer Hash Override' is set to 'Disabled'
+
+# 18.10.17.4 (L1) Ensure 'Enable App Installer ms-appinstaller protocol' is set to 'Disabled'
+
 #

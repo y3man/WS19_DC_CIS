@@ -1356,6 +1356,32 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" "Di
 # 18.10.15.7 (L1) Ensure 'Limit Dump Collection' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\DataCollection" "LimitDumpCollection" ("1") "18.10.15.7" "L1" "Ensure 'Limit Dump Collection' is set to 'Enabled'"
 
+# ---------------  Event log service ---------------
+
+# 18.10.26.1.1 (L1) Ensure 'Application: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Application" "Retention" ("0") "18.10.26.1.1" "L1" "Ensure 'Application: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'" -empty_ok
+
+# 18.10.26.1.2 (L1) Ensure 'Application: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Application" "MaxSize" (32768..99999) "18.10.26.1.2" "L1" "Ensure 'Application: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'"
+
+# 18.10.26.2.1 (L1) Ensure 'Security: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Security" "Retention" ("0") "18.10.26.2.1" "L1" "Ensure 'Security: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'" -empty_ok
+
+# 18.10.26.2.2 (L1) Ensure 'Security: Specify the maximum log file size (KB)' is set to 'Enabled: 196,608 or greater'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Security" "MaxSize" (196608..999999) "18.10.26.2.2" "L1" "Ensure 'Security: Specify the maximum log file size (KB)' is set to 'Enabled: 196,608 or greater'"
+
+# 18.10.26.3.1 (L1) Ensure 'Setup: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Setup" "Retention" ("0") "18.10.26.3.1" "L1" "Ensure 'Setup: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'" -empty_ok
+
+# 18.10.26.3.2 (L1) Ensure 'Setup: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\Setup" "MaxSize" (32768..99999) "18.10.26.3.2" "L1" "Ensure 'Setup: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'"
+
+# 18.10.26.4.1 (L1) Ensure 'System: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\System" "Retention" ("0") "18.10.26.4.1" "L1" "Ensure 'System: Control Event Log behavior when the log file reaches its maximum size' is set to 'Disabled'" -empty_ok
+
+# 18.10.26.4.2 (L1) Ensure 'System: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\EventLog\System" "MaxSize" (32768..99999) "18.10.26.4.2" "L1" "Ensure 'System: Specify the maximum log file size (KB)' is set to 'Enabled: 32,768 or greater'"
+
 
 
 Write-Host "`nDone`nRemoving export files..."
