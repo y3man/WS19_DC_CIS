@@ -1,6 +1,0 @@
-Cannot be set
-    18.7.3, 18.7.4, 18.7.5, 18.7.6, 18.7.9
-
-17.2.6 does not behave correctly
-
-18.9.32.6.x - sleep settings - skipped (not applicable on VMs)

@@ -19,8 +19,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "F
 #set to 'Enabled: Limit Queue-specific files to Color profiles'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "CopyFilesPolicy" ("1") "18.7.9" "L1" "Ensure 'Manage processing of Queue-specific files' is set to 'Enabled: Limit Queue-specific files to Color profiles'" -empty_ok
 
-# --------------- Sleep settings ---------------
-
 # 18.9.32.6.1 (L2) Ensure 'Allow network connectivity during connected-standby (on battery)' is set to 'Disabled'
 
 # 18.9.32.6.2 (L2) Ensure 'Allow network connectivity during connected-standby (plugged in)' is set to 'Disabled'
@@ -28,7 +26,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "CopyF
 # 18.9.32.6.3 (L1) Ensure 'Require a password when a computer wakes (on battery)' is set to 'Enabled'
 
 # 18.9.32.6.4 (L1) Ensure 'Require a password when a computer wakes (plugged in)' is set to 'Enabled'
-
 
 # 18.9.46.11.1 (L2) Ensure 'Enable/Disable PerfTrack' is set to 'Disabled'
 
