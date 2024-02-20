@@ -11,19 +11,19 @@ $SID_NETWORK_SERVICE = "*S-1-5-20"
 
 $SID_LOCAL_SERVICE = "*S-1-5-19"
 
-$SID_LOCAL_ACCOUNT = "*S-1-5-113"
+#$SID_LOCAL_ACCOUNT = "*S-1-5-113"
 
 $SID_WINDOW_MANAGER_GROUP = "*S-1-5-90-0"
 
-$SID_REMOTE_DESKTOP_USERS = "*S-1-5-32-555"
+#$SID_REMOTE_DESKTOP_USERS = "*S-1-5-32-555"
 
-$SID_VIRTUAL_MACHINE = "*S-1-5-83-0"
+#$SID_VIRTUAL_MACHINE = "*S-1-5-83-0"
 
 $SID_AUTHENTICATED_USERS = "*S-1-5-11"
 
 $SID_WDI_SYSTEM_SERVICE = "*S-1-5-80-3139157870-2983391045-3678747466-658725712-1809340420"
 
-$SID_BACKUP_OPERATORS = "*S-1-5-32-551"
+#$SID_BACKUP_OPERATORS = "*S-1-5-32-551"
 
 $SID_ENTERPRISE_DOMAIN_CONTROLLERS= "*S-1-5-9"
 
@@ -1405,6 +1405,19 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows De
 
 # 18.10.43.6.1.2 (L1) Ensure 'Configure Attack Surface Reduction
 #rules: Set the state for each ASR rule' is configured
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR" "ExploitGuard_ASR_Rules" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "26190899-1602-49e8-8b27-eb1d0a1ce869" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "3b576869-a4ec-4529-8536-b80a7769e899" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "5beb7efe-fd9a-4556-801d-275e5ffc04cc" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "75668c1f-73b5-4cf0-bb93-3ecf5cb7cc84" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "7674ba52-37eb-4a4f-a9a1-f0f9a1619a2c" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "92e97fa1-2edf-4476-bdd6-9dd0b4dddc7b" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "9e6c4e1f-7d60-472f-ba1a-a39ef669e4b2" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "b2b3f03d-6a65-4f7b-a9c7-1c7ef74a9ba4" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "be9ba2d9-53ea-4cdc-84e5-9b1eeee46550" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "d3e037e1-3eb8-44c8-a917-57927947596d" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "d4f940ab-401b-4efc-aadc-ad5f3c50688a" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
+
 
 
 Write-Host "`nDone`nRemoving export files..."
