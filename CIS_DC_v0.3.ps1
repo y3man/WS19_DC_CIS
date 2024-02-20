@@ -1418,6 +1418,34 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows De
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "d3e037e1-3eb8-44c8-a917-57927947596d" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "d4f940ab-401b-4efc-aadc-ad5f3c50688a" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
 
+# ---------------  Mp engine ---------------
+
+# 18.10.43.7.1 (L2) Ensure 'Enable file hash computation feature' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\MpEngine" "EnableFileHashComputation" ("1") "18.10.43.7.1" "L2" "Ensure 'Enable file hash computation feature' is set to 'Enabled'"
+
+# ---------------  Real-time protection ---------------
+
+# 18.10.43.10.1 (L1) Ensure 'Scan all downloaded files and attachments' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" "DisableIOAVProtection" ("0") "18.10.43.10.1" "L1" "Ensure 'Scan all downloaded files and attachments' is set to 'Enabled'" -empty_ok
+
+# 18.10.43.10.2 (L1) Ensure 'Turn off real-time protection' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" "DisableRealtimeMonitoring" ("0") "18.10.43.10.2" "L1" "Ensure 'Turn off real-time protection' is set to 'Disabled'" -empty_ok
+
+# 18.10.43.10.3 (L1) Ensure 'Turn on behavior monitoring' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" "DisableBehaviorMonitoring" ("0") "18.10.43.10.3" "L1" "Ensure 'Turn on behavior monitoring' is set to 'Enabled'" -empty_ok
+
+# 18.10.43.10.4 (L1) Ensure 'Turn on script scanning' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" "DisableScriptScanning" ("0") "18.10.43.10.4" "L1" "Ensure 'Turn on script scanning' is set to 'Enabled'" -empty_ok
+
+# ---------------  Threats ---------------
+
+# 18.10.43.16 (L1) Ensure 'Configure detection for potentially
+#unwanted applications' is set to 'Enabled: Block'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "PUAProtection" ("1") "18.10.43.16" "L1" "Ensure 'Configure detection for potentially unwanted applications' is set to 'Enabled: Block'"
+
+# 18.10.43.17 (L1) Ensure 'Turn off Microsoft Defender AntiVirus' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "DisableAntiSpyware" ("0") "18.10.43.17" "L1" "Ensure 'Turn off Microsoft Defender AntiVirus' is set to 'Disabled'" -empty_ok
+
 
 
 Write-Host "`nDone`nRemoving export files..."

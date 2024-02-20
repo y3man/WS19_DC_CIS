@@ -78,4 +78,16 @@ is set to 'Enabled: Disable Authenticated Proxy usage'
 
 # 18.10.43.5.2 (L2) Ensure 'Join Microsoft MAPS' is set to 'Disabled'
 
+# 18.10.43.6.3.1 (L1) Ensure 'Prevent users and apps from accessing dangerous websites' is set to 'Enabled: Block'
+
+# 18.10.43.12.1 (L2) Ensure 'Configure Watson events' is set to 'Disabled'
+
+# 18.10.43.13.1 (L1) Ensure 'Scan removable drives' is set to 'Enabled'
+
+# 18.10.43.13.2 (L1) Ensure 'Turn on e-mail scanning' is set to 'Enabled'
+
+# 18.10.51.1 (L1) Ensure 'Prevent the usage of OneDrive for file storage' is set to 'Enabled'
+
+# 18.10.56.1 (L2) Ensure 'Turn off Push To Install service' is set to 'Enabled'
+
 #
