@@ -505,14 +505,6 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "SCENoApplyLegacy
 # 2.3.2.2 (L1) Ensure 'Audit: Shut down system immediately if unable to log security audits' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "CrashOnAuditFail" ("0") "2.3.2.2" "L1" "Ensure 'Audit: Shut down system immediately if unable to log security audits' is set to 'Disabled'" -empty_ok
 
-# --------------- Devices ---------------
-
-# 2.3.4.1 (L1) Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators'
-Get-RegistryValue "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" "AllocateDASD" ("0") "2.3.4.1" "L1" "Ensure 'Devices: Allowed to format and eject removable media' is set to 'Administrators'" -empty_ok
-
-# 2.3.4.2 (L1) Ensure 'Devices: Prevent users from installing printer drivers' is set to 'Enabled'
-Get-RegistryValue "HKLM:\System\CurrentControlSet\Control\Print\Providers\LanMan Print Services\Servers" "AddPrinterDrivers" ("1") "2.3.4.2" "L1" "Ensure 'Devices: Prevent users from installing printer drivers' is set to 'Enabled'" -empty_ok
-
 # --------------- Domain controller ---------------
 
 # 2.3.5.1 (L1) Ensure 'Domain controller: Allow server operators to schedule tasks' is set to 'Disabled' (DC only)
@@ -529,26 +521,6 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\NTDS\Parameters" "LDA
 
 # 2.3.5.5 (L1) Ensure 'Domain controller: Refuse machine account password changes' is set to 'Disabled' (DC only)
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RefusePasswordChange" ("0") "2.3.5.5" "L1" "Ensure 'Domain controller: Refuse machine account password changes' is set to 'Disabled'" -empty_ok
-
-# --------------- Domain member ---------------
-
-# 2.3.6.1 (L1) Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireSignOrSeal" ("1") "2.3.6.1" "L1" "Ensure 'Domain member: Digitally encrypt or sign secure channel data (always)' is set to 'Enabled'" -empty_ok
-
-# 2.3.6.2 (L1) Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SealSecureChannel" ("1") "2.3.6.2" "L1" "Ensure 'Domain member: Digitally encrypt secure channel data (when possible)' is set to 'Enabled'" -empty_ok
-
-# 2.3.6.3 (L1) Ensure 'Domain member: Digitally sign secure channel data (when possible)' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "SignSecureChannel" ("1") "2.3.6.3" "L1" "Ensure 'Domain member: Digitally sign secure channel data (when possible)' is set to 'Enabled'" -empty_ok
-
-# 2.3.6.4 (L1) Ensure 'Domain member: Disable machine account password changes' is set to 'Disabled'
-Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "DisablePasswordChange" ("0") "2.3.6.4" "L1" "Ensure 'Domain member: Disable machine account password changes' is set to 'Disabled'" -empty_ok
-
-# 2.3.6.5 (L1) Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0'
-Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "MaximumPasswordAge" (1..30) "2.3.6.5" "L1" "Ensure 'Domain member: Maximum machine account password age' is set to '30 or fewer days, but not 0'" -empty_ok
-
-# 2.3.6.6 (L1) Ensure 'Domain member: Require strong (Windows 2000 or later) session key' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Netlogon\Parameters" "RequireStrongKey" ("1") "2.3.6.6" "L1" "Ensure 'Domain member: Require strong (Windows 2000 or later) session key' is set to 'Enabled'" -empty_ok
 
 # --------------- Interactive logon ---------------
 
@@ -607,8 +579,7 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanmanWorkstation\Par
 
 # --------------- Microsoft network server ---------------
 
-# 2.3.9.1 (L1) Ensure 'Microsoft network server: Amount of idle time
-#required before suspending session' is set to '15 or fewer minute(s)'
+# 2.3.9.1 (L1) Ensure 'Microsoft network server: Amount of idle time required before suspending session' is set to '15 or fewer minute(s)'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Parameters" "AutoDisconnect" (1..15) "2.3.9.1" "L1" "Ensure 'Microsoft network server: Amount of idle time required before suspending session' is set to '15 or fewer minute(s)'"
 
 # 2.3.9.2 (L1) Ensure 'Microsoft network server: Digitally sign communications (always)' is set to 'Enabled'
@@ -625,8 +596,7 @@ Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\LanManServer\Paramete
 # 2.3.10.1 (L1) Ensure 'Network access: Allow anonymous SID/Name translation' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "TurnOffAnonymousBlock" ("1") "2.3.10.1" "L1" "Ensure 'Network access: Allow anonymous SID/Name translation' is set to 'Disabled'" -empty_ok
 
-# 2.3.10.4 (L2) Ensure 'Network access: Do not allow storage of
-#passwords and credentials for network authentication' is set to 'Enabled'
+# 2.3.10.4 (L2) Ensure 'Network access: Do not allow storage of passwords and credentials for network authentication' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "DisableDomainCreds" ("1") "2.3.10.4" "L2" "Ensure 'Network access: Do not allow storage of passwords and credentials for network authentication' is set to 'Enabled'"
 
 # 2.3.10.5 (L1) Ensure 'Network access: Let Everyone permissions apply to anonymous users' is set to 'Disabled'
@@ -764,11 +734,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Syst
 # 2.3.17.8 (L1) Ensure 'User Account Control: Virtualize file and
 #registry write failures to per-user locations' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "EnableVirtualization" ("1") "2.3.17.8" "L1" "Ensure 'User Account Control: Virtualize file and registry write failures to per-user locations' is set to 'Enabled'" -empty_ok
-
-# --------------- System services ---------------
-
-# 5.1 (L1) Ensure 'Print Spooler (Spooler)' is set to 'Disabled' (DC only)
-Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Services\Spooler" "Start" ("4") "5.1" "L1" "Ensure 'Print Spooler (Spooler)' is set to 'Disabled'"
 
 # --------------- Firewall (domain) ---------------
 
@@ -963,20 +928,6 @@ Get-AuditPolicy "System Integrity" (1,1) "17.9.5" "L1" "Ensure 'Audit System Int
 
 # --------------- Administrative templates ---------------
 
-# ------------------- Personalization -------------------
-
-# 18.1.1.1 (L1) Ensure 'Prevent enabling lock screen camera' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" "NoLockScreenCamera" ("1") "18.1.1.1" "L1" "Ensure 'Prevent enabling lock screen camera' is set to 'Enabled'"
-
-# 18.1.1.2 (L1) Ensure 'Prevent enabling lock screen slide show' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Personalization" "NoLockScreenSlideshow" ("1") "18.1.1.2" "L1" "Ensure 'Prevent enabling lock screen slide show' is set to 'Enabled'"
-
-# 18.1.2.2 (L1) Ensure 'Allow users to enable online speech recognition services' is set to 'Disabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\InputPersonalization" "AllowInputPersonalization" ("1") "18.1.2.2" "L1" "Ensure 'Allow users to enable online speech recognition services' is set to 'Disabled'"
-
-# 18.1.3 (L2) Ensure 'Allow Online Tips' is set to 'Disabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer" "AllowOnlineTips" ("1") "18.1.3" "L2" "Ensure 'Allow Online Tips' is set to 'Disabled'"
-
 # ------------------- MS Security Guide -------------------
 
 # 18.4.2 (L1) Ensure 'Configure RPC packet level privacy setting for incoming connections' is set to 'Enabled'
@@ -1054,11 +1005,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" "Enab
 # 18.6.4.2 (L1) Ensure 'Turn off multicast name resolution' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" "EnableMulticast" ("0") "18.6.4.2" "L1" "Ensure 'Turn off multicast name resolution' is set to 'Enabled'"
 
-# --------------- Fonts ---------------
-
-# 18.6.5.1 (L2) Ensure 'Enable Font Providers' is set to 'Disabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "EnableFontProviders" ("0") "18.6.5.1" "L2" "Ensure 'Enable Font Providers' is set to 'Disabled'"
-
 # --------------- LanMan workstation ---------------
 
 # 18.6.8.1 (L1) Ensure 'Enable insecure guest logons' is set to 'Disabled'
@@ -1119,11 +1065,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\UI" "DisableWcn
 # 18.6.21.1 (L1) Ensure 'Minimize the number of simultaneous
 #connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy" "fMinimizeConnections" ("3") "18.6.21.1" "L1" "Ensure 'Minimize the number of simultaneous connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'"
-
-# --------------- Start menu and taskbar ---------------
-
-# 18.8.1.1 (L2) Ensure 'Turn off notifications network usage' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" "NoCloudApplicationNotification" ("1") "18.8.1.1" "L2" "Ensure 'Turn off notifications network usage' is set to 'Enabled'"
 
 # --------------- System ---------------
 
@@ -1239,8 +1180,7 @@ Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Syst
 
 # --------------- Kernel DMA protection ---------------
 
-# 18.9.24.1 (L1) Ensure 'Enumeration policy for external devices
-#incompatible with Kernel DMA Protection' is set to 'Enabled: Block All'
+# 18.9.24.1 (L1) Ensure 'Enumeration policy for external devices incompatible with Kernel DMA Protection' is set to 'Enabled: Block All'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protection" "DeviceEnumerationPolicy" ("1") "18.9.24.1" "L1" "Ensure 'Enumeration policy for external devices incompatible with Kernel DMA Protection' is set to 'Enabled: Block All'"
 
 # --------------- Local Security Authority ---------------
@@ -1249,27 +1189,18 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Kernel DMA Protecti
 #process' is set to 'Enabled: Enabled with UEFI Lock'
 Get-RegistryValue "HKLM:\SYSTEM\CurrentControlSet\Control\Lsa" "RunAsPPL" ("1") "18.9.25.1" "NG" "Ensure 'Configures LSASS to run as a protected process' is set to 'Enabled: Enabled with UEFI Lock'"
 
-# --------------- Locale Services ---------------
-
-# 18.9.26.1 (L2) Ensure 'Disallow copying of user input methods to
-#the system account for sign-in' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Control Panel\International" "BlockUserInputMethodsForSignIn" ("1") "18.9.26.1" "L2" "Ensure 'Disallow copying of user input methods to the system account for sign-in' is set to 'Enabled'"
-
 # --------------- Logon ---------------
 
-# 18.9.27.1 (L1) Ensure 'Block user from showing account details
-#on sign-in' is set to 'Enabled'
+# 18.9.27.1 (L1) Ensure 'Block user from showing account details on sign-in' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "BlockUserFromShowingAccountDetailsOnSignin" ("1") "18.9.27.1" "L1" "Ensure 'Block user from showing account details on sign-in' is set to 'Enabled'"
 
 # 18.9.27.2 (L1) Ensure 'Do not display network selection UI' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DontDisplayNetworkSelectionUI" ("1") "18.9.27.2" "L1" "Ensure 'Do not display network selection UI' is set to 'Enabled'"
 
-# 18.9.27.3 (L1) Ensure 'Do not enumerate connected users on
-#domain-joined computers' is set to 'Enabled'
+# 18.9.27.3 (L1) Ensure 'Do not enumerate connected users on domain-joined computers' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DontEnumerateConnectedUsers" ("1") "18.9.27.3" "L1" "Ensure 'Do not enumerate connected users on domain-joined computers' is set to 'Enabled'"
 
-# 18.9.27.5 (L1) Ensure 'Turn off app notifications on the lock
-#screen' is set to 'Enabled'
+# 18.9.27.5 (L1) Ensure 'Turn off app notifications on the lock screen' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "DisableLockScreenAppNotifications" ("1") "18.9.27.5" "L1" "Ensure 'Turn off app notifications on the lock screen' is set to 'Enabled'"
 
 # 18.9.27.6 (L1) Ensure 'Turn off picture password sign-in' is set to 'Enabled'
@@ -1280,8 +1211,7 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "AllowDomai
 
 # --------------- OS Policies ---------------
 
-# 18.9.30.1 (L2) Ensure 'Allow Clipboard synchronization across
-#devices' is set to 'Disabled'
+# 18.9.30.1 (L2) Ensure 'Allow Clipboard synchronization across devices' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\System" "AllowCrossDeviceClipboard" ("0") "18.9.30.1" "L2" "Ensure 'Allow Clipboard synchronization across devices' is set to 'Disabled'"
 
 # 18.9.30.2 (L2) Ensure 'Allow upload of User Activities' is set to 'Disabled'
@@ -1298,13 +1228,12 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Service
 # ---------------  Security Account Manager ---------------
 
 # 18.9.38.1 (L1) Ensure 'Configure validation of ROCA-vulnerable
-#WHfB keys during authentication' is set to 'Enabled: Audit' or higher (DC only)
+# WHfB keys during authentication' is set to 'Enabled: Audit' or higher (DC only)
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System\SAM" "SamNGCKeyROCAValidation" (1,2) "18.9.38.1" "L1" "Ensure 'Configure validation of ROCA-vulnerable WHfB keys during authentication' is set to 'Enabled: Audit' or higher (DC only)" -empty_ok
 
 # ---------------  Microsoft Support Diagnostic Tool ---------------
 
-# 18.9.46.5.1 (L2) Ensure 'Microsoft Support Diagnostic Tool: Turn
-#on MSDT interactive communication with support provider' is set to 'Disabled'
+# 18.9.46.5.1 (L2) Ensure 'Microsoft Support Diagnostic Tool: Turn on MSDT interactive communication with support provider' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\ScriptedDiagnosticsProvider\Policy" "DisableQueryRemoteServer" ("0") "18.9.46.5.1" "L2" "Ensure 'Microsoft Support Diagnostic Tool: Turn on MSDT interactive communication with support provider' is set to 'Disabled'"
 
 # ---------------  Time providers ---------------
@@ -1314,12 +1243,10 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpCl
 
 # ---------------  Credential UI ---------------
 
-# 18.10.14.1 (L1) Ensure 'Do not display the password reveal
-#button' is set to 'Enabled'
+# 18.10.14.1 (L1) Ensure 'Do not display the password reveal button' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\CredUI" "DisablePasswordReveal" ("1") "18.10.14.1" "L1" "Ensure 'Do not display the password reveal button' is set to 'Enabled'"
 
-# 18.10.14.2 (L1) Ensure 'Enumerate administrator accounts on
-#elevation' is set to 'Disabled'
+# 18.10.14.2 (L1) Ensure 'Enumerate administrator accounts on elevation' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\CredUI" "EnumerateAdministrators" ("0") "18.10.14.2" "L1" "Ensure 'Enumerate administrator accounts on elevation' is set to 'Disabled'" -empty_ok
 
 # ---------------  Data Collection and Preview Builds ---------------
@@ -1381,8 +1308,7 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\LocationAndSensors"
 # 18.10.43.6.1.1 (L1) Ensure 'Configure Attack Surface Reduction rules' is set to 'Enabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR" "ExploitGuard_ASR_Rules" ("1") "18.10.43.6.1.1" "L1" "Ensure 'Configure Attack Surface Reduction rules' is set to 'Enabled'"
 
-# 18.10.43.6.1.2 (L1) Ensure 'Configure Attack Surface Reduction
-#rules: Set the state for each ASR rule' is configured
+# 18.10.43.6.1.2 (L1) Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR" "ExploitGuard_ASR_Rules" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "26190899-1602-49e8-8b27-eb1d0a1ce869" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR\Rules" "3b576869-a4ec-4529-8536-b80a7769e899" ("1") "18.10.43.6.1.2" "L1" "Ensure 'Configure Attack Surface Reduction rules: Set the state for each ASR rule' is configured"
