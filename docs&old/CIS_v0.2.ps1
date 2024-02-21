@@ -1426,7 +1426,7 @@ GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fP
 
 GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fEncryptRPCTraffic" "1"
 
-GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "SecurityLayer" "1"
+GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "SecurityLayer" "2"
 
 GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "UserAuthentication" "1"
 

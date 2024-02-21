@@ -1120,28 +1120,6 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WCN\UI" "DisableWcn
 #connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WcmSvc\GroupPolicy" "fMinimizeConnections" ("3") "18.6.21.1" "L1" "Ensure 'Minimize the number of simultaneous connections to the Internet or a Windows Domain' is set to 'Enabled: 3 = Prevent Wi-Fi when on Ethernet'"
 
-# --------------- Printers ---------------
-
-# 18.7.1 (L1) Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RegisterSpoolerRemoteRpcEndPoint" ("2") "18.7.1" "L1" "Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'"
-
-# 18.7.2 (L1) Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RedirectionguardPolicy" ("1") "18.7.2" "L1" "Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'"
-
-# 18.7.7 (L1) Ensure 'Configure RPC over TCP port' is set to 'Enabled: 0'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcTcpPort" ("0") "18.7.7" "L1" "Ensure 'Configure RPC over TCP port' is set to 'Enabled: 0'"
-
-# 18.7.8 (L1) Ensure 'Limits print driver installation to Administrators' is set to 'Enabled'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RestrictDriverInstallationToAdministrators" ("1") "18.7.8" "L1" "Ensure 'Limits print driver installation to Administrators' is set to 'Enabled'" -empty_ok
-
-# 18.7.10 (L1) Ensure 'Point and Print Restrictions: When installing
-#drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint" "NoWarningNoElevationOnInstall" ("0") "18.7.10" "L1" "Ensure 'Point and Print Restrictions: When installing drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'" -empty_ok
-
-# 18.7.11 (L1) Ensure 'Point and Print Restrictions: When updating
-#drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'
-Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint" "UpdatePromptSettings" ("0") "18.7.11" "L1" "Ensure 'Point and Print Restrictions: When updating drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'" -empty_ok
-
 # --------------- Start menu and taskbar ---------------
 
 # 18.8.1.1 (L2) Ensure 'Turn off notifications network usage' is set to 'Enabled'
@@ -1446,7 +1424,45 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "PUAProte
 # 18.10.43.17 (L1) Ensure 'Turn off Microsoft Defender AntiVirus' is set to 'Disabled'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender" "DisableAntiSpyware" ("0") "18.10.43.17" "L1" "Ensure 'Turn off Microsoft Defender AntiVirus' is set to 'Disabled'" -empty_ok
 
+# ---------------  Remote desktop services ---------------
 
+# 18.10.57.3.2.1 (L2) Ensure 'Restrict Remote Desktop Services
+#users to a single Remote Desktop Services session' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fSingleSessionPerUser" ("1") "18.10.57.3.2.1" "L2" "Ensure 'Restrict Remote Desktop Services users to a single Remote Desktop Services session' is set to 'Enabled'" -empty_ok
+
+# 18.10.57.3.3.3 (L2) Ensure 'Do not allow LPT port redirection' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fDisableLPT" ("1") "18.10.57.3.3.3" "L2" "Ensure 'Do not allow LPT port redirection' is set to 'Enabled'"
+
+# 18.10.57.3.9.1 (L1) Ensure 'Always prompt for password upon connection' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fPromptForPassword" ("1") "18.10.57.3.9.1" "L1" "Ensure 'Always prompt for password upon connection' is set to 'Enabled'"
+
+# 18.10.57.3.9.2 (L1) Ensure 'Require secure RPC communication' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "fEncryptRPCTraffic" ("1") "18.10.57.3.9.2" "L1" "Ensure 'Require secure RPC communication' is set to 'Enabled'"
+
+# 18.10.57.3.9.3 (L1) Ensure 'Require use of specific security layer for remote (RDP) connections' is set to 'Enabled: SSL'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "SecurityLayer" ("2") "18.10.57.3.9.3" "L1" "Ensure 'Require use of specific security layer for remote (RDP) connections' is set to 'Enabled: SSL'"
+
+# 18.10.57.3.9.4 (L1) Ensure 'Require user authentication for
+#remote connections by using Network Level Authentication' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "UserAuthentication" ("1") "18.10.57.3.9.4" "L1" "Ensure 'Require user authentication for remote connections by using Network Level Authentication' is set to 'Enabled'" -empty_ok
+
+# 18.10.57.3.9.5 (L1) Ensure 'Set client connection encryption level' is set to 'Enabled: High Level'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "MinEncryptionLevel" ("3") "18.10.57.3.9.5" "L1" "Ensure 'Set client connection encryption level' is set to 'Enabled: High Level'" -empty_ok
+
+# 18.10.57.3.10.1 (L2) Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to
+# 'Enabled: 15 minutes or less, but not Never (0)'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "MaxIdleTime" (1..15) "18.10.57.3.10.1" "L2" "Ensure 'Set time limit for active but idle Remote Desktop Services sessions' is set to 'Enabled: 15 minutes or less, but not Never (0)'"
+
+# 18.10.57.3.10.2 (L2) Ensure 'Set time limit for disconnected sessions' is set to 'Enabled: 1 minute'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "MaxDisconnectionTime" (1) "18.10.57.3.10.2" "L2" "Ensure 'Set time limit for disconnected sessions' is set to 'Enabled: 1 minute'"
+
+# 18.10.57.3.11.1 (L1) Ensure 'Do not delete temp folders upon exit' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "DeleteTempDirsOnExit" ("0") "18.10.57.3.11.1" "L1" "Ensure 'Do not delete temp folders upon exit' is set to 'Disabled'" -empty_ok
+
+# 18.10.57.3.11.2 (L1) Ensure 'Do not use temporary folders per session' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Services" "PerSessionTempDir" ("0") "18.10.57.3.11.2" "L1" "Ensure 'Do not use temporary folders per session' is set to 'Disabled'" -empty_ok
+
+# ---------------  Search ---------------
 
 Write-Host "`nDone`nRemoving export files..."
 

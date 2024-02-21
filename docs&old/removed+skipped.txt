@@ -20,74 +20,66 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "F
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "CopyFilesPolicy" ("1") "18.7.9" "L1" "Ensure 'Manage processing of Queue-specific files' is set to 'Enabled: Limit Queue-specific files to Color profiles'" -empty_ok
 
 # 18.9.32.6.1 (L2) Ensure 'Allow network connectivity during connected-standby (on battery)' is set to 'Disabled'
-
 # 18.9.32.6.2 (L2) Ensure 'Allow network connectivity during connected-standby (plugged in)' is set to 'Disabled'
-
 # 18.9.32.6.3 (L1) Ensure 'Require a password when a computer wakes (on battery)' is set to 'Enabled'
-
 # 18.9.32.6.4 (L1) Ensure 'Require a password when a computer wakes (plugged in)' is set to 'Enabled'
-
 # 18.9.46.11.1 (L2) Ensure 'Enable/Disable PerfTrack' is set to 'Disabled'
-
 # 18.9.48.1 (L2) Ensure 'Turn off the advertising ID' is set to 'Enabled'
-
 # 18.10.3.1 (L2) Ensure 'Allow a Windows app to share application data between users' is set to 'Disabled'
-
 # 18.10.5.1 (L1) Ensure 'Allow Microsoft accounts to be optional' is  set to 'Enabled'
-
 # 18.10.7.1 (L1) Ensure 'Disallow Autoplay for non-volume devices' is set to 'Enabled'
-
 # 18.10.7.2 (L1) Ensure 'Set the default behavior for AutoRun' is set to 'Enabled: Do not execute any autorun commands'
-
 # 18.10.7.3 (L1) Ensure 'Turn off Autoplay' is set to 'Enabled: All drives'
-
 # 18.10.8.1.1 (L1) Ensure 'Configure enhanced anti-spoofing' is set to 'Enabled'
-
 # 18.10.10.1 (L2) Ensure 'Allow Use of Camera' is set to 'Disabled'
-
 # 18.10.12.1 (L1) Ensure 'Turn off cloud consumer account state content' is set to 'Enabled'
-
 # 18.10.12.2 (L1) Ensure 'Turn off Microsoft consumer experiences' is set to 'Enabled'
-
 # 18.10.13.1 (L1) Ensure 'Require pin for pairing' is set to 'Enabled: First Time' OR 'Enabled: Always'
-
-# 18.10.15.2 (L2) Ensure 'Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service'
-is set to 'Enabled: Disable Authenticated Proxy usage'
-
+# 18.10.15.2 (L2) Ensure 'Configure Authenticated Proxy usage for the Connected User Experience and Telemetry service' is set to 'Enabled: Disable Authenticated Proxy usage'
 # 18.10.15.4 (L1) Ensure 'Do not show feedback notifications' is set to 'Enabled'
-
 # 18.10.15.5 (L1) Ensure 'Enable OneSettings Auditing' is set to 'Enabled'
-
 # 18.10.15.6 (L1) Ensure 'Limit Diagnostic Log Collection' is set to 'Enabled'
-
 # 18.10.15.8 (L1) Ensure 'Toggle user control over Insider builds' is set to 'Disabled'
-
 # 18.10.17.1 (L1) Ensure 'Enable App Installer' is set to 'Disabled'
-
 # 18.10.17.2 (L1) Ensure 'Enable App Installer Experimental Features' is set to 'Disabled'
-
 # 18.10.17.3 (L1) Ensure 'Enable App Installer Hash Override' is set to 'Disabled'
-
 # 18.10.17.4 (L1) Ensure 'Enable App Installer ms-appinstaller protocol' is set to 'Disabled'
-
 # 18.10.41.1 (L2) Ensure 'Allow Message Service Cloud Sync' is set to 'Disabled'
-
 # 18.10.42.1 (L1) Ensure 'Block all consumer Microsoft account user authentication' is set to 'Enabled'
-
 # 18.10.43.5.1 (L1) Ensure 'Configure local setting override for reporting to Microsoft MAPS' is set to 'Disabled'
-
 # 18.10.43.5.2 (L2) Ensure 'Join Microsoft MAPS' is set to 'Disabled'
-
 # 18.10.43.6.3.1 (L1) Ensure 'Prevent users and apps from accessing dangerous websites' is set to 'Enabled: Block'
-
 # 18.10.43.12.1 (L2) Ensure 'Configure Watson events' is set to 'Disabled'
-
 # 18.10.43.13.1 (L1) Ensure 'Scan removable drives' is set to 'Enabled'
-
 # 18.10.43.13.2 (L1) Ensure 'Turn on e-mail scanning' is set to 'Enabled'
-
 # 18.10.51.1 (L1) Ensure 'Prevent the usage of OneDrive for file storage' is set to 'Enabled'
-
 # 18.10.56.1 (L2) Ensure 'Turn off Push To Install service' is set to 'Enabled'
+# 18.10.57.2.2 (L1) Ensure 'Do not allow passwords to be saved' is set to 'Enabled'
+# 18.10.57.3.3.1 (L2) Ensure 'Do not allow COM port redirection' is set to 'Enabled'
+# 18.10.57.3.3.2 (L1) Ensure 'Do not allow drive redirection' is set to 'Enabled'
+# 18.10.57.3.3.4 (L2) Ensure 'Do not allow supported Plug and Play device redirection' is set to 'Enabled'
+# 18.10.58.1 (L1) Ensure 'Prevent downloading of enclosures' is set to 'Enabled'
+# 18.10.59.2 (L2) Ensure 'Allow Cloud Search' is set to 'Enabled: Disable Cloud Search'
 
-#
+# --------------- Printers ---------------
+
+# 18.7.1 (L1) Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RegisterSpoolerRemoteRpcEndPoint" ("2") "18.7.1" "L1" "Ensure 'Allow Print Spooler to accept client connections' is set to 'Disabled'"
+
+# 18.7.2 (L1) Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RedirectionguardPolicy" ("1") "18.7.2" "L1" "Ensure 'Configure Redirection Guard' is set to 'Enabled: Redirection Guard Enabled'"
+
+# 18.7.7 (L1) Ensure 'Configure RPC over TCP port' is set to 'Enabled: 0'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\RPC" "RpcTcpPort" ("0") "18.7.7" "L1" "Ensure 'Configure RPC over TCP port' is set to 'Enabled: 0'"
+
+# 18.7.8 (L1) Ensure 'Limits print driver installation to Administrators' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers" "RestrictDriverInstallationToAdministrators" ("1") "18.7.8" "L1" "Ensure 'Limits print driver installation to Administrators' is set to 'Enabled'" -empty_ok
+
+# 18.7.10 (L1) Ensure 'Point and Print Restrictions: When installing
+#drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint" "NoWarningNoElevationOnInstall" ("0") "18.7.10" "L1" "Ensure 'Point and Print Restrictions: When installing drivers for a new connection' is set to 'Enabled: Show warning and elevation prompt'" -empty_ok
+
+# 18.7.11 (L1) Ensure 'Point and Print Restrictions: When updating
+#drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint" "UpdatePromptSettings" ("0") "18.7.11" "L1" "Ensure 'Point and Print Restrictions: When updating drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'" -empty_ok
+
