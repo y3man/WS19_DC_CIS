@@ -1522,7 +1522,7 @@ GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLog
 
  
 
-GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription" "EnableTranscripting" "0"
+GetRegEntry "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription" "EnableTranscripting" "1"
 
 # This Group Policy section is provided by the Group Policy template WindowsRemoteManagement.admx/adml that is
 

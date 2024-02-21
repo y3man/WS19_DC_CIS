@@ -1464,18 +1464,63 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Terminal Service
 
 # ---------------  Search ---------------
 
+# 18.10.59.3 (L1) Ensure 'Allow indexing of encrypted files' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Windows Search" "AllowIndexingEncryptedStoresOrItems" ("0") "18.10.59.3" "L1" "Ensure 'Allow indexing of encrypted files' is set to 'Disabled'" -empty_ok
+
+# ---------------  Logon options ---------------
+
+# 18.10.82.1 (L1) Ensure 'Sign-in and lock last interactive user automatically after a restart' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" "DisableAutomaticRestartSignOn" ("1") "18.10.82.1" "L1" "Ensure 'Sign-in and lock last interactive user automatically after a restart' is set to 'Disabled'"
+
+# ---------------  Powershell ---------------
+
+# 18.10.87.1 (L1) Ensure 'Turn on PowerShell Script Block Logging' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging" "EnableScriptBlockLogging" ("1") "18.10.87.1" "L1" "Ensure 'Turn on PowerShell Script Block Logging' is set to 'Enabled'" -empty_ok
+
+# 18.10.87.2 (L1) Ensure 'Turn on PowerShell Transcription' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Transcription" "EnableTranscripting" ("1") "18.10.87.2" "L1" "Ensure 'Turn on PowerShell Transcription' is set to 'Enabled'"
+
+# ---------------  WinRM service ---------------
+
+# 18.10.89.2.1 (L1) Ensure 'Allow Basic authentication' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service" "AllowBasic" ("0") "18.10.89.2.1" "L1" "Ensure 'Allow Basic authentication' is set to 'Disabled'" -empty_ok
+
+# 18.10.89.2.2 (L2) Ensure 'Allow remote server management through WinRM' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service" "AllowAutoConfig" ("0") "18.10.89.2.2" "L2" "Ensure 'Allow remote server management through WinRM' is set to 'Disabled'" -empty_ok
+
+# 18.10.89.2.3 (L1) Ensure 'Allow unencrypted traffic' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service" "AllowUnencryptedTraffic" ("0") "18.10.89.2.3" "L1" "Ensure 'Allow unencrypted traffic' is set to 'Disabled'" -empty_ok
+
+# 18.10.89.2.4 (L1) Ensure 'Disallow WinRM from storing RunAs credentials' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Service" "DisableRunAs" ("1") "18.10.89.2.4" "L1" "Ensure 'Disallow WinRM from storing RunAs credentials' is set to 'Enabled'"
+
+# ---------------  Remote Shell ---------------
+
+# 18.10.90.1 (L2) Ensure 'Allow Remote Shell Access' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WinRM\Client" "AllowRemoteShellAccess" ("0") "18.10.90.1" "L2" "Ensure 'Allow Remote Shell Access' is set to 'Disabled'"
+
+# ---------------  Windows Update ---------------
+
+# 18.10.93.1.1 (L1) Ensure 'No auto-restart with logged on users for
+#scheduled automatic updates installations' is set to 'Disabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" "NoAutoRebootWithLoggedOnUsers" ("0") "18.10.93.1.1" "L1" "Ensure 'No auto-restart with logged on users for scheduled automatic updates installations' is set to 'Disabled'" -empty_ok
+
+# 18.10.93.2.1 (L1) Ensure 'Configure Automatic Updates' is set to 'Enabled'
+Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate\AU" "NoAutoUpdate" ("0") "18.10.93.2.1" "L1" "Ensure 'Configure Automatic Updates' is set to 'Enabled'"
+
+
 Write-Host "`nDone`nRemoving export files..."
 
-#try {
-#    Remove-Item .\secpol.cfg
-#} catch {
-#    Write-Host "Failed to remove secpol.cfg" -ForegroundColor Red
-#}
+try {
+    Remove-Item .\secpol.cfg
+} catch {
+    Write-Host "Failed to remove secpol.cfg" -ForegroundColor Red
+}
 
-#try {
-#    Remove-Item .\auditpol.txt
-#} catch {
-#    Write-Host "Failed to remove auditpol.txt" -ForegroundColor Red
-#}
+try {
+    Remove-Item .\auditpol.txt
+} catch {
+    Write-Host "Failed to remove auditpol.txt" -ForegroundColor Red
+}
 
 Read-Host "Press enter to exit..."

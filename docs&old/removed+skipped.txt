@@ -83,3 +83,21 @@ Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAn
 #drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'
 Get-RegistryValue "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\Printers\PointAndPrint" "UpdatePromptSettings" ("0") "18.7.11" "L1" "Ensure 'Point and Print Restrictions: When updating drivers for an existing connection' is set to 'Enabled: Show warning and elevation prompt'" -empty_ok
 
+# 18.10.59.4 (L2) Ensure 'Allow search highlights' is set to 'Disabled
+# 18.10.63.1 (L2) Ensure 'Turn off KMS Client Online AVS Validation' is set to 'Enabled'
+# 18.10.76.2.1 (L1) Ensure 'Configure Windows Defender SmartScreen' is set to 'Enabled: Warn and prevent bypass'
+# 18.10.80.1 (L2) Ensure 'Allow suggested apps in Windows Ink Workspace' is set to 'Disabled'
+# 18.10.80.2 (L1) Ensure 'Allow Windows Ink Workspace' is set to 'Enabled: On, but disallow access above lock' OR 'Enabled: Disabled'
+# 18.10.81.1 (L1) Ensure 'Allow user control over installs' is set to 'Disabled'
+# 18.10.81.2 (L1) Ensure 'Always install with elevated privileges' is set to 'Disabled'
+# 18.10.81.3 (L2) Ensure 'Prevent Internet Explorer security prompt for Windows Installer scripts' is set to 'Disabled'
+# 18.10.89.1.1 (L1) Ensure 'Allow Basic authentication' is set to 'Disabled'
+# 18.10.89.1.2 (L1) Ensure 'Allow unencrypted traffic' is set to 'Disabled'
+# 18.10.89.1.3 (L1) Ensure 'Disallow Digest authentication' is set to 'Enabled'
+# 18.10.92.2.1 (L1) Ensure 'Prevent users from modifying settings' is set to 'Enabled'
+# 18.10.93.2.2 (L1) Ensure 'Configure Automatic Updates: Scheduled install day' is set to '0 - Every day'
+# 18.10.93.4.1 (L1) Ensure 'Manage preview builds' is set to 'Disabled'
+# 18.10.93.4.2 (L1) Ensure 'Select when Preview Builds and Feature Updates are received' is set to 'Enabled: 180 or more days'
+# 18.10.93.4.3 (L1) Ensure 'Select when Quality Updates are received' is set to 'Enabled: 0 days'
+
+19 Administrative Templates (User)
